@@ -324,3 +324,267 @@
   background: rgb(var(--color-overlay));
   z-index: 1;
 }
+/* ==========================================================================
+   Banner style (newsletter_style: banner) - "sign up" section
+   Figma - desktop "sign up · 1440" (2:99), mobile "sign up · 393" (2:141).
+   Mobile first; desktop from 990px. Scoped to .newsletter--style-banner so the
+   default style (home / password page) is not affected.
+   ========================================================================== */
+.newsletter-section .newsletter.newsletter--style-banner {
+  --nl-white: 255, 255, 255;
+  --nl-field-border: 226, 228, 233; /* Neutral/200 #E2E4E9 */
+  --nl-placeholder: 198, 200, 210; /* Neutral/300 #C6C8D2 */
+  min-height: 65rem; /* mobile frame 393 x 650 */
+  color: rgb(var(--nl-white));
+}
+
+/* Gradient: transparent at the top to 80% black at the bottom */
+.newsletter-section .newsletter--style-banner .newsletter--overlay-gradient {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 99.982%);
+}
+
+.newsletter-section .newsletter--style-banner > .newsletter__inner.container {
+  max-width: none;
+  padding-right: 1.6rem;
+  padding-left: 1.6rem;
+}
+
+.newsletter-section .newsletter--style-banner .newsletter__form {
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+}
+
+/* ---------- Background photo crop (exact Figma placement) ----------
+   Figma draws the photo larger than the frame and offsets it:
+   mobile  393 x 650  -> 131.09% x 106.15%, left -15.54%, top -6.15%
+   desktop 1920 x 702 -> 111.04% x 406.77%, left -11.04%, top -196.12%
+   object-fit: cover inside that box keeps the photo's own ratio. */
+.newsletter-section .newsletter--style-banner {
+  overflow: hidden;
+}
+
+.newsletter-section .newsletter--style-banner .newsletter__image {
+  top: -6.15%;
+  right: auto;
+  bottom: auto;
+  left: -15.54%;
+  width: 131.09%;
+  max-width: none;
+  height: 106.15%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ---------- Heading + text (centred, white) ---------- */
+.newsletter-section .newsletter--style-banner .newsletter__title {
+  width: 100%;
+  max-width: none !important;
+  margin: 0 0 0.8rem;
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-align: center;
+  color: rgb(var(--nl-white));
+}
+
+.newsletter-section .newsletter--style-banner .newsletter-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.newsletter-section .newsletter--style-banner .newsletter-form .newsletter__text,
+.newsletter-section .newsletter--style-banner .newsletter__text p {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  text-align: center;
+  color: rgb(var(--nl-white));
+}
+
+/* ---------- Form: stacked on mobile (field, 10px, button, 10px, note) ---------- */
+.newsletter-section .newsletter--style-banner .newsletter-form__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  width: 100%;
+  max-width: 70rem;
+  margin: 2.4rem auto 0;
+}
+
+.newsletter-section .newsletter--style-banner .newsletter-form__field-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Only the wrapper div: the email input itself also has the class "field" */
+.newsletter-section .newsletter--style-banner .newsletter-form__field-wrapper > .field {
+  display: block;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.newsletter-section .newsletter--style-banner .newsletter-form .field input.field__input {
+  box-sizing: border-box;
+  width: 100%;
+  flex: none;
+  height: 4.8rem;
+  min-height: 4.8rem;
+  padding: 0 1.2rem !important; /* theme reserves 7rem on the right for its inline button */
+  border: 0.1rem solid rgb(var(--nl-field-border));
+  border-radius: 0.4rem;
+  background: transparent;
+  font-family: var(--font-body-family);
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--nl-white));
+  box-shadow: none;
+}
+
+.newsletter-section .newsletter--style-banner .newsletter-form .field input.field__input::placeholder {
+  color: rgb(var(--nl-placeholder));
+  opacity: 1;
+}
+
+.newsletter-section .newsletter--style-banner .newsletter-form .field input.field__input:hover,
+.newsletter-section .newsletter--style-banner .newsletter-form .field input.field__input:focus {
+  border-color: rgb(var(--nl-white));
+}
+
+/* Button: 48px, white outline, "Sign up ->" */
+.newsletter-section .newsletter--style-banner .newsletter-form .newsletter__button {
+  position: static;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 100%;
+  height: 4.8rem;
+  min-width: 0;
+  min-height: 4.8rem;
+  margin: 0;
+  padding: 0 2.3rem; /* Figma: 24px incl. the 1px inside stroke */
+  border: 0.1rem solid rgb(var(--nl-white));
+  border-radius: 0.4rem;
+  background: transparent;
+  color: rgb(var(--nl-white));
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 1;
+  cursor: pointer;
+  transition: background-color var(--duration-default);
+}
+
+.newsletter-section .newsletter--style-banner .newsletter-form .newsletter__button::after {
+  display: none;
+}
+
+.newsletter-section .newsletter--style-banner .newsletter-form .newsletter__button:hover {
+  opacity: 1;
+  background: rgba(var(--nl-white), 0.12);
+  color: rgb(var(--nl-white));
+}
+
+.newsletter-section .newsletter--style-banner .newsletter__button-icon {
+  display: block;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.newsletter-section .newsletter--style-banner .newsletter-form__message {
+  flex: 1 0 100%;
+  color: rgb(var(--nl-white));
+}
+
+.newsletter-section .newsletter--style-banner .newsletter__note {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  text-align: center;
+  color: rgb(var(--nl-white));
+  opacity: 0.8;
+}
+
+.newsletter-section .newsletter--style-banner .newsletter-form__gdpr,
+.newsletter-section .newsletter--style-banner .newsletter-form__gdpr label {
+  color: rgb(var(--nl-white));
+}
+
+/* ---------- Desktop ---------- */
+@media screen and (min-width: 990px) {
+  /* Frame 1920 x 702 -> 36.56vw */
+  .newsletter-section .newsletter.newsletter--style-banner {
+    min-height: max(52rem, 36.56vw);
+  }
+
+  .newsletter-section .newsletter--style-banner .newsletter__image {
+    top: -196.12%;
+    left: -11.04%;
+    width: 111.04%;
+    height: 406.77%;
+  }
+
+  .newsletter-section .newsletter--style-banner > .newsletter__inner.container {
+    padding-right: max(2.4rem, 8.33vw);
+    padding-left: max(2.4rem, 8.33vw);
+  }
+
+  .newsletter-section .newsletter--style-banner .newsletter__title {
+    margin-bottom: 1.2rem;
+    font-size: 4rem;
+    line-height: 1.2;
+  }
+
+  .newsletter-section .newsletter--style-banner .newsletter-form .newsletter__text,
+  .newsletter-section .newsletter--style-banner .newsletter__text p {
+    font-size: 1.8rem;
+  }
+
+  /* 700px form: field + 12px + button in one row, note 12px below */
+  .newsletter-section .newsletter--style-banner .newsletter-form__inner {
+    gap: 1.2rem;
+    margin-top: 4rem;
+  }
+
+  .newsletter-section .newsletter--style-banner .newsletter-form__field-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+
+  .newsletter-section .newsletter--style-banner .newsletter-form__field-wrapper > .field {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .newsletter-section .newsletter--style-banner .newsletter-form .newsletter__button {
+    width: auto;
+  }
+
+  .newsletter-section .newsletter--style-banner .newsletter__note {
+    font-size: 1.4rem;
+  }
+}

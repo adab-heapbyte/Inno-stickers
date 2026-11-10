@@ -5,7 +5,8 @@
 {%- endstyle -%}
 
 {% comment %}use newsletter class for this section only{% endcomment %}
-<div class="newsletter newsletter--{{ section.settings.aspect_ratio }} newsletter--{{ section.settings.text_align }} color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
+{%- assign newsletter_style = section.settings.newsletter_style | default: 'default' -%}
+<div class="newsletter newsletter--style-{{ newsletter_style }} newsletter--{{ section.settings.aspect_ratio }} newsletter--{{ section.settings.text_align }} color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
   {% liquid
     if section.settings.image != blank and section.settings.mobile_image == blank
       assign image = section.settings.image
@@ -111,9 +112,26 @@
               class="newsletter__button button button--tertiary"
               name="commit"
             >
-              {{ 'newsletter.button_label' | t }}
+              {%- if section.settings.button_label != blank -%}
+                <span>{{ section.settings.button_label | escape }}</span>
+              {%- else -%}
+                {{ 'newsletter.button_label' | t }}
+              {%- endif -%}
+              {%- if newsletter_style == 'banner' -%}
+                <img
+                  class="newsletter__button-icon"
+                  src="{{ 'icon-arrow-right-white.svg' | asset_url }}"
+                  alt=""
+                  width="20"
+                  height="20"
+                  loading="lazy"
+                >
+              {%- endif -%}
             </button>
           </div>
+          {%- if section.settings.note_text != blank -%}
+            <p class="newsletter__note">{{ section.settings.note_text | escape }}</p>
+          {%- endif -%}
         </div>
         {% if section.settings.show_gdpr_checkbox %}
           <div class="newsletter-form__gdpr">
@@ -142,10 +160,14 @@
     </div>
   </div>
   {%- if image != blank or image == 1 -%}
-    <div
-      class="newsletter--overlay"
-      style="opacity: {{ section.settings.overlay_opacity }}"
-    ></div>
+    {%- if newsletter_style == 'banner' -%}
+      <div class="newsletter--overlay newsletter--overlay-gradient"></div>
+    {%- else -%}
+      <div
+        class="newsletter--overlay"
+        style="opacity: {{ section.settings.overlay_opacity }}"
+      ></div>
+    {%- endif -%}
   {%- endif -%}
 </div>
 
@@ -158,6 +180,35 @@
     "templates": ["*"]
   },
   "settings": [
+    {
+      "type": "select",
+      "id": "newsletter_style",
+      "label": "t:sections.newsletter.settings.newsletter_style.label",
+      "info": "t:sections.newsletter.settings.newsletter_style.info",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.newsletter.settings.newsletter_style.options__1.label"
+        },
+        {
+          "value": "banner",
+          "label": "t:sections.newsletter.settings.newsletter_style.options__2.label"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.newsletter.settings.button_label.label",
+      "info": "t:sections.newsletter.settings.button_label.info"
+    },
+    {
+      "type": "text",
+      "id": "note_text",
+      "label": "t:sections.newsletter.settings.note_text.label",
+      "info": "t:sections.newsletter.settings.note_text.info"
+    },
     {
       "type": "color_scheme",
       "id": "color_scheme",

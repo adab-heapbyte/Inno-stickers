@@ -5442,6 +5442,23 @@
     "newsletter": {
       "name": "Email signup",
       "settings": {
+        "newsletter_style": {
+          "label": "Style",
+          "info": "Banner: centred text over a full-width photo with a gradient, email field and button side by side.",
+          "options__1": {
+            "label": "Default"
+          },
+          "options__2": {
+            "label": "Banner"
+          }
+        },
+        "button_label": {
+          "label": "Button label",
+          "info": "Leave empty to use the default text."
+        },
+        "note_text": {
+          "label": "Note below the form"
+        },
         "align_content": {
           "label": "Content alignment",
           "options__1": {
