@@ -9,6 +9,8 @@
   @param {boolean} [show_collection] - Show the first collection of the product
   @param {boolean} [show_desc] - Show a truncated product description
   @param {string} [title_size] - Heading class applied to the card title. Default: "h3"
+  @param {string} [price_suffix] - Text shown after the price, e.g. "sq. ft."
+  @param {boolean} [show_rating] - Show the reviews.rating metafield (star + value) next to the price
 
   @example
   {% render 'product-card-info', product_card_product: product %}
@@ -45,7 +47,44 @@
       {{- product_card_product.title | escape -}}
     </a>
   </h3>
-  {% render 'price', product: product_card_product, price_class: '' %}
+  {%- if price_suffix != blank or show_rating -%}
+    {%- liquid
+      assign card_rating = blank
+      if show_rating
+        assign card_rating = product_card_product.metafields.reviews.rating.value
+      endif
+    -%}
+    <div class="card__price-row">
+      <div class="card__price-wrap">
+        {% render 'price', product: product_card_product, price_class: '' %}
+        {%- if price_suffix != blank -%}
+          <span class="card__price-suffix">{{ price_suffix | escape }}</span>
+        {%- endif -%}
+      </div>
+      {%- if card_rating != blank -%}
+        <div
+          class="card__rating"
+          role="img"
+          aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: card_rating.rating, rating_max: card_rating.scale_max }}"
+        >
+          <span class="card__rating-icon" aria-hidden="true">
+            <img
+              src="{{ 'icon-star-rating.svg' | asset_url }}"
+              alt=""
+              width="13"
+              height="12"
+              loading="lazy"
+            >
+          </span>
+          <span class="card__rating-value" aria-hidden="true">
+            {{- card_rating.rating | round: 1 | remove: '.0' -}}
+          </span>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    {% render 'price', product: product_card_product, price_class: '' %}
+  {%- endif -%}
 </div>
 {%- if show_desc and product_card_product.description != blank -%}
   <div class="card__description">

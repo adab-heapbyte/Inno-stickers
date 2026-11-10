@@ -8,6 +8,8 @@
   	- show_desc: {Boolean} Show the product vendor. Default: false
   	- section_id: {String} The ID of the section that contains this card.
   	- show_linked_products: {Boolean} Show the linked products options on the card. Default: false (optional)
+  	- price_suffix: {String} Text shown after the price, e.g. "sq. ft.". Default: blank (optional)
+  	- show_rating: {Boolean} Show the reviews.rating metafield next to the price. Default: false (optional)
   	Usage:
   {% render 'product-card', show_vendor: section.settings.show_vendor %}
 {% endcomment %}
@@ -87,7 +89,9 @@
             show_vendor: show_vendor,
             show_collection: show_collection,
             show_desc: show_desc,
-            title_size: title_size
+            title_size: title_size,
+            price_suffix: price_suffix,
+            show_rating: show_rating
           %}
         </div>
         <div class="product-parameters {% if settings.show_on_mobile %} quick-add-block-enable{% endif %} {% if settings.product_color_display_state == 'static' %} quick-add-block-static{% endif %}">

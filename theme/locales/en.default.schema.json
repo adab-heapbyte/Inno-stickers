@@ -6226,12 +6226,34 @@
         },
         "enable_main_image_link": {
           "label": "Enable main image link"
+        },
+        "card_style": {
+          "label": "Style",
+          "options__1": {
+            "label": "Classic"
+          },
+          "options__2": {
+            "label": "Catalog"
+          },
+          "info": "Catalog: title and text over a gradient on the image, minimal product card with price suffix and rating."
+        },
+        "price_suffix": {
+          "label": "Price suffix",
+          "info": "Shown after the price, e.g. sq. ft."
+        },
+        "show_rating": {
+          "label": "Show product rating",
+          "info": "Uses the product rating from your reviews app (reviews.rating metafield). Hidden when a product has no rating."
         }
       },
       "blocks": {
         "product_slide": {
           "name": "Product slide",
           "settings": {
+            "title": {
+              "label": "Title",
+              "info": "Shown on the image in the Catalog style."
+            },
             "description": {
               "default": "Highlight products, promos, or seasonal picks to engage visitors."
             }
