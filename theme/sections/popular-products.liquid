@@ -22,9 +22,25 @@
 {%- liquid
   assign section_id = 'shopify-section-' | append: section.id
   assign enable_swiper = section.settings.enable_swiper
+  assign card_style = section.settings.card_style | default: 'classic'
+
+  assign card_price_suffix = blank
+  assign card_show_rating = false
+  assign card_button_label = blank
+  assign card_sale_badge_format = blank
+  if card_style == 'catalog'
+    assign card_price_suffix = section.settings.price_suffix
+    assign card_show_rating = section.settings.show_rating
+    assign card_button_label = section.settings.card_button_label
+    assign card_sale_badge_format = 'percent_off'
+  endif
 -%}
 
-<div class="popular-products section-{{ section.id }}-padding background color-background-1">
+{%- if card_button_label != blank -%}
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+<div class="popular-products popular-products--{{ card_style }} section-{{ section.id }}-padding background color-background-1">
   <div class="container popular-products__container">
     {% render 'section-header', section_heading_tag: section.settings.heading_tag %}
     <div class="popular-products__content">
@@ -59,7 +75,11 @@
               show_collection: section.settings.show_collection,
               show_desc: section.settings.show_desc,
               section_id: section.id,
-              add_id: forloop.index
+              add_id: forloop.index,
+              price_suffix: card_price_suffix,
+              show_rating: card_show_rating,
+              card_button_label: card_button_label,
+              sale_badge_format: card_sale_badge_format
             %}
           </li>
         {%- else -%}
@@ -108,6 +128,23 @@
     "groups": ["*"]
   },
   "settings": [
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "t:sections.popular-products.settings.card_style.label",
+      "info": "t:sections.popular-products.settings.card_style.info",
+      "options": [
+        {
+          "value": "classic",
+          "label": "t:sections.popular-products.settings.card_style.options__1.label"
+        },
+        {
+          "value": "catalog",
+          "label": "t:sections.popular-products.settings.card_style.options__2.label"
+        }
+      ],
+      "default": "classic"
+    },
     {
       "type": "text",
       "id": "subheading",
@@ -305,6 +342,25 @@
       "default": false,
       "label": "t:sections.all.card.show_desc.label",
       "info": "t:sections.all.card.show_desc.info"
+    },
+    {
+      "type": "text",
+      "id": "price_suffix",
+      "label": "t:sections.popular-products.settings.price_suffix.label",
+      "info": "t:sections.popular-products.settings.price_suffix.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "t:sections.popular-products.settings.show_rating.label",
+      "info": "t:sections.popular-products.settings.show_rating.info"
+    },
+    {
+      "type": "text",
+      "id": "card_button_label",
+      "label": "t:sections.popular-products.settings.card_button_label.label",
+      "info": "t:sections.popular-products.settings.card_button_label.info"
     },
     {
       "type": "header",

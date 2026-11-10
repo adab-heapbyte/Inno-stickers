@@ -6176,6 +6176,28 @@
         },
         "swipe": {
           "label": "Enable slider"
+        },
+        "card_style": {
+          "label": "Style",
+          "options__1": {
+            "label": "Classic"
+          },
+          "options__2": {
+            "label": "Catalog"
+          },
+          "info": "Catalog: left-aligned heading and minimal product cards with price suffix, rating, sale badges and an add to cart button."
+        },
+        "price_suffix": {
+          "label": "Price suffix",
+          "info": "Shown after the price, e.g. sq. ft."
+        },
+        "show_rating": {
+          "label": "Show product rating",
+          "info": "Uses the product rating from your reviews app (reviews.rating metafield). Hidden when a product has no rating."
+        },
+        "card_button_label": {
+          "label": "Add to cart button label",
+          "info": "Catalog style. Adds the product to the cart. Shown for products without variant options; disabled when sold out. Leave empty to hide the button."
         }
       },
       "presets": {

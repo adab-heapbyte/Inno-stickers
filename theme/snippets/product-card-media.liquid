@@ -9,6 +9,7 @@
   @param {string} [media_fit] - Image fit of the card. Values are "contain" and "cover"
   @param {number} [columns_mobile] - Number of columns on mobile. Default: 2
   @param {boolean} [show_slide] - Whether the media slider is allowed on this card. Default: true
+  @param {string} [sale_badge_format] - "percent_off" renders the sale badge as "-20%". Default: theme setting
 
   @example
   {% render 'product-card-media', product_card_product: product %}
@@ -222,7 +223,16 @@
           class="subtitle badge badge--sale {% if settings.badges_background %} badge-transparent {% endif %}"
           aria-hidden="true"
         >
-          {% if settings.badge_sale_type == 'sale' %}
+          {% if sale_badge_format == 'percent_off' %}
+            {{- '-' -}}
+            {{-
+              product_card_product.compare_at_price
+              | minus: product_card_product.price
+              | times: 100
+              | divided_by: product_card_product.compare_at_price
+            -}}
+            {{- '%' -}}
+          {% elsif settings.badge_sale_type == 'sale' %}
             {{- 'products.product.on_sale' | t -}}
           {% else %}
             {{- 'products.product.on_sale' | t -}}

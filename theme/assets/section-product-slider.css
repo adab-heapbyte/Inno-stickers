@@ -790,3 +790,23 @@
     font-size: 1.6rem;
   }
 }
+
+/* ---------- Inset product photo (Figma "Picture") ----------
+   Square photo centred in the grey box (no shadow).
+   Desktop 300 of 483 (62.11%), mobile 109 of 168.5 (64.69%).
+   `translate` is used so the theme hover scale (transform) still composes. */
+.product-slider--catalog .card__inner .media img {
+  top: 50% !important;
+  left: 50% !important;
+  width: 64.69% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  translate: -50% -50%;
+  object-fit: cover;
+}
+
+@media screen and (min-width: 990px) {
+  .product-slider--catalog .card__inner .media img {
+    width: 62.11% !important;
+  }
+}

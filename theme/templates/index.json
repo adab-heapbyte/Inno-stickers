@@ -160,10 +160,11 @@
     "popular-products": {
       "type": "popular-products",
       "settings": {
-        "subheading": "This Year",
+        "card_style": "catalog",
+        "subheading": "",
         "heading": "Best Seller",
         "heading_tag": "h2",
-        "description": "",
+        "description": "Ideal for patios, balconies, and garden areas—made for daily use, light gardening, and unwinding outdoors.",
         "heading_size": "h1",
         "product_list": [
           "10-pieces-aluminium-peel-and-stick-backsplash-trim-36inch-silver-matte",
@@ -182,8 +183,11 @@
         "show_color_count": false,
         "show_size_count": false,
         "show_collection": false,
-        "show_desc": true,
-        "columns_mobile": "1",
+        "show_desc": false,
+        "price_suffix": "sq. ft.",
+        "show_rating": true,
+        "card_button_label": "Add Sample",
+        "columns_mobile": "2",
         "button_label": "",
         "button_link": "",
         "button_style": "simple",
@@ -368,6 +372,7 @@
     "popular-products1": {
       "type": "popular-products",
       "settings": {
+        "card_style": "catalog",
         "subheading": "",
         "heading": "",
         "heading_tag": "h2",
@@ -387,16 +392,19 @@
         "image_ratio": "portrait",
         "image_fit": "cover",
         "show_vendor": false,
-        "show_color_count": true,
+        "show_color_count": false,
         "show_size_count": false,
         "show_collection": false,
         "show_desc": false,
-        "columns_mobile": "1",
+        "price_suffix": "sq. ft.",
+        "show_rating": true,
+        "card_button_label": "Add Sample",
+        "columns_mobile": "2",
         "button_label": "",
         "button_link": "",
         "button_style": "simple",
-        "margin_top": "m",
-        "margin_bottom": "m"
+        "margin_top": "l",
+        "margin_bottom": "l"
       }
     },
     "media-banner": {

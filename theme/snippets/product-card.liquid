@@ -10,6 +10,8 @@
   	- show_linked_products: {Boolean} Show the linked products options on the card. Default: false (optional)
   	- price_suffix: {String} Text shown after the price, e.g. "sq. ft.". Default: blank (optional)
   	- show_rating: {Boolean} Show the reviews.rating metafield next to the price. Default: false (optional)
+  	- card_button_label: {String} Always show an add to cart button with this label (disabled when sold out). Default: blank (optional)
+  	- sale_badge_format: {String} "percent_off" renders the sale badge as "-20%". Default: blank, theme setting (optional)
   	Usage:
   {% render 'product-card', show_vendor: section.settings.show_vendor %}
 {% endcomment %}
@@ -75,7 +77,8 @@
         media_size: media_size,
         media_fit: media_fit,
         columns_mobile: columns_mobile,
-        show_slide: show_slide
+        show_slide: show_slide,
+        sale_badge_format: sale_badge_format
       %}
     </div>
   </div>
@@ -103,7 +106,8 @@
           {% render 'product-card-quick-add',
             product_card_product: product_card_product,
             section_id: section_id,
-            show_color_count: show_color_count
+            show_color_count: show_color_count,
+            button_label: card_button_label
           %}
         </div>
         {%- if has_linked_products -%}

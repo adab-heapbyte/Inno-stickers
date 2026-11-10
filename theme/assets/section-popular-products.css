@@ -100,3 +100,412 @@
 .popular-products .card-wrapper .media > image {
   border-radius: var(--border-radius-media);
 }
+/* ==========================================================================
+   Catalog style (card_style: catalog)
+   Figma - desktop "explore catalog · 395" (1:1280), mobile "explore catalog · 396" (3:592).
+   Mobile first. Every rule is scoped to .popular-products--catalog so the
+   classic style (collection / lookbook pages) is not affected.
+   ========================================================================== */
+.popular-products--catalog {
+  --catalog-text: var(--color-foreground); /* Neutral/900 #0F0F0F */
+  --catalog-muted: 127, 133, 159; /* Neutral/500 #7F859F */
+  --catalog-card-bg: 244, 244, 244; /* Neutral/100 #F4F4F4 */
+  --catalog-sale: 128, 0, 32; /* Burgundy #800020 */
+  --catalog-badge-muted-bg: 226, 228, 233; /* Neutral/200 #E2E4E9 */
+  --catalog-primary: 42, 100, 137; /* Primary Teal #2A6489 */
+  --catalog-desc-mobile: 24, 24, 27; /* Neutral/800 #18181B */
+}
+
+/* Content width: 16px gutters on mobile, 160px of 1920 on desktop */
+.popular-products.popular-products--catalog .popular-products__container {
+  padding-right: 1.6rem;
+  padding-left: 1.6rem;
+}
+
+/* ---------- Heading ---------- */
+.popular-products--catalog .section-heading {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 2.4rem;
+}
+
+.popular-products--catalog .section-heading__heading {
+  max-width: none !important; /* base.css caps headings at 56rem with !important */
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.31;
+  letter-spacing: 0;
+  color: rgb(var(--catalog-text));
+}
+
+.popular-products--catalog .section-heading__heading + .section-heading__description {
+  margin-top: 0.4rem;
+}
+
+.popular-products--catalog .section-heading__description {
+  max-width: none;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--catalog-desc-mobile));
+}
+
+/* ---------- Grid: 2 columns, 24px gaps on mobile ---------- */
+.popular-products.popular-products--catalog .popular-products__wrapper {
+  gap: 2.4rem;
+}
+
+/* ---------- Product card ---------- */
+/* Picture: #F4F4F4, 4px radius, ratio 370 x 493 */
+.popular-products--catalog .card-wrapper .media {
+  border-radius: 0.4rem;
+  background-color: rgb(var(--catalog-card-bg));
+}
+
+/* !important: product-card-media sets padding-bottom inline */
+.popular-products--catalog .card__inner .media--portrait {
+  padding-bottom: 133.24% !important;
+}
+
+.popular-products.popular-products--catalog .collection-product-card .card-information {
+  padding: 1.2rem 0 0;
+}
+
+.popular-products--catalog .card-information__top {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.2rem;
+}
+
+.popular-products.popular-products--catalog .collection-product-card .card__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: rgb(var(--catalog-text));
+}
+
+.popular-products--catalog .card__title a {
+  line-height: 1.5;
+}
+
+.popular-products--catalog .card-wrapper .card__description {
+  display: none;
+}
+
+/* Badges: 8px from the corner on mobile, 12px on desktop */
+.popular-products.popular-products--catalog .card__information-top {
+  top: 0.8rem;
+  left: 0.8rem;
+  padding: 0;
+}
+
+.popular-products.popular-products--catalog .card__badge .badge {
+  padding: 0.2rem 0.4rem;
+  border: 0;
+  border-radius: 0.2rem;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.popular-products--catalog .card__badge .badge.badge--sale {
+  background-color: rgb(var(--catalog-sale));
+  color: rgb(255, 255, 255);
+  text-transform: none;
+}
+
+.popular-products--catalog .card__badge .badge.badge--soldout {
+  background-color: rgb(var(--catalog-badge-muted-bg));
+  color: rgb(var(--catalog-muted));
+  text-transform: uppercase;
+}
+
+/* ---------- Price row: price + suffix + compare-at, rating on the right ---------- */
+.popular-products--catalog .card__price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+.popular-products--catalog .card__price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* Flatten the theme price markup so price, suffix and compare-at share one row */
+.popular-products--catalog .card__price-wrap .price,
+.popular-products--catalog .card__price-wrap .price > dl,
+.popular-products--catalog .card__price-wrap .price--on-sale .price__sale {
+  display: contents;
+}
+
+.popular-products.popular-products--catalog .collection-product-card .price {
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.popular-products--catalog .card__price-wrap .price dd {
+  margin: 0;
+}
+
+.popular-products--catalog .card__price-wrap .price-item--regular,
+.popular-products--catalog .card__price-wrap .price-item--sale {
+  color: rgb(var(--catalog-text));
+}
+
+.popular-products--catalog .card__price-wrap .price--on-sale .price-item--sale {
+  color: rgb(var(--catalog-sale));
+}
+
+.popular-products--catalog .card__price-suffix {
+  order: 1;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: rgb(var(--catalog-muted));
+}
+
+/* Compare-at price: after the suffix, struck through */
+.popular-products--catalog .card__price-wrap .price--on-sale dd.price__compare {
+  order: 2;
+  margin: 0 0 0 0.2rem;
+}
+
+.popular-products--catalog .card__price-wrap .price--on-sale .price__compare .price-item--regular {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: rgb(var(--catalog-muted));
+  text-decoration: line-through;
+  text-decoration-color: rgb(var(--catalog-muted));
+}
+
+.popular-products--catalog .card__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex-shrink: 0;
+}
+
+/* 14px icon box; star scaled from the Figma 16px box (13.14 x 12.55) */
+.popular-products--catalog .card__rating-icon {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.popular-products--catalog .card__rating-icon img {
+  display: block;
+  width: 1.15rem;
+  height: 1.098rem;
+}
+
+.popular-products--catalog .card__rating-value {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: rgb(var(--catalog-text));
+}
+
+/* ---------- Add to cart button (Figma "Add Sample"), 12px below the info ---------- */
+.popular-products.popular-products--catalog .card-wrapper .product-parameters {
+  margin-top: 1.2rem;
+}
+
+.popular-products--catalog .card-wrapper .product-parameters > :not(.quick-add-block) {
+  display: none;
+}
+
+.popular-products.popular-products--catalog .card-wrapper .product-parameters .quick-add-block {
+  display: block;
+  width: 100%;
+  margin-top: 0;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popular-products--catalog .card__add-to-cart--labelled,
+.popular-products--catalog .card__add-to-cart--labelled .form {
+  display: block;
+  width: 100%;
+}
+
+.popular-products.popular-products--catalog .card__add-to-cart--labelled .card__link.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  min-height: 4rem;
+  padding: 0 1.4rem;
+  border: 0.1rem solid rgb(var(--catalog-primary));
+  border-radius: 0.4rem;
+  background: transparent;
+  color: rgb(var(--catalog-primary));
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  pointer-events: auto;
+  transition: background-color var(--duration-default);
+}
+
+.popular-products--catalog .card__add-to-cart--labelled .card__link.button:not([disabled]):hover {
+  background-color: rgba(var(--catalog-primary), 0.06);
+  color: rgb(var(--catalog-primary));
+}
+
+.popular-products--catalog .card__add-to-cart--labelled .card__link.button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.popular-products--catalog .card__add-to-cart--labelled .card__link span {
+  display: inline;
+}
+
+.popular-products--catalog .card__add-to-cart--labelled .card__link span::before,
+.popular-products--catalog .card__add-to-cart--labelled .card__link span::after {
+  content: none;
+}
+
+.popular-products--catalog .card__add-to-cart--labelled .sold-out-message.hidden,
+.popular-products--catalog .card__add-to-cart--labelled .loading-overlay__spinner.hidden {
+  display: none;
+}
+
+.popular-products--catalog .card__add-to-cart-icon {
+  display: block;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+/* ---------- Desktop ---------- */
+@media screen and (min-width: 990px) {
+  .popular-products.popular-products--catalog .popular-products__container {
+    padding-right: max(2.4rem, 8.33vw);
+    padding-left: max(2.4rem, 8.33vw);
+  }
+
+  .popular-products--catalog .section-heading {
+    margin-bottom: 4rem;
+  }
+
+  .popular-products--catalog .section-heading__heading {
+    font-size: 4rem;
+    line-height: 1.2;
+  }
+
+  .popular-products--catalog .section-heading__heading + .section-heading__description {
+    margin-top: 1.2rem;
+  }
+
+  .popular-products--catalog .section-heading__description {
+    font-size: 1.8rem;
+    color: rgb(var(--color-foreground-secondary)); /* Neutral/600 #3C404F */
+  }
+
+  .popular-products.popular-products--catalog .popular-products__wrapper {
+    gap: 4rem;
+  }
+
+  .popular-products.popular-products--catalog .collection-product-card .card__title {
+    -webkit-line-clamp: 1;
+    font-size: 1.8rem;
+  }
+
+  .popular-products.popular-products--catalog .card__information-top {
+    top: 1.2rem;
+    left: 1.2rem;
+  }
+
+  .popular-products.popular-products--catalog .collection-product-card .badge {
+    font-size: 1.4rem;
+  }
+
+  .popular-products.popular-products--catalog .collection-product-card .price {
+    font-size: 1.6rem;
+  }
+
+  .popular-products--catalog .card__price-wrap {
+    gap: 0.4rem;
+  }
+
+  .popular-products--catalog .card__price-suffix {
+    font-size: 1.6rem;
+  }
+
+  .popular-products--catalog .card__price-wrap .price--on-sale dd.price__compare {
+    margin-left: 0.4rem;
+  }
+
+  .popular-products--catalog .card__price-wrap .price--on-sale .price__compare .price-item--regular {
+    font-size: 1.4rem;
+  }
+
+  .popular-products--catalog .card__rating {
+    gap: 0.6rem;
+  }
+
+  .popular-products--catalog .card__rating-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .popular-products--catalog .card__rating-icon img {
+    width: 1.314rem;
+    height: 1.255rem;
+  }
+
+  .popular-products--catalog .card__rating-value {
+    font-size: 1.6rem;
+  }
+}
+
+/* ---------- Inset product photo (Figma "Picture") ----------
+   Square photo centred in the grey box (no shadow).
+   Desktop 300 of 370 (81.08%), mobile 109 of 168.5 (64.69%).
+   `translate` is used so the theme hover scale (transform) still composes. */
+.popular-products--catalog .card__inner .media .swiper-slide.media {
+  padding-bottom: 0 !important;
+  height: 100%;
+}
+
+.popular-products--catalog .card__inner .media img {
+  top: 50% !important;
+  left: 50% !important;
+  width: 64.69% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  translate: -50% -50%;
+  object-fit: cover;
+}
+
+@media screen and (min-width: 990px) {
+  .popular-products--catalog .card__inner .media img {
+    width: 81.08% !important;
+  }
+}
