@@ -496,6 +496,28 @@
         "margin_bottom": "l"
       }
     },
+    "newsletter_G8QjCT": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "newsletter_style": "banner",
+        "button_label": "Sign up",
+        "note_text": "Sample offers and fresh ideas, straight to your inbox.",
+        "color_scheme": "background-2",
+        "aspect_ratio": "medium",
+        "heading": "Own your interior design.",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "newsletter_text": "&nbsp;Get updates on free sample offers, new finishes and ideas for your next project.&nbsp;",
+        "text_align": "center",
+        "image": "shopify://shop_images/78dffb12d90cc184c8cec5ceb7d6d64d7d1f473a.jpg",
+        "overlay_opacity": 0.5,
+        "show_gdpr_checkbox": false,
+        "gdpr_text": "I agree to receive marketing emails. Read our <a href=\"/policies/privacy-policy\">privacy policy</a>.",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
     "multicolumn": {
       "type": "multicolumn",
       "blocks": {
@@ -1255,6 +1277,9 @@
       "type": "newsletter",
       "disabled": true,
       "settings": {
+        "newsletter_style": "default",
+        "button_label": "",
+        "note_text": "",
         "color_scheme": "background-2",
         "aspect_ratio": "medium",
         "heading": "Subscribe to our Newsletter",
@@ -1436,28 +1461,6 @@
         "width": "medium",
         "margin_top": "m",
         "margin_bottom": "m"
-      }
-    },
-    "newsletter_G8QjCT": {
-      "type": "newsletter",
-      "name": "Newsletter",
-      "settings": {
-        "newsletter_style": "banner",
-        "button_label": "Sign up",
-        "note_text": "Sample offers and fresh ideas, straight to your inbox.",
-        "color_scheme": "background-2",
-        "aspect_ratio": "medium",
-        "heading": "Own your interior design.",
-        "heading_size": "h2",
-        "heading_tag": "h2",
-        "newsletter_text": "Get updates on free sample offers, new finishes and ideas for your next project.",
-        "text_align": "center",
-        "image": "shopify://shop_images/MZMLG-WAL-16-6.jpg",
-        "overlay_opacity": 0.5,
-        "show_gdpr_checkbox": false,
-        "gdpr_text": "I agree to receive marketing emails. Read our <a href=\"/policies/privacy-policy\">privacy policy</a>.",
-        "margin_top": "no-indent",
-        "margin_bottom": "no-indent"
       }
     },
     "contact_form_7zywTk": {
