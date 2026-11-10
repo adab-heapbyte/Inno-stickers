@@ -1,0 +1,144 @@
+/* ==========================================================================
+   Header - "Minimal" style (header_style: minimal)
+   Figma: desktop "Navigation" (4:828), 1920 x 66.
+   Used with the "Center logo with burger menu" layout. Desktop only (990px+);
+   the mobile header keeps the theme layout.
+   ========================================================================== */
+@media screen and (min-width: 990px) {
+  /* Bar: 66px, 8px / 64px padding, 12px between the three areas */
+  .header.header--style-minimal {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    max-width: none;
+    min-height: 6.6rem;
+    padding: 0.8rem 6.4rem;
+    background-color: rgb(255, 255, 255);
+  }
+
+  .header--style-minimal .menu_left_block,
+  .header--style-minimal .header__column,
+  .header--style-minimal burger-menu {
+    display: flex;
+    flex: 1 1 0;
+    align-items: center;
+    min-width: 0;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header--style-minimal .header__column {
+    justify-content: flex-end;
+  }
+
+  .header--style-minimal .header__inline-menu {
+    display: none;
+  }
+
+  /* Logo: centred, 93px wide */
+  .header--style-minimal .header__heading,
+  .header--style-minimal .header__heading-link {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header--style-minimal .header__heading-logo {
+    width: 9.3rem;
+    max-width: 9.3rem;
+    height: auto;
+  }
+
+  /* Menu button: Figma 24px list icon only */
+  .header.header--style-minimal .burger-menu__toggle--open-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+
+  .header--style-minimal .burger-menu__toggle--open-btn > * {
+    display: none;
+  }
+
+  .header--style-minimal .burger-menu__toggle--open-btn::before {
+    content: "";
+    display: block;
+    width: 2.4rem;
+    height: 2.4rem;
+    background: url("icon-header-list.svg") center / 2.4rem 2.4rem no-repeat;
+  }
+
+  /* Search icon + "Cart (0)" in one row, 12px apart */
+  .header.header--style-minimal .header__icons.header__icons-reverse {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: auto;
+    gap: 1.2rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header.header--style-minimal .header__icons.header__icons-reverse > * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .header--style-minimal .header__icon--search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header--style-minimal .header__icon--search > svg {
+    display: none;
+  }
+
+  .header--style-minimal .header__icon--search::before {
+    content: "";
+    display: block;
+    width: 2.4rem;
+    height: 2.4rem;
+    background: url("icon-header-search.svg") center / 2.4rem 2.4rem no-repeat;
+  }
+
+  .header--style-minimal .header__icon--cart,
+  .header--style-minimal .header__cart--text {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-body-family);
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    letter-spacing: 0;
+    text-transform: none;
+    color: rgb(15, 15, 15); /* Neutral/900 #0F0F0F */
+  }
+
+  .header--style-minimal .header__cart--text .text-cart,
+  .header--style-minimal .header__cart--text .cart-count-bubble {
+    font: inherit;
+    color: inherit;
+    line-height: 1.5;
+  }
+}

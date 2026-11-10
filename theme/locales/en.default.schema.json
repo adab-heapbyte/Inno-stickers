@@ -3429,6 +3429,16 @@
     "header": {
       "name": "Header",
       "settings": {
+        "header_style": {
+          "label": "Style",
+          "info": "Minimal: menu icon, centred logo, search icon and cart text (use with the Center logo with burger menu layout).",
+          "options__1": {
+            "label": "Default"
+          },
+          "options__2": {
+            "label": "Minimal"
+          }
+        },
         "header-group": {
           "label": "Header Group"
         },

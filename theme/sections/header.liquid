@@ -1,4 +1,7 @@
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.header_style == 'minimal' -%}
+  {{ 'section-header-minimal.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 {% if settings.show_shipping %}
   {{ 'component-cart-shipping.css' | asset_url | stylesheet_tag }}
 {% endif %}
@@ -120,7 +123,7 @@
     data-background-color-scheme="{{ header_background_color_scheme }}"
     class="header-wrapper {% if section.settings.enable_border %}header--border{% endif %}"
   >
-    <header class=" {% if section.settings.sticky_header_type != 'none' and section.settings.header_type == 'center-logo-burger' %} header-always {% endif %} header header--{{ section.settings.header_type }} {% if section.settings.header_type == 'center-logo-burger' %}header--center-logo{% endif %} {% if section.settings.menu != blank %}header--has-menu{% endif %} {% if section.settings.header_animation_type == 'slide' %} header-animation-slide {% endif %} container">
+    <header class=" {% if section.settings.sticky_header_type != 'none' and section.settings.header_type == 'center-logo-burger' %} header-always {% endif %} header header--{{ section.settings.header_type }} {% if section.settings.header_type == 'center-logo-burger' %}header--center-logo{% endif %} {% if section.settings.menu != blank %}header--has-menu{% endif %} {% if section.settings.header_animation_type == 'slide' %} header-animation-slide {% endif %}{% if section.settings.header_style == 'minimal' %} header--style-minimal{% endif %} container">
       {% if section.settings.header_type == 'left-logo' %}
         {% render 'header-left-logo', header_background_color_scheme: header_background_color_scheme %}
       {% elsif section.settings.header_type == 'center-logo' %}
@@ -344,6 +347,17 @@
   "max_blocks": 6,
   "class": "shopify-section-header",
   "settings": [
+    {
+      "type": "select",
+      "id": "header_style",
+      "label": "t:sections.header.settings.header_style.label",
+      "info": "t:sections.header.settings.header_style.info",
+      "options": [
+        { "value": "default", "label": "t:sections.header.settings.header_style.options__1.label" },
+        { "value": "minimal", "label": "t:sections.header.settings.header_style.options__2.label" }
+      ],
+      "default": "default"
+    },
     {
       "type": "color_scheme",
       "id": "background_color_scheme",
