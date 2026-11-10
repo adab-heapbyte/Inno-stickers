@@ -29,7 +29,9 @@
   endif
 %}
 
-<div class="multicolumn background color-background-1 section-{{ section.id }}-padding multicolumn--heading-align-{{ section.settings.heading_alignment }} multicolumn--heading-width-{{ section.settings.heading_content_width }}">
+<div class="multicolumn multicolumn--layout-{{ layout_type }} background color-background-1 section-{{ section.id }}-padding multicolumn--heading-align-{{ section.settings.heading_alignment }} multicolumn--heading-width-{{ section.settings.heading_content_width }}"
+  {%- if layout_type == 'badges' %} style="--badge-columns: {{ section.blocks.size | at_least: 1 | at_most: 4 }};"{% endif %}
+>
   <div class="container">
     {%- if section.settings.heading != blank -%}
       {% render 'section-header', section_heading_tag: section.settings.heading_tag %}
@@ -114,7 +116,30 @@
                 style="background-color: {{ block.settings.background_color }};"
               {%- endif -%}
             >
-              {%- if video_overlay -%}
+              {%- if layout_type == 'badges' -%}
+                {%- comment -%} Badges layout: small icon (uploaded image or built-in icon) {%- endcomment -%}
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 112
+                    | image_tag:
+                      class: 'multicolumn-card__badge-icon',
+                      loading: 'lazy',
+                      width: 56,
+                      height: 56,
+                      alt: ''
+                  }}
+                {%- elsif block.settings.badge_icon != blank and block.settings.badge_icon != 'none' -%}
+                  <img
+                    class="multicolumn-card__badge-icon multicolumn-card__badge-icon--{{ block.settings.badge_icon }}"
+                    src="{{ block.settings.badge_icon | prepend: 'icon-badge-' | append: '.svg' | asset_url }}"
+                    alt=""
+                    width="56"
+                    height="56"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              {%- elsif video_overlay -%}
                 {%- if block.settings.image != blank -%}
                   {%- assign height = block.settings.image.height -%}
                   {%- assign width = block.settings.image.width -%}
@@ -571,6 +596,10 @@
         {
           "value": "overlay",
           "label": "t:sections.multicolumn.settings.layout_type.options__2.label"
+        },
+        {
+          "value": "badges",
+          "label": "t:sections.multicolumn.settings.layout_type.options__3.label"
         }
       ],
       "default": "standard",
@@ -803,6 +832,31 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:sections.all.image.label"
+        },
+        {
+          "type": "select",
+          "id": "badge_icon",
+          "label": "t:sections.multicolumn.blocks.column.settings.badge_icon.label",
+          "info": "t:sections.multicolumn.blocks.column.settings.badge_icon.info",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.multicolumn.blocks.column.settings.badge_icon.options__1.label"
+            },
+            {
+              "value": "free-shipping",
+              "label": "t:sections.multicolumn.blocks.column.settings.badge_icon.options__2.label"
+            },
+            {
+              "value": "returns",
+              "label": "t:sections.multicolumn.blocks.column.settings.badge_icon.options__3.label"
+            },
+            {
+              "value": "warranty",
+              "label": "t:sections.multicolumn.blocks.column.settings.badge_icon.options__4.label"
+            }
+          ],
+          "default": "none"
         },
         {
           "type": "range",

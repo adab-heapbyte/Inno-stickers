@@ -5954,6 +5954,9 @@
           },
           "options__2": {
             "label": "Overlay"
+          },
+          "options__3": {
+            "label": "Badges"
           }
         },
         "swiper": {
@@ -6005,6 +6008,22 @@
         "column": {
           "name": "Column",
           "settings": {
+            "badge_icon": {
+              "label": "Badge icon",
+              "info": "Badges layout only. An uploaded image replaces this icon.",
+              "options__1": {
+                "label": "None"
+              },
+              "options__2": {
+                "label": "Free shipping"
+              },
+              "options__3": {
+                "label": "Returns"
+              },
+              "options__4": {
+                "label": "Warranty"
+              }
+            },
             "full_link": {
               "label": "Overlay link"
             },

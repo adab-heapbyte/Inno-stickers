@@ -242,6 +242,59 @@
         "margin_bottom": "l"
       }
     },
+    "multicolumn_trust_badges": {
+      "type": "multicolumn",
+      "blocks": {
+        "badge_shipping": {
+          "type": "column",
+          "settings": {
+            "badge_icon": "free-shipping",
+            "heading": "Free U.S. shipping",
+            "description": "<p>On orders within the contiguous United States.</p>"
+          }
+        },
+        "badge_returns": {
+          "type": "column",
+          "settings": {
+            "badge_icon": "returns",
+            "heading": "30-day returns",
+            "description": "<p>For eligible unused items in original packaging.</p>"
+          }
+        },
+        "badge_warranty": {
+          "type": "column",
+          "settings": {
+            "badge_icon": "warranty",
+            "heading": "3-year warranty",
+            "description": "<p>Coverage against manufacturing defects.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "badge_shipping",
+        "badge_returns",
+        "badge_warranty"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "subheading": "",
+        "heading": "Shop with confidence.",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "description": "<p>Start with the essentials for peel-and-stick acoustic panels.</p>",
+        "heading_alignment": "center",
+        "heading_content_width": "full",
+        "enable_full_screen": true,
+        "swiper": false,
+        "enable_scroll": false,
+        "layout_type": "badges",
+        "multicolumn_to_show": 3,
+        "button_label": "",
+        "button_link": "",
+        "margin_top": "l",
+        "margin_bottom": "l"
+      }
+    },
     "sample_kit_ordering": {
       "type": "sample-kit",
       "blocks": {
@@ -1362,6 +1415,7 @@
     "product-slider",
     "step_cards_installation",
     "sample_kit_ordering",
+    "multicolumn_trust_badges",
     "multicolumn",
     "image-with-text",
     "popular-products1",

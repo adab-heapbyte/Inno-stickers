@@ -997,3 +997,230 @@
 .multicolumn--heading-width-full .section-heading p {
   max-width: 100%;
 }
+/* ==========================================================================
+   Badges layout (layout_type: badges) - trust badges
+   Figma - desktop "trust badges · 1440" (14:1307), mobile "trust badges · 393" (14:1346).
+   Mobile first; desktop from 990px. Scoped to .multicolumn--layout-badges so the
+   standard and overlay layouts are not affected.
+   ========================================================================== */
+.multicolumn--layout-badges {
+  --badge-text: var(--color-foreground); /* Neutral/900 #0F0F0F */
+  --badge-secondary: var(--color-foreground-secondary); /* Neutral/600 #3C404F */
+  --badge-title: 51, 51, 51; /* Charcoal #333333 */
+}
+
+.multicolumn--layout-badges .container {
+  padding-right: 1.6rem;
+  padding-left: 1.6rem;
+}
+
+/* ---------- Heading: left on mobile, centred on desktop ---------- */
+.multicolumn--layout-badges .section-heading {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 2.4rem;
+  text-align: left;
+}
+
+/* Left on mobile: the theme heading-align-center also centres the inner block */
+.multicolumn--layout-badges .section-heading__left,
+.multicolumn--layout-badges .section-heading__left > * {
+  width: 100%;
+  margin-inline: 0;
+  text-align: left;
+}
+
+.multicolumn--layout-badges .section-heading__heading {
+  max-width: none !important; /* base.css caps headings at 56rem with !important */
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: rgb(var(--badge-text));
+}
+
+/* The shared section-header wraps the richtext description in a <p>, so the browser
+   splits it into an empty .section-heading__description and a sibling <p> with the text.
+   Style every paragraph in the heading block and hide the empty ones. */
+.multicolumn--layout-badges .section-heading__left > p:empty {
+  display: none;
+}
+
+.multicolumn--layout-badges .section-heading__heading ~ p:not(:empty) {
+  margin-top: 0.8rem;
+}
+
+.multicolumn--layout-badges .section-heading__left > p,
+.multicolumn--layout-badges .section-heading__description {
+  max-width: none;
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--badge-secondary));
+}
+
+.multicolumn--layout-badges .section-heading__description p {
+  margin: 0;
+}
+
+/* ---------- Badges: stacked on mobile, 32px apart ---------- */
+.multicolumn--layout-badges .multicolumn__wrapper {
+  padding-right: 1.6rem;
+  padding-left: 1.6rem;
+}
+
+.multicolumn--layout-badges .multicolumn-list {
+  display: block;
+}
+
+.multicolumn--layout-badges .multicolumn-list__wrapper.multicolumn-list__wrapper--badges {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3.2rem;
+  max-width: 109.3rem;
+  margin: 0 auto;
+  transform: none !important;
+}
+
+.multicolumn--layout-badges .multicolumn-card.multicolumn-list__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100% !important;
+  height: auto;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0;
+  overflow: visible;
+  background: transparent;
+  text-align: center;
+}
+
+/* Icon: 40px box on mobile, 56px on desktop; icon centred, own aspect ratio kept */
+.multicolumn--layout-badges .multicolumn-card__image-wrapper {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.multicolumn--layout-badges .multicolumn-card__image-wrapper img.multicolumn-card__badge-icon {
+  position: static;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  transform: none !important;
+  transition: none;
+}
+
+.multicolumn--layout-badges .multicolumn-card--standard-overlay,
+.multicolumn--layout-badges .multicolumn-card__image-wrapper .multicolumn-card__link {
+  display: none;
+}
+
+/* Text: always visible (the theme fades it out on hover) */
+.multicolumn--layout-badges .multicolumn-card .multicolumn-card__info,
+.multicolumn--layout-badges .multicolumn-card:hover .multicolumn-card__info {
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  opacity: 1;
+  text-align: center;
+}
+
+.multicolumn--layout-badges .multicolumn-card__heading {
+  max-width: none;
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: rgb(var(--badge-title));
+}
+
+.multicolumn--layout-badges .multicolumn-card__description,
+.multicolumn--layout-badges .multicolumn-card__description p {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--badge-text));
+}
+
+.multicolumn--layout-badges .multicolumn-card__description {
+  width: 100%;
+  opacity: 0.6;
+}
+
+/* ---------- Desktop ---------- */
+@media screen and (min-width: 990px) {
+  .multicolumn--layout-badges .container,
+  .multicolumn--layout-badges .multicolumn__wrapper {
+    padding-right: max(2.4rem, 8.33vw);
+    padding-left: max(2.4rem, 8.33vw);
+  }
+
+  .multicolumn--layout-badges .section-heading {
+    align-items: center;
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .multicolumn--layout-badges .section-heading__left,
+  .multicolumn--layout-badges .section-heading__left > * {
+    text-align: center;
+  }
+
+  .multicolumn--layout-badges .section-heading__heading {
+    font-size: 4rem;
+    line-height: 1.2;
+  }
+
+  .multicolumn--layout-badges .section-heading__heading ~ p:not(:empty) {
+    margin-top: 1.2rem;
+  }
+
+  .multicolumn--layout-badges .section-heading__left > p,
+  .multicolumn--layout-badges .section-heading__description {
+    font-size: 1.8rem;
+  }
+
+  /* 3 badges, 32px gaps, 1093px wide in total, centred */
+  .multicolumn--layout-badges .multicolumn-list__wrapper.multicolumn-list__wrapper--badges {
+    grid-template-columns: repeat(var(--badge-columns, 3), minmax(0, 1fr));
+  }
+
+  .multicolumn--layout-badges .multicolumn-card.multicolumn-list__item {
+    gap: 1.2rem;
+  }
+
+  .multicolumn--layout-badges .multicolumn-card__image-wrapper {
+    width: 5.6rem;
+    height: 5.6rem;
+  }
+
+  .multicolumn--layout-badges .multicolumn-card .multicolumn-card__info,
+  .multicolumn--layout-badges .multicolumn-card:hover .multicolumn-card__info {
+    gap: 0.8rem;
+  }
+
+  .multicolumn--layout-badges .multicolumn-card__heading,
+  .multicolumn--layout-badges .multicolumn-card__description,
+  .multicolumn--layout-badges .multicolumn-card__description p {
+    font-size: 1.8rem;
+  }
+}
