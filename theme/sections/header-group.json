@@ -81,7 +81,7 @@
         "burger_menu_main": {
           "type": "burger_menu",
           "settings": {
-            "main_menu": "main-menu"
+            "main_menu": "explore-catalog"
           }
         }
       },

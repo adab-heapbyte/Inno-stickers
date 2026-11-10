@@ -1,0 +1,118 @@
+{% comment %}
+  Burger menu content for the "Minimal" header style (Figma 5:937 "explore catalog").
+  Top-level links with children are collapsible groups (native <details>),
+  links without children are plain bold rows, with a divider between rows.
+  Children of a group whose title contains "color" get a 28px swatch.
+
+  Accepts:
+  - menu: {Object} link list
+  - open_count: {Number} how many groups start expanded (default 2, as in Figma)
+
+  Usage:
+  {% render 'burger-menu-accordion', menu: burger_block.settings.main_menu %}
+{% endcomment %}
+{%- liquid
+  assign open_count = open_count | default: 2
+  assign swatch_names = 'beige,black,blue,brown,charcoal,gold,gray,green,multicolor,natural-oak,orange,red,walnut,white' | split: ','
+  assign caret = 'icon-menu-caret-down.svg' | asset_url
+  assign groups_seen = 0
+-%}
+{%- if menu.links != blank -%}
+  <ul class="burger-accordion" role="list">
+    {%- for link in menu.links -%}
+      {%- unless forloop.first -%}
+        <li class="burger-accordion__divider" aria-hidden="true"></li>
+      {%- endunless -%}
+      <li class="burger-accordion__item">
+        {%- if link.links != blank -%}
+          {%- liquid
+            assign groups_seen = groups_seen | plus: 1
+            assign link_handle = link.title | handle
+            assign is_color_group = false
+            if link_handle contains 'color' or link_handle contains 'colour'
+              assign is_color_group = true
+            endif
+          -%}
+          <details class="burger-accordion__group"{% if groups_seen <= open_count %} open{% endif %}>
+            <summary class="burger-accordion__row burger-accordion__summary">
+              <span class="burger-accordion__title">{{ link.title | escape }}</span>
+              <img
+                class="burger-accordion__caret"
+                src="{{ caret }}"
+                alt=""
+                width="20"
+                height="20"
+                loading="lazy"
+              >
+            </summary>
+            <ul class="burger-accordion__children" role="list">
+              {%- for childlink in link.links -%}
+                <li>
+                  <a
+                    href="{{ childlink.url }}"
+                    class="burger-accordion__child{% if is_color_group %} burger-accordion__child--swatch{% endif %}"
+                    {% if childlink.current %}
+                      aria-current="page"
+                    {% endif %}
+                    {% if settings.links_blank and childlink.type == 'http_link' and childlink.url contains '://' %}
+                      target="_blank"
+                    {% endif %}
+                  >
+                    {%- if is_color_group -%}
+                      {%- liquid
+                        assign swatch = childlink.title | handle | replace: 'grey', 'gray'
+                        assign swatch_image = blank
+                        if swatch_names contains swatch
+                          assign swatch_file = 'swatch-' | append: swatch | append: '.png'
+                          assign swatch_image = swatch_file | asset_url
+                        elsif childlink.type == 'collection_link' and childlink.object.featured_image != blank
+                          assign swatch_image = childlink.object.featured_image | image_url: width: 56
+                        endif
+                      -%}
+                      <span class="burger-accordion__swatch" aria-hidden="true">
+                        {%- if swatch_image != blank -%}
+                          <img src="{{ swatch_image }}" alt="" width="28" height="28" loading="lazy">
+                        {%- endif -%}
+                      </span>
+                    {%- endif -%}
+                    <span>{{ childlink.title | escape }}</span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </details>
+        {%- else -%}
+          <a
+            href="{{ link.url }}"
+            class="burger-accordion__row burger-accordion__title"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+            {% if settings.links_blank and link.type == 'http_link' and link.url contains '://' %}
+              target="_blank"
+            {% endif %}
+          >
+            {{- link.title | escape -}}
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+  <script>
+    // In the mobile drawer the theme's MenuDrawer traps Tab focus inside any
+    // opened <details>. Accordion groups are not sub-panels, so move the trap
+    // back to the whole drawer after a group is toggled.
+    if (!window.burgerAccordionFocusFix) {
+      window.burgerAccordionFocusFix = true;
+      document.addEventListener('click', (event) => {
+        const summary = event.target.closest('.burger-accordion__summary');
+        const drawer = summary && summary.closest('header-drawer');
+        if (!drawer) return;
+        setTimeout(() => {
+          const main = drawer.querySelector('details');
+          if (typeof trapFocus === 'function' && main) trapFocus(main, summary);
+        });
+      });
+    }
+  </script>
+{%- endif -%}

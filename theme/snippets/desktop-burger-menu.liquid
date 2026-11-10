@@ -43,6 +43,10 @@
             </button>
           </div>
 
+          {%- if section.settings.header_style == 'minimal' -%}
+            {% render 'burger-menu-accordion', menu: burger_block.settings.main_menu %}
+        </div>
+          {%- else -%}
           <ul class="burger-menu__list" role="list">
             {% if burger_block.settings.main_menu.links != blank %}
               {% for item in burger_block.settings.main_menu.links %}
@@ -629,6 +633,7 @@
             {% render 'color-scheme' %}
           {%- endif -%}
         </div>
+          {%- endif -%}
       </div>
     </div>
   </burger-menu>

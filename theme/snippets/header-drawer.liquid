@@ -28,6 +28,9 @@
       <div class="menu-drawer__inner-container">
         <div class="menu-drawer__navigation-container">
           <nav class="menu-drawer__navigation">
+            {%- if section.settings.header_style == 'minimal' -%}
+              {% render 'burger-menu-accordion', menu: burger_block.settings.main_menu %}
+            {%- else -%}
             <ul class="menu-drawer__menu list-menu" role="list">
               {%- for link in section.settings.menu.links -%}
                 {% liquid
@@ -1157,6 +1160,7 @@
                 {% endfor %}
               </ul>
             {% endif %}
+            {%- endif -%}
           </nav>
 
           <div class="menu-drawer__utility-links {% if customer %} menu-drawer__utility-links-customer {% endif %}">
