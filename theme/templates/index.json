@@ -15,19 +15,19 @@
         "slideshow-item": {
           "type": "slideshow-item",
           "settings": {
-            "image": "shopify://shop_images/PSFT-WDCS-12-6.jpg",
+            "image": "shopify://shop_images/82f9db12d731929cfe6569ee3d0aa95734781d3e.png",
             "overlay_opacity": 0.1,
             "show_video": false,
             "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
             "description_video": "",
             "heading": "Functional Storage Solutions in Solid Wood",
             "heading_tag": "h2",
-            "description": "<p>Simple, functional designs that make your<br>home feel open and organized. Less clutter, more comfort.</p>",
+            "description": "<p>Simple, functional designs that make your home feel open and organized. Less clutter, more comfort.</p>",
             "tab_subheading": "",
             "tab_heading": "Minimal Interior",
             "tab_heading_tag": "p",
             "button_label": "Shop Acoustic Panels",
-            "button_link": "",
+            "button_link": "shopify://collections/acoustic-wall-paneling",
             "button_style": "tertiary",
             "enable_fullscreen_link": true
           }
@@ -35,7 +35,7 @@
         "slideshow_item_TcQxkG": {
           "type": "slideshow-item",
           "settings": {
-            "image": "shopify://shop_images/PSFT-WDC-12-8.jpg",
+            "image": "shopify://shop_images/ba3e343eaebfbdf420dee48ab6071a4d1a3e2232.jpg",
             "overlay_opacity": 0.2,
             "show_video": false,
             "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
@@ -47,47 +47,7 @@
             "tab_heading": "Highlight Your Best",
             "tab_heading_tag": "p",
             "button_label": "View More",
-            "button_link": "",
-            "button_style": "tertiary",
-            "enable_fullscreen_link": true
-          }
-        },
-        "slideshow-item1": {
-          "type": "slideshow-item",
-          "settings": {
-            "image": "shopify://shop_images/PSFT-WDH-12-10.jpg",
-            "overlay_opacity": 0.1,
-            "show_video": false,
-            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-            "description_video": "",
-            "heading": "Comfortable Outdoor Furniture for Gardening and Relaxing",
-            "heading_tag": "h2",
-            "description": "<p>Ideal for patios, balconies, and garden areas—made for daily use, light gardening, and unwinding outdoors.</p>",
-            "tab_subheading": "",
-            "tab_heading": "Quiet Ground",
-            "tab_heading_tag": "p",
-            "button_label": "Shop Collection",
-            "button_link": "",
-            "button_style": "tertiary",
-            "enable_fullscreen_link": true
-          }
-        },
-        "slideshow-item2": {
-          "type": "slideshow-item",
-          "settings": {
-            "image": "shopify://shop_images/PSFT-WDH-12-8.jpg",
-            "overlay_opacity": 0.3,
-            "show_video": false,
-            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-            "description_video": "",
-            "heading": "Handcrafted Oak and Walnut Furniture Pieces",
-            "heading_tag": "h2",
-            "description": "<p>Thoughtfully selected decor pieces that bring warmth, personality, and style to any room in your home.</p>",
-            "tab_subheading": "",
-            "tab_heading": "Home Decor",
-            "tab_heading_tag": "p",
-            "button_label": "Shop Collection",
-            "button_link": "",
+            "button_link": "shopify://collections",
             "button_style": "tertiary",
             "enable_fullscreen_link": true
           }
@@ -95,9 +55,7 @@
       },
       "block_order": [
         "slideshow-item",
-        "slideshow_item_TcQxkG",
-        "slideshow-item1",
-        "slideshow-item2"
+        "slideshow_item_TcQxkG"
       ],
       "settings": {
         "header_overlay": false,
