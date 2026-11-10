@@ -11,6 +11,23 @@
   "type": "header",
   "name": "t:sections.header.settings.header-group.label",
   "sections": {
+    "announcement_bar_XQbB3L": {
+      "type": "announcement-bar",
+      "name": "t:sections.announcement-bar.name",
+      "settings": {
+        "height": 40,
+        "height_mobile": 40,
+        "color_scheme": "background-2",
+        "background_color": "",
+        "show_close_button": false,
+        "text_align": "center",
+        "text": "&nbsp;✌️Announcement Bar&nbsp;",
+        "enable_ticker": false,
+        "ticker_speed": 5,
+        "ticker_pause_hover": true,
+        "ticker_direction": "left_to_right"
+      }
+    },
     "header": {
       "type": "header",
       "blocks": {
@@ -97,6 +114,7 @@
     }
   },
   "order": [
+    "announcement_bar_XQbB3L",
     "header"
   ]
 }
