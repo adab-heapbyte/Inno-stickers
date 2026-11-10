@@ -73,47 +73,6 @@
         "margin_bottom": "no-indent"
       }
     },
-    "step_cards_installation": {
-      "type": "step-cards",
-      "blocks": {
-        "step_prep": {
-          "type": "step",
-          "settings": {
-            "title": "Prep your wall",
-            "text": "Clean, smooth, dry, primed surface."
-          }
-        },
-        "step_measure": {
-          "type": "step",
-          "settings": {
-            "title": "Measure & trim",
-            "text": "Plan your layout and trim panels to fit where needed."
-          }
-        },
-        "step_peel": {
-          "type": "step",
-          "settings": {
-            "title": "Peel & press",
-            "text": "Remove the backing, align your panel and press firmly into place."
-          }
-        }
-      },
-      "block_order": [
-        "step_prep",
-        "step_measure",
-        "step_peel"
-      ],
-      "settings": {
-        "color_scheme": "background-1",
-        "heading": "A new look, step by step.",
-        "heading_tag": "h2",
-        "description": "Start with the essentials for peel-and-stick acoustic panels.",
-        "button_label": "Shop Peel n’Stick Products",
-        "button_link": "shopify://collections/all",
-        "margin_top": "l",
-        "margin_bottom": "l"
-      }
-    },
     "popular-products": {
       "type": "popular-products",
       "settings": {
@@ -237,6 +196,50 @@
         "show_rating": true,
         "margin_top": "no-indent",
         "margin_bottom": "no-indent"
+      }
+    },
+    "step_cards_installation": {
+      "type": "step-cards",
+      "blocks": {
+        "step_prep": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/Group_2.png",
+            "title": "Prep your wall",
+            "text": "Clean, smooth, dry, primed surface."
+          }
+        },
+        "step_measure": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/Group_3.png",
+            "title": "Measure & trim",
+            "text": "Plan your layout and trim panels to fit where needed."
+          }
+        },
+        "step_peel": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/Group_4.png",
+            "title": "Peel & press",
+            "text": "Remove the backing, align your panel and press firmly into place."
+          }
+        }
+      },
+      "block_order": [
+        "step_prep",
+        "step_measure",
+        "step_peel"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "heading": "A new look, step by step.",
+        "heading_tag": "h2",
+        "description": "Start with the essentials for peel-and-stick acoustic panels.",
+        "button_label": "Shop Peel n’Stick Products",
+        "button_link": "shopify://collections/all",
+        "margin_top": "l",
+        "margin_bottom": "l"
       }
     },
     "multicolumn": {
