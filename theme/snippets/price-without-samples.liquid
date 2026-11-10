@@ -1,0 +1,83 @@
+{% doc %}
+  Renders a product price like the `price` snippet, but ignores "Sample" variants
+  (variants with an option value equal to "Sample", e.g. Size: Sample).
+  Used by catalog-style product cards so a cheap sample does not turn the card
+  price into a range ("$6.99 - $69.99"). Shows the lowest non-sample price and,
+  when that variant is discounted, its compare-at price.
+  Falls back to the regular `price` snippet when a product only has sample variants.
+
+  Markup and classes match `price` so existing price styles apply.
+
+  @param {object} product - Product Liquid object
+
+  @example
+  {% render 'price-without-samples', product: product %}
+{% enddoc %}
+
+{%- liquid
+  assign main_variant = nil
+  for variant in product.variants
+    assign is_sample = false
+    for option_value in variant.options
+      assign option_value_normalized = option_value | strip | downcase
+      if option_value_normalized == 'sample'
+        assign is_sample = true
+      endif
+    endfor
+    unless is_sample
+      if main_variant == nil or variant.price < main_variant.price
+        assign main_variant = variant
+      endif
+    endunless
+  endfor
+-%}
+
+{%- if main_variant == nil -%}
+  {% render 'price', product: product, price_class: '' %}
+{%- else -%}
+  {%- liquid
+    assign main_price = main_variant.price
+    assign main_compare = main_variant.compare_at_price | default: 0
+    assign on_sale = false
+    if main_compare > main_price
+      assign on_sale = true
+    endif
+
+    if settings.currency_code_enabled
+      assign money_price = main_price | money_with_currency
+      assign money_compare = main_compare | money_with_currency
+    else
+      assign money_price = main_price | money
+      assign money_compare = main_compare | money
+    endif
+  -%}
+  <div class="price{% if product.available == false %} price--sold-out{% endif %}{% if on_sale %} price--on-sale{% endif %}">
+    <dl>
+      {%- if on_sale -%}
+        <div class="price__sale">
+          <dt class="price__compare">
+            <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
+          </dt>
+          <dd class="price__compare">
+            <s class="price-item price-item--regular">{{ money_compare }}</s>
+          </dd>
+          <dt class="visually-hidden">
+            <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.sale_price' | t }}</span>
+          </dt>
+          <dd>
+            <span class="price-item price-item--sale">{{ money_price }}</span>
+          </dd>
+        </div>
+      {%- else -%}
+        <div class="price__regular">
+          <dt>
+            <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
+          </dt>
+          <dd>
+            <span class="price-item price-item--regular">{{ money_price }}</span>
+          </dd>
+        </div>
+      {%- endif -%}
+    </dl>
+  </div>
+{%- endif -%}

@@ -205,6 +205,34 @@
   </div>
 {%- endif -%}
 
+{%- liquid
+  # Sale badge values. With sale_badge_format "percent_off" (catalog cards) the "Sample"
+  # variants are ignored, so a cheap sample does not turn into a huge discount badge.
+  assign badge_price = product_card_product.price
+  assign badge_compare = product_card_product.compare_at_price | default: 0
+  if sale_badge_format == 'percent_off'
+    assign badge_variant = nil
+    for variant in product_card_product.variants
+      assign is_sample = false
+      for option_value in variant.options
+        assign option_value_normalized = option_value | strip | downcase
+        if option_value_normalized == 'sample'
+          assign is_sample = true
+        endif
+      endfor
+      unless is_sample
+        if badge_variant == nil or variant.price < badge_variant.price
+          assign badge_variant = variant
+        endif
+      endunless
+    endfor
+    if badge_variant != nil
+      assign badge_price = badge_variant.price
+      assign badge_compare = badge_variant.compare_at_price | default: 0
+    endif
+  endif
+-%}
+
 <div class="card__information-top subtitle badge-text-{{ settings.badge_custom_text_direction }}">
   {%- if settings.badge_sale_show or settings.badge_soldout_show or settings.badge_custom_show -%}
     <div class="card__badge">
@@ -215,7 +243,7 @@
         >
           {{- 'products.product.sold_out' | t -}}
         </span>
-      {%- elsif product_card_product.compare_at_price > product_card_product.price
+      {%- elsif badge_compare > badge_price
         and product_card_product.available
         and settings.badge_sale_show
       -%}
@@ -226,10 +254,10 @@
           {% if sale_badge_format == 'percent_off' %}
             {{- '-' -}}
             {{-
-              product_card_product.compare_at_price
-              | minus: product_card_product.price
+              badge_compare
+              | minus: badge_price
               | times: 100
-              | divided_by: product_card_product.compare_at_price
+              | divided_by: badge_compare
             -}}
             {{- '%' -}}
           {% elsif settings.badge_sale_type == 'sale' %}
@@ -238,10 +266,10 @@
             {{- 'products.product.on_sale' | t -}}
             <span>
               {{
-                product_card_product.compare_at_price
-                | minus: product_card_product.price
+                badge_compare
+                | minus: badge_price
                 | times: 100
-                | divided_by: product_card_product.compare_at_price
+                | divided_by: badge_compare
               -}}
               %
             </span>

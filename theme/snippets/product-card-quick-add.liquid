@@ -7,8 +7,9 @@
   @param {object} product_card_product - Product Liquid object
   @param {string} [section_id] - The ID of the section that contains the card
   @param {boolean} [show_color_count] - Whether the card shows color options (swatches let the customer pick a variant)
-  @param {string} [button_label] - Always render the add to cart button with this label and a plus icon,
-    independent of the global quick add setting; the button stays visible but disabled when sold out
+  @param {string} [button_label] - Sample button: renders an add to cart button with this label and a plus
+    icon that adds the product's "Sample" variant (any option value equal to "Sample"), independent of the
+    global quick add setting. Hidden when the product has no sample variant; disabled when it is sold out.
 
   @example
   {% render 'product-card-quick-add', product_card_product: product, section_id: section.id, show_color_count: true %}
@@ -44,18 +45,35 @@
         assign can_quick_add = true
       endif
 
-      # A section-provided label always renders a button (disabled when sold out):
-      # products without options add to cart directly, products with options open
-      # the theme quick view popup so the customer can pick the variant first.
+      assign add_variant = product_card_product.selected_or_first_available_variant
+
+      # Sample button (section-provided label): add the product's "Sample" variant.
+      # The store models samples as an option value "Sample" (e.g. Size: Sample);
+      # an available sample variant is preferred (e.g. Sample / Peel & Stick).
       assign show_add_to_cart = false
       if button_label != blank
-        assign quick_add = true
+        assign quick_view = false
         assign hide_desktop = false
-        if can_quick_add
+        assign sample_variant = nil
+        for variant in product_card_product.variants
+          assign is_sample = false
+          for option_value in variant.options
+            assign option_value_normalized = option_value | strip | downcase
+            if option_value_normalized == 'sample'
+              assign is_sample = true
+            endif
+          endfor
+          if is_sample
+            if sample_variant == nil
+              assign sample_variant = variant
+            elsif sample_variant.available == false and variant.available
+              assign sample_variant = variant
+            endif
+          endif
+        endfor
+        if sample_variant != nil
+          assign add_variant = sample_variant
           assign show_add_to_cart = true
-          assign quick_view = false
-        else
-          assign quick_view = true
         endif
       elsif quick_add and can_quick_add and product_card_product.selected_or_first_available_variant.available
         assign show_add_to_cart = true
@@ -77,7 +95,7 @@
           <input
             type="hidden"
             name="id"
-            value="{{ product_card_product.selected_or_first_available_variant.id }}"
+            value="{{ add_variant.id }}"
             disabled
           >
           <input
@@ -105,7 +123,7 @@
             aria-haspopup="dialog"
             aria-live="polite"
             data-sold-out-message="true"
-            {% if product_card_product.selected_or_first_available_variant.available == false %}
+            {% if add_variant.available == false %}
               disabled
             {% endif %}
           >
