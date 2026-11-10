@@ -1,0 +1,250 @@
+{{ 'section-step-cards.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'step-cards.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  {% render 'section-margin' %}
+{%- endstyle -%}
+
+{%- liquid
+  assign step_count = section.blocks.size
+  assign columns = step_count
+  if columns > 4
+    assign columns = 4
+  elsif columns < 1
+    assign columns = 1
+  endif
+-%}
+
+<div class="step-cards background color-{{ section.settings.color_scheme }}">
+  <div class="container step-cards__container">
+    {%- if section.settings.heading != blank or section.settings.description != blank -%}
+      <div class="step-cards__header">
+        {%- if section.settings.heading != blank -%}
+          <{{ section.settings.heading_tag }} class="step-cards__heading">
+            {{- section.settings.heading | escape -}}
+          </{{ section.settings.heading_tag }}>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="step-cards__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if step_count > 0 -%}
+      <step-cards-slider class="step-cards__slider">
+        <ol
+          class="step-cards__list list-unstyled"
+          style="--step-columns: {{ columns }};"
+          role="list"
+          tabindex="0"
+        >
+          {%- for block in section.blocks -%}
+            <li class="step-cards__item" {{ block.shopify_attributes }}>
+              <span class="step-cards__number" aria-hidden="true">
+                {%- if forloop.index < 10 -%}0{%- endif -%}
+                {{- forloop.index -}}
+              </span>
+              <div class="step-cards__media">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1600
+                    | image_tag:
+                      class: 'step-cards__image',
+                      loading: 'lazy',
+                      sizes: '(min-width: 990px) calc((100vw - 16.66vw - 4.8rem) / 3), 247px',
+                      widths: '247, 360, 494, 517, 720, 1034, 1600',
+                      alt: block.settings.image.alt
+                  }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg step-cards__image' }}
+                {%- endif -%}
+              </div>
+              <div class="step-cards__content">
+                {%- if block.settings.title != blank -%}
+                  <h3 class="step-cards__title">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="step-cards__text">{{ block.settings.text }}</p>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ol>
+
+        <div class="step-cards__progress" aria-hidden="true">
+          <span class="step-cards__progress-thumb"></span>
+        </div>
+      </step-cards-slider>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="step-cards__footer">
+        <a
+          class="button step-cards__button"
+          {% if section.settings.button_link != blank %}
+            href="{{ section.settings.button_link }}"
+          {% else %}
+            role="link"
+            aria-disabled="true"
+          {% endif %}
+        >
+          <span>{{ section.settings.button_label | escape }}</span>
+          <img
+            class="step-cards__button-icon"
+            src="{{ 'icon-arrow-right-teal.svg' | asset_url }}"
+            alt=""
+            width="20"
+            height="20"
+            loading="lazy"
+          >
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.step-cards.name",
+  "tag": "section",
+  "class": "step-cards-section",
+  "max_blocks": 8,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-1",
+      "label": "t:sections.step-cards.settings.color_scheme.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "A new look, step by step.",
+      "label": "t:sections.step-cards.settings.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:sections.all.heading.tag",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "div", "label": "div" },
+        { "value": "p", "label": "p" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "default": "Start with the essentials for peel-and-stick acoustic panels.",
+      "label": "t:sections.step-cards.settings.description.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.step-cards.settings.header_button.content"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Shop Peel n’Stick Products",
+      "label": "t:sections.all.button.button_label.label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.all.button.button_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-margin.header.content"
+    },
+    {
+      "type": "select",
+      "id": "margin_top",
+      "options": [
+        { "value": "no-indent", "label": "t:sections.all.section-margin.options__1.label" },
+        { "value": "xs", "label": "t:sections.all.section-margin.options__2.label" },
+        { "value": "s", "label": "t:sections.all.section-margin.options__3.label" },
+        { "value": "m", "label": "t:sections.all.section-margin.options__4.label" },
+        { "value": "l", "label": "t:sections.all.section-margin.options__5.label" },
+        { "value": "xl", "label": "t:sections.all.section-margin.options__6.label" }
+      ],
+      "default": "l",
+      "label": "t:sections.all.section-margin.margin_top.label"
+    },
+    {
+      "type": "select",
+      "id": "margin_bottom",
+      "options": [
+        { "value": "no-indent", "label": "t:sections.all.section-margin.options__1.label" },
+        { "value": "xs", "label": "t:sections.all.section-margin.options__2.label" },
+        { "value": "s", "label": "t:sections.all.section-margin.options__3.label" },
+        { "value": "m", "label": "t:sections.all.section-margin.options__4.label" },
+        { "value": "l", "label": "t:sections.all.section-margin.options__5.label" },
+        { "value": "xl", "label": "t:sections.all.section-margin.options__6.label" }
+      ],
+      "default": "l",
+      "label": "t:sections.all.section-margin.margin_bottom.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "t:sections.step-cards.blocks.step.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.step-cards.blocks.step.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Step title",
+          "label": "t:sections.step-cards.blocks.step.settings.title.label"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "default": "Short description of this step.",
+          "label": "t:sections.step-cards.blocks.step.settings.text.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.step-cards.presets.name",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Prep your wall",
+            "text": "Clean, smooth, dry, primed surface."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Measure & trim",
+            "text": "Plan your layout and trim panels to fit where needed."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Peel & press",
+            "text": "Remove the backing, align your panel and press firmly into place."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -2046,6 +2046,42 @@
         }
       }
     },
+    "step-cards": {
+      "name": "Step cards",
+      "settings": {
+        "color_scheme": {
+          "label": "Color scheme"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "header_button": {
+          "content": "Button"
+        }
+      },
+      "blocks": {
+        "step": {
+          "name": "Step",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "title": {
+              "label": "Title"
+            },
+            "text": {
+              "label": "Text"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Step cards"
+      }
+    },
     "steps": {
       "name": "Steps",
       "settings": {
