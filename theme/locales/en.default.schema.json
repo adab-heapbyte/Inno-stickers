@@ -2078,7 +2078,19 @@
           "label": "Banner text"
         },
         "banner_button_link": {
-          "info": "Link for the room visualizer (HomeVisioner) once it is set up."
+          "info": "Used when no room visualizer app block is added, or as a fallback."
+        },
+        "header_visualizer": {
+          "content": "Room visualizer (HomeVisioner)",
+          "info": "Add the HomeVisioner app block to this section, then choose the product to show in the room."
+        },
+        "visualizer_product": {
+          "label": "Visualizer product",
+          "info": "Product the app shows in the room, e.g. Natural Oak acoustic panel."
+        },
+        "use_own_button": {
+          "label": "Open the app with the button above",
+          "info": "Keeps this design button and hides the app button. Turn off to show the app button instead."
         }
       },
       "blocks": {

@@ -9,7 +9,9 @@
 {%- endstyle -%}
 
 {%- liquid
-  assign story_count = section.blocks.size
+  assign story_blocks = section.blocks | where: 'type', 'story'
+  assign app_blocks = section.blocks | where: 'type', '@app'
+  assign story_count = story_blocks.size
   assign total_label = story_count
   if story_count < 10
     assign total_label = '0' | append: story_count
@@ -35,7 +37,7 @@
       <room-inspiration-slider class="room-inspiration__gallery" data-total="{{ story_count }}">
         <div class="room-inspiration__slider swiper">
           <ul class="room-inspiration__list swiper-wrapper list-unstyled" role="list">
-            {%- for block in section.blocks -%}
+            {%- for block in story_blocks -%}
               <li class="room-inspiration__item swiper-slide" {{ block.shopify_attributes }}>
                 <div class="room-inspiration__media{% if block.settings.image != blank %} room-inspiration__media--has-image{% endif %}">
                   {%- if block.settings.image != blank -%}
@@ -143,16 +145,43 @@
           </div>
         </div>
 
-        {%- if section.settings.banner_button_label != blank -%}
-          <a
-            class="button room-inspiration__button"
-            {% if section.settings.banner_button_link != blank %}
-              href="{{ section.settings.banner_button_link }}"
-            {% else %}
-              role="link"
-              aria-disabled="true"
-            {% endif %}
-          >
+        {%- liquid
+          # Room visualizer (HomeVisioner) app block, if added to this section.
+          # With use_own_button the app block is kept off-screen and the Figma
+          # button triggers it; otherwise the app button is shown instead.
+          assign has_visualizer = false
+          if app_blocks.size > 0
+            assign has_visualizer = true
+          endif
+        -%}
+
+        {%- if has_visualizer and section.settings.use_own_button == false -%}
+          <div class="room-inspiration__app room-inspiration__app--visible">
+            {%- for block in app_blocks -%}
+              {% render block %}
+            {%- endfor -%}
+          </div>
+        {%- elsif section.settings.banner_button_label != blank -%}
+          {%- if has_visualizer -%}
+            <button
+              type="button"
+              class="button room-inspiration__button"
+              data-visualizer-trigger
+              {% if section.settings.banner_button_link != blank %}
+                data-fallback-url="{{ section.settings.banner_button_link }}"
+              {% endif %}
+            >
+          {%- else -%}
+            <a
+              class="button room-inspiration__button"
+              {% if section.settings.banner_button_link != blank %}
+                href="{{ section.settings.banner_button_link }}"
+              {% else %}
+                role="link"
+                aria-disabled="true"
+              {% endif %}
+            >
+          {%- endif -%}
             <span>{{ section.settings.banner_button_label | escape }}</span>
             <img
               class="room-inspiration__button-icon"
@@ -162,7 +191,19 @@
               height="20"
               loading="lazy"
             >
-          </a>
+          {%- if has_visualizer -%}
+            </button>
+          {%- else -%}
+            </a>
+          {%- endif -%}
+
+          {%- if has_visualizer -%}
+            <div class="room-inspiration__app room-inspiration__app--hidden" data-visualizer-app aria-hidden="true">
+              {%- for block in app_blocks -%}
+                {% render block %}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -257,6 +298,24 @@
     },
     {
       "type": "header",
+      "content": "t:sections.room-inspiration.settings.header_visualizer.content",
+      "info": "t:sections.room-inspiration.settings.header_visualizer.info"
+    },
+    {
+      "type": "product",
+      "id": "visualizer_product",
+      "label": "t:sections.room-inspiration.settings.visualizer_product.label",
+      "info": "t:sections.room-inspiration.settings.visualizer_product.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_own_button",
+      "default": true,
+      "label": "t:sections.room-inspiration.settings.use_own_button.label",
+      "info": "t:sections.room-inspiration.settings.use_own_button.info"
+    },
+    {
+      "type": "header",
       "content": "t:sections.all.section-margin.header.content"
     },
     {
@@ -289,6 +348,9 @@
     }
   ],
   "blocks": [
+    {
+      "type": "@app"
+    },
     {
       "type": "story",
       "name": "t:sections.room-inspiration.blocks.story.name",

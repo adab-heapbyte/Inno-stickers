@@ -91,3 +91,25 @@ if (!customElements.get('room-inspiration-slider')) {
 
   customElements.define('room-inspiration-slider', RoomInspirationSlider);
 }
+
+/**
+ * "See it in your space": when a room visualizer app block (e.g. HomeVisioner)
+ * is added to the section, the Figma button clicks the app button that is kept
+ * off-screen. Falls back to the button link if the app has not rendered one.
+ */
+document.addEventListener('click', (event) => {
+  const trigger = event.target.closest('[data-visualizer-trigger]');
+  if (!trigger) return;
+
+  const banner = trigger.closest('.room-inspiration__banner');
+  const app = banner && banner.querySelector('[data-visualizer-app]');
+  const appButton = app && app.querySelector('button, a[href], [role="button"]');
+
+  if (appButton) {
+    event.preventDefault();
+    appButton.click();
+    return;
+  }
+
+  if (trigger.dataset.fallbackUrl) window.location.href = trigger.dataset.fallbackUrl;
+});

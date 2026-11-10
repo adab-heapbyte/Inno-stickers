@@ -376,6 +376,28 @@
   height: 2rem;
 }
 
+/* ---------- Room visualizer app block ----------
+   Hidden variant: kept in the page (not display:none) so the app can still open
+   its popup when the Figma button triggers it; overflow does not clip fixed popups. */
+.room-inspiration__app--hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+}
+
+.room-inspiration__banner {
+  position: relative;
+}
+
+.room-inspiration__app--visible {
+  flex-shrink: 0;
+}
+
 /* ---------- Desktop ---------- */
 @media screen and (min-width: 990px) {
   .room-inspiration__container {
