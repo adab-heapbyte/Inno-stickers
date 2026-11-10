@@ -491,7 +491,9 @@
         "banner_title": "Picture it in your space.",
         "banner_text": "Explore how a finish could look in your own room.",
         "banner_button_label": "See it in your space",
-        "banner_button_link": "shopify://collections/acoustic-wall-paneling",
+        "banner_button_link": "",
+        "visualizer_product": "",
+        "use_own_button": true,
         "margin_top": "l",
         "margin_bottom": "l"
       }
@@ -639,6 +641,7 @@
         "column3",
         "column_7ppE9q"
       ],
+      "disabled": true,
       "settings": {
         "color_scheme": "",
         "subheading": "",
@@ -672,6 +675,7 @@
     },
     "image-with-text": {
       "type": "image-with-text",
+      "disabled": true,
       "settings": {
         "color_scheme": "",
         "layout_symmetry": "default",
@@ -699,6 +703,7 @@
     },
     "popular-products1": {
       "type": "popular-products",
+      "disabled": true,
       "settings": {
         "card_style": "catalog",
         "subheading": "",
@@ -768,6 +773,7 @@
       "block_order": [
         "media_slide"
       ],
+      "disabled": true,
       "settings": {
         "header_overlay": false,
         "sticky": "sticky-text-effect",
@@ -813,6 +819,7 @@
       "block_order": [
         "media_slide"
       ],
+      "disabled": true,
       "settings": {
         "header_overlay": false,
         "sticky": "sticky-text-effect",
@@ -827,6 +834,7 @@
     },
     "product_carousel_Kmb4XK": {
       "type": "product-carousel",
+      "disabled": true,
       "settings": {
         "collection": "acoustic-felt",
         "collection_list": [],
@@ -904,6 +912,7 @@
         "product_markers_item_iDnTRp",
         "product_markers_item_Hrrbei"
       ],
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/PSFT-WLS-12-10.jpg",
         "main_image_ratio": "landscape",
@@ -1006,6 +1015,7 @@
         "image_qn9jXJ",
         "image_Y7He7m"
       ],
+      "disabled": true,
       "settings": {
         "aspect_ratio": "full",
         "heading": "Quick Answers",
@@ -1095,6 +1105,7 @@
         "column_87BMPn",
         "column_wADiLP"
       ],
+      "disabled": true,
       "settings": {
         "color_scheme": "",
         "subheading": "",
@@ -1128,6 +1139,7 @@
     },
     "featured-blog": {
       "type": "featured-blog",
+      "disabled": true,
       "settings": {
         "blog": "新闻",
         "post_limit": 6,
@@ -1261,6 +1273,7 @@
         "column_wxXUkD",
         "column_wm9yJN"
       ],
+      "disabled": true,
       "settings": {
         "subheading": "Our Designers",
         "subheading_tag": "span",
@@ -1369,6 +1382,7 @@
         "variant_picker_GxMEPL",
         "buy_buttons_kCemFb"
       ],
+      "disabled": true,
       "name": "t:sections.featured-product.name",
       "settings": {
         "subheading": "Short introduction to this product",
@@ -1390,6 +1404,7 @@
     },
     "image_banner_DXgEiU": {
       "type": "image-banner",
+      "disabled": true,
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "full_width": true,
@@ -1455,6 +1470,7 @@
         "text_3FirNc",
         "button_Xn7xWw"
       ],
+      "disabled": true,
       "name": "t:sections.rich-text.presets.name",
       "settings": {
         "alignment": "center",
@@ -1522,6 +1538,7 @@
         "form_name_YrwUEk",
         "phone_number_9hKHQq"
       ],
+      "disabled": true,
       "name": "t:sections.contact-form.presets.name",
       "settings": {
         "position": "right",
