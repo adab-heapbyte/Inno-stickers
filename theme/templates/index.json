@@ -198,6 +198,78 @@
         "margin_bottom": "no-indent"
       }
     },
+    "sample_kit_ordering": {
+      "type": "sample-kit",
+      "blocks": {
+        "finish_oak": {
+          "type": "finish",
+          "settings": {
+            "title": "Natural Oak Wood Slat Acoustic Panels Decorative Wall Paneling"
+          }
+        },
+        "finish_walnut": {
+          "type": "finish",
+          "settings": {
+            "title": "Walnut Wood Slat Acoustic Panels Decorative Wall Paneling"
+          }
+        },
+        "finish_black_grey": {
+          "type": "finish",
+          "settings": {
+            "title": "Black Grey Wood Slat Acoustic Panels Decorative Wall Paneling"
+          }
+        },
+        "feature_no_tools": {
+          "type": "feature",
+          "settings": {
+            "icon": "compass-tool",
+            "label": "No Tools"
+          }
+        },
+        "feature_echo": {
+          "type": "feature",
+          "settings": {
+            "icon": "waveform",
+            "label": "Echo-reduction"
+          }
+        },
+        "feature_bpa": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield-check",
+            "label": "BPA-Free"
+          }
+        }
+      },
+      "block_order": [
+        "finish_oak",
+        "finish_walnut",
+        "finish_black_grey",
+        "feature_no_tools",
+        "feature_echo",
+        "feature_bpa"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "background_color": "#f4f6f8",
+        "heading": "Find your finish. Start with samples.",
+        "heading_tag": "h2",
+        "description": "Compare all three finishes at home.",
+        "kit_title": "Acoustic Wood Sample Kit",
+        "meta_1": "3 finish samples",
+        "meta_2": "1 kit",
+        "promo_text": "Get 3 samples for <b>$10,</b> get a <b>$20 discount</b> later.",
+        "show_delivery": true,
+        "delivery_label": "Estimated delivery:",
+        "delivery_min_days": 3,
+        "delivery_max_days": 9,
+        "button_label": "Get my sample kit",
+        "button_link": "",
+        "note": "One kit. All three finishes. Yours to compare.",
+        "margin_top": "l",
+        "margin_bottom": "l"
+      }
+    },
     "step_cards_installation": {
       "type": "step-cards",
       "blocks": {
@@ -1282,6 +1354,7 @@
     "popular-products",
     "product-slider",
     "step_cards_installation",
+    "sample_kit_ordering",
     "multicolumn",
     "image-with-text",
     "popular-products1",

@@ -1,0 +1,473 @@
+/* ==========================================================================
+   Sample kit
+   Figma - desktop "sample ordering · 1440" (12:1267), mobile "sample ordering · 393" (12:1268).
+   Mobile first; desktop values from 990px.
+   ========================================================================== */
+.sample-kit {
+  --kit-text: var(--color-foreground); /* Neutral/900 #0F0F0F */
+  --kit-secondary: var(--color-foreground-secondary); /* Neutral/600 #3C404F */
+  --kit-muted: 127, 133, 159; /* Neutral/500 #7F859F */
+  --kit-primary: 42, 100, 137; /* Primary Teal #2A6489 */
+  --kit-navy: 31, 58, 77; /* Deep Navy #1F3A4D */
+  --kit-line: 226, 228, 233; /* Neutral/200 #E2E4E9 */
+  --kit-card: 255, 255, 255; /* White */
+  --kit-promo: 244, 244, 244; /* Neutral/100 #F4F4F4 */
+  color: rgb(var(--kit-text));
+}
+
+/* The section background colour is set on #shopify-section-{id}; the colour
+   scheme class would otherwise paint its own background over it. */
+.sample-kit-section .sample-kit {
+  background: transparent;
+}
+
+.sample-kit__container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding-right: 1.6rem;
+  padding-left: 1.6rem;
+}
+
+/* ---------- Header ---------- */
+.sample-kit__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.sample-kit__heading {
+  max-width: 22rem; /* mobile: breaks after "finish." like Figma */
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: rgb(var(--kit-text));
+}
+
+.sample-kit__description {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--kit-secondary));
+}
+
+.sample-kit__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+/* ---------- Kit card ---------- */
+.sample-kit__card {
+  overflow: hidden;
+  border-radius: 0.4rem;
+  background-color: rgb(var(--kit-card));
+}
+
+.sample-kit__finishes {
+  display: flex;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 1.6rem 1.2rem;
+  border-bottom: 0.1rem solid rgba(var(--kit-line), 0.6);
+}
+
+.sample-kit__finish {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.sample-kit__finish,
+.sample-kit__finish-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgb(var(--kit-text));
+  text-decoration: none;
+}
+
+.sample-kit__finish-link {
+  width: 100%;
+}
+
+.sample-kit__finish-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.sample-kit__finish-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sample-kit__finish-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  width: 100%;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  text-align: center;
+  color: rgb(var(--kit-text));
+  word-break: break-word;
+}
+
+.sample-kit__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.6rem 1.2rem;
+}
+
+.sample-kit__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.sample-kit__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.sample-kit__title {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: rgb(var(--kit-text));
+}
+
+.sample-kit__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.sample-kit__meta span {
+  color: rgba(var(--kit-text), 0.5);
+}
+
+/* 10px vertical divider between the two meta items */
+.sample-kit__meta span + span {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.sample-kit__meta span + span::before {
+  content: "";
+  display: block;
+  width: 0.1rem;
+  height: 1rem;
+  background-color: rgb(var(--kit-line));
+}
+
+.sample-kit__price {
+  flex-shrink: 0;
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 2.8rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-align: right;
+  color: rgb(var(--kit-primary));
+}
+
+.sample-kit__promo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.2rem;
+  background-color: rgb(var(--kit-promo));
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  text-align: center;
+  color: rgb(var(--kit-navy));
+}
+
+.sample-kit__promo strong,
+.sample-kit__promo b {
+  font-weight: 700;
+}
+
+.sample-kit__promo-icon {
+  display: block;
+  flex: 0 0 1.4rem;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+/* ---------- Features ---------- */
+.sample-kit__features {
+  display: flex;
+  margin: 0;
+}
+
+.sample-kit__feature {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-width: 0;
+  padding: 0 0.8rem;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  text-align: center;
+  color: rgb(var(--kit-text));
+}
+
+/* Vertical dividers between features (#1F3A4D at 5%) */
+.sample-kit__feature + .sample-kit__feature {
+  border-left: 0.1rem solid rgba(var(--kit-navy), 0.05);
+}
+
+.sample-kit__feature-icon {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+/* Figma flips the compass horizontally */
+.sample-kit__feature-icon--compass-tool {
+  transform: scaleX(-1);
+}
+
+/* ---------- Footer ---------- */
+.sample-kit__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  padding-top: 2.4rem;
+  border-top: 0.1rem solid rgba(var(--kit-navy), 0.1);
+}
+
+.sample-kit__delivery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: rgb(var(--kit-secondary));
+}
+
+.sample-kit__delivery strong {
+  font-weight: 700;
+}
+
+.sample-kit__delivery-icon {
+  display: block;
+  flex: 0 0 1.6rem;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.sample-kit__form,
+.sample-kit__form .form {
+  display: block;
+  width: 100%;
+}
+
+.sample-kit .sample-kit__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 100%;
+  min-height: 4.8rem;
+  padding: 0 2.3rem;
+  border: 0.1rem solid rgb(var(--kit-primary));
+  border-radius: 0.4rem;
+  background: transparent;
+  color: rgb(var(--kit-primary));
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  transition: background-color var(--duration-default);
+}
+
+.sample-kit .sample-kit__button:not([disabled]):not([aria-disabled='true']):hover {
+  background-color: rgba(var(--kit-primary), 0.06);
+  color: rgb(var(--kit-primary));
+}
+
+.sample-kit .sample-kit__button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sample-kit__button-icon {
+  display: block;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.sample-kit__note {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  text-align: center;
+  color: rgb(var(--kit-muted));
+}
+
+/* ---------- Desktop ---------- */
+@media screen and (min-width: 990px) {
+  .sample-kit__container {
+    gap: 4rem;
+    padding-right: max(2.4rem, 8.33vw);
+    padding-left: max(2.4rem, 8.33vw);
+  }
+
+  .sample-kit__header {
+    gap: 1.2rem;
+  }
+
+  .sample-kit__heading {
+    max-width: none;
+    font-size: 4rem;
+    line-height: 1.2;
+  }
+
+  .sample-kit__description {
+    font-size: 1.8rem;
+  }
+
+  .sample-kit__finishes {
+    padding: 2.4rem;
+  }
+
+  .sample-kit__finish,
+  .sample-kit__finish-link {
+    gap: 0.8rem;
+  }
+
+  /* 250px photos */
+  .sample-kit__finish-media {
+    width: 25rem;
+    max-width: 100%;
+  }
+
+  .sample-kit__finish-title {
+    font-size: 1.6rem;
+  }
+
+  .sample-kit__summary {
+    padding: 2.4rem;
+  }
+
+  .sample-kit__title {
+    font-size: 1.8rem;
+  }
+
+  .sample-kit__meta {
+    gap: 1.2rem;
+    font-size: 1.8rem;
+  }
+
+  .sample-kit__meta span + span {
+    gap: 1.2rem;
+  }
+
+  .sample-kit__price {
+    font-size: 3.2rem;
+    line-height: 1.25;
+  }
+
+  .sample-kit__promo {
+    gap: 1.2rem;
+    padding: 0.8rem;
+    font-size: 1.8rem;
+  }
+
+  .sample-kit__promo-icon {
+    flex-basis: 2.8rem;
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  .sample-kit__features {
+    gap: 0;
+  }
+
+  .sample-kit__feature {
+    font-size: 1.8rem;
+  }
+
+  .sample-kit__feature-icon {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .sample-kit__footer {
+    gap: 1.2rem;
+  }
+
+  .sample-kit__delivery {
+    font-size: 1.6rem;
+  }
+
+  .sample-kit__delivery-icon {
+    flex-basis: 2.4rem;
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .sample-kit__form {
+    width: auto;
+  }
+
+  .sample-kit .sample-kit__button {
+    width: auto;
+  }
+
+  .sample-kit__note {
+    font-size: 1.6rem;
+  }
+}

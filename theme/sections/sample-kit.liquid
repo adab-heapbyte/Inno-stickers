@@ -1,0 +1,497 @@
+{{ 'section-sample-kit.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {% render 'section-margin' %}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign kit = section.settings.product
+  assign kit_variant = kit.selected_or_first_available_variant
+
+  assign kit_title = section.settings.kit_title
+  if kit_title == blank and kit != blank
+    assign kit_title = kit.title
+  endif
+
+  # Estimated delivery window: today + min / max days (e.g. "Nov 4–10" or "Nov 28–Dec 3")
+  assign now_seconds = 'now' | date: '%s' | plus: 0
+  assign delivery_start = section.settings.delivery_min_days | times: 86400 | plus: now_seconds
+  assign delivery_end = section.settings.delivery_max_days | times: 86400 | plus: now_seconds
+  assign delivery_start_label = delivery_start | date: '%b %-d'
+  assign delivery_start_month = delivery_start | date: '%b'
+  assign delivery_end_month = delivery_end | date: '%b'
+  if delivery_start_month == delivery_end_month
+    assign delivery_end_label = delivery_end | date: '%-d'
+  else
+    assign delivery_end_label = delivery_end | date: '%b %-d'
+  endif
+
+  assign finish_blocks = section.blocks | where: 'type', 'finish'
+  assign feature_blocks = section.blocks | where: 'type', 'feature'
+-%}
+
+<div class="sample-kit color-{{ section.settings.color_scheme }}">
+  <div class="container sample-kit__container">
+    {%- if section.settings.heading != blank or section.settings.description != blank -%}
+      <div class="sample-kit__header">
+        {%- if section.settings.heading != blank -%}
+          <{{ section.settings.heading_tag }} class="sample-kit__heading">
+            {{- section.settings.heading | escape -}}
+          </{{ section.settings.heading_tag }}>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="sample-kit__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="sample-kit__body">
+      {%- comment -%} Kit card: finishes + summary {%- endcomment -%}
+      <div class="sample-kit__card">
+        {%- if finish_blocks.size > 0 -%}
+          <ul class="sample-kit__finishes list-unstyled" role="list">
+            {%- for block in finish_blocks -%}
+              {%- liquid
+                assign finish_product = block.settings.product
+                assign finish_image = block.settings.image | default: finish_product.featured_image
+                assign finish_title = block.settings.title | default: finish_product.title
+              -%}
+              <li class="sample-kit__finish" {{ block.shopify_attributes }}>
+                {%- if finish_product != blank -%}
+                  <a class="sample-kit__finish-link" href="{{ finish_product.url }}">
+                {%- endif -%}
+                <div class="sample-kit__finish-media">
+                  {%- if finish_image != blank -%}
+                    {{
+                      finish_image
+                      | image_url: width: 750
+                      | image_tag:
+                        class: 'sample-kit__finish-image',
+                        loading: 'lazy',
+                        sizes: '(min-width: 990px) 250px, 33vw',
+                        widths: '120, 180, 250, 375, 500, 750',
+                        alt: finish_title
+                    }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg sample-kit__finish-image' }}
+                  {%- endif -%}
+                </div>
+                {%- if finish_title != blank -%}
+                  <span class="sample-kit__finish-title">{{ finish_title | escape }}</span>
+                {%- endif -%}
+                {%- if finish_product != blank -%}
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <div class="sample-kit__summary">
+          <div class="sample-kit__row">
+            <div class="sample-kit__info">
+              {%- if kit_title != blank -%}
+                <h3 class="sample-kit__title">{{ kit_title | escape }}</h3>
+              {%- endif -%}
+              {%- if section.settings.meta_1 != blank or section.settings.meta_2 != blank -%}
+                <p class="sample-kit__meta">
+                  {%- if section.settings.meta_1 != blank -%}
+                    <span>{{ section.settings.meta_1 | escape }}</span>
+                  {%- endif -%}
+                  {%- if section.settings.meta_2 != blank -%}
+                    <span>{{ section.settings.meta_2 | escape }}</span>
+                  {%- endif -%}
+                </p>
+              {%- endif -%}
+            </div>
+            {%- if kit != blank -%}
+              <p class="sample-kit__price">
+                <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                {{- kit_variant.price | money_without_trailing_zeros -}}
+              </p>
+            {%- endif -%}
+          </div>
+
+          {%- if section.settings.promo_text != blank -%}
+            <p class="sample-kit__promo">
+              <img
+                class="sample-kit__promo-icon"
+                src="{{ 'icon-ticket.svg' | asset_url }}"
+                alt=""
+                width="28"
+                height="28"
+                loading="lazy"
+              >
+              <span>{{ section.settings.promo_text }}</span>
+            </p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} Features row {%- endcomment -%}
+      {%- if feature_blocks.size > 0 -%}
+        <ul class="sample-kit__features list-unstyled" role="list">
+          {%- for block in feature_blocks -%}
+            <li class="sample-kit__feature" {{ block.shopify_attributes }}>
+              {%- if block.settings.custom_icon != blank -%}
+                {{
+                  block.settings.custom_icon
+                  | image_url: width: 80
+                  | image_tag: class: 'sample-kit__feature-icon', loading: 'lazy', alt: '', width: 40, height: 40
+                }}
+              {%- elsif block.settings.icon != 'none' -%}
+                <img
+                  class="sample-kit__feature-icon sample-kit__feature-icon--{{ block.settings.icon }}"
+                  src="{{ block.settings.icon | prepend: 'icon-' | append: '.svg' | asset_url }}"
+                  alt=""
+                  width="40"
+                  height="40"
+                  loading="lazy"
+                >
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                <span class="sample-kit__feature-label">{{ block.settings.label | escape }}</span>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <div class="sample-kit__footer">
+        {%- if section.settings.show_delivery -%}
+          <p class="sample-kit__delivery">
+            <img
+              class="sample-kit__delivery-icon"
+              src="{{ 'icon-truck-trailer.svg' | asset_url }}"
+              alt=""
+              width="24"
+              height="24"
+              loading="lazy"
+            >
+            <span>
+              {{- section.settings.delivery_label | escape }}
+              <strong>{{ delivery_start_label }}–{{ delivery_end_label }}</strong>
+            </span>
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          {%- if kit != blank -%}
+            {%- comment -%}
+              Plain (non-AJAX) add to cart: Shopify adds the kit and, via return_to,
+              redirects straight to checkout (client brief: "add sample kit and send
+              user to checkout").
+            {%- endcomment -%}
+            {%- assign product_form_id = 'sample-kit-' | append: section.id -%}
+            <div class="sample-kit__form">
+              {%- form 'product', kit, id: product_form_id, class: 'form', novalidate: 'novalidate' -%}
+                <input type="hidden" name="id" value="{{ kit_variant.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="return_to" value="/checkout">
+                <button
+                  id="{{ product_form_id }}-submit"
+                  type="submit"
+                  name="add"
+                  class="button sample-kit__button"
+                  {% if kit_variant.available == false %}
+                    disabled
+                  {% endif %}
+                >
+                  <span>
+                    {%- if kit_variant.available -%}
+                      {{ section.settings.button_label | escape }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t }}
+                    {%- endif -%}
+                  </span>
+                  <img
+                    class="sample-kit__button-icon"
+                    src="{{ 'icon-arrow-right-teal.svg' | asset_url }}"
+                    alt=""
+                    width="20"
+                    height="20"
+                    loading="lazy"
+                  >
+                </button>
+              {%- endform -%}
+            </div>
+          {%- else -%}
+            <a
+              class="button sample-kit__button"
+              {% if section.settings.button_link != blank %}
+                href="{{ section.settings.button_link }}"
+              {% else %}
+                role="link"
+                aria-disabled="true"
+              {% endif %}
+            >
+              <span>{{ section.settings.button_label | escape }}</span>
+              <img
+                class="sample-kit__button-icon"
+                src="{{ 'icon-arrow-right-teal.svg' | asset_url }}"
+                alt=""
+                width="20"
+                height="20"
+                loading="lazy"
+              >
+            </a>
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if section.settings.note != blank -%}
+          <p class="sample-kit__note">{{ section.settings.note | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.sample-kit.name",
+  "tag": "section",
+  "class": "sample-kit-section",
+  "max_blocks": 10,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-1",
+      "label": "t:sections.sample-kit.settings.color_scheme.label"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "default": "#F4F6F8",
+      "label": "t:sections.sample-kit.settings.background_color.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Find your finish. Start with samples.",
+      "label": "t:sections.sample-kit.settings.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:sections.all.heading.tag",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "div", "label": "div" },
+        { "value": "p", "label": "p" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "default": "Compare all three finishes at home.",
+      "label": "t:sections.sample-kit.settings.description.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.sample-kit.settings.header_kit.content"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:sections.sample-kit.settings.product.label",
+      "info": "t:sections.sample-kit.settings.product.info"
+    },
+    {
+      "type": "text",
+      "id": "kit_title",
+      "default": "Acoustic Wood Sample Kit",
+      "label": "t:sections.sample-kit.settings.kit_title.label",
+      "info": "t:sections.sample-kit.settings.kit_title.info"
+    },
+    {
+      "type": "text",
+      "id": "meta_1",
+      "default": "3 finish samples",
+      "label": "t:sections.sample-kit.settings.meta_1.label"
+    },
+    {
+      "type": "text",
+      "id": "meta_2",
+      "default": "1 kit",
+      "label": "t:sections.sample-kit.settings.meta_2.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "promo_text",
+      "default": "Get 3 samples for <b>$10,</b> get a <b>$20 discount</b> later.",
+      "label": "t:sections.sample-kit.settings.promo_text.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.sample-kit.settings.header_delivery.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_delivery",
+      "default": true,
+      "label": "t:sections.sample-kit.settings.show_delivery.label"
+    },
+    {
+      "type": "text",
+      "id": "delivery_label",
+      "default": "Estimated delivery:",
+      "label": "t:sections.sample-kit.settings.delivery_label.label"
+    },
+    {
+      "type": "range",
+      "id": "delivery_min_days",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "d",
+      "default": 3,
+      "label": "t:sections.sample-kit.settings.delivery_min_days.label"
+    },
+    {
+      "type": "range",
+      "id": "delivery_max_days",
+      "min": 1,
+      "max": 45,
+      "step": 1,
+      "unit": "d",
+      "default": 9,
+      "label": "t:sections.sample-kit.settings.delivery_max_days.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.sample-kit.settings.header_button.content"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Get my sample kit",
+      "label": "t:sections.all.button.button_label.label",
+      "info": "t:sections.sample-kit.settings.button_label.info"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.all.button.button_link.label",
+      "info": "t:sections.sample-kit.settings.button_link.info"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "default": "One kit. All three finishes. Yours to compare.",
+      "label": "t:sections.sample-kit.settings.note.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-margin.header.content"
+    },
+    {
+      "type": "select",
+      "id": "margin_top",
+      "options": [
+        { "value": "no-indent", "label": "t:sections.all.section-margin.options__1.label" },
+        { "value": "xs", "label": "t:sections.all.section-margin.options__2.label" },
+        { "value": "s", "label": "t:sections.all.section-margin.options__3.label" },
+        { "value": "m", "label": "t:sections.all.section-margin.options__4.label" },
+        { "value": "l", "label": "t:sections.all.section-margin.options__5.label" },
+        { "value": "xl", "label": "t:sections.all.section-margin.options__6.label" }
+      ],
+      "default": "l",
+      "label": "t:sections.all.section-margin.margin_top.label"
+    },
+    {
+      "type": "select",
+      "id": "margin_bottom",
+      "options": [
+        { "value": "no-indent", "label": "t:sections.all.section-margin.options__1.label" },
+        { "value": "xs", "label": "t:sections.all.section-margin.options__2.label" },
+        { "value": "s", "label": "t:sections.all.section-margin.options__3.label" },
+        { "value": "m", "label": "t:sections.all.section-margin.options__4.label" },
+        { "value": "l", "label": "t:sections.all.section-margin.options__5.label" },
+        { "value": "xl", "label": "t:sections.all.section-margin.options__6.label" }
+      ],
+      "default": "l",
+      "label": "t:sections.all.section-margin.margin_bottom.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "finish",
+      "name": "t:sections.sample-kit.blocks.finish.name",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.sample-kit.blocks.finish.settings.product.label",
+          "info": "t:sections.sample-kit.blocks.finish.settings.product.info"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.sample-kit.blocks.finish.settings.image.label",
+          "info": "t:sections.sample-kit.blocks.finish.settings.image.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.sample-kit.blocks.finish.settings.title.label",
+          "info": "t:sections.sample-kit.blocks.finish.settings.title.info"
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "t:sections.sample-kit.blocks.feature.name",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "t:sections.sample-kit.blocks.feature.settings.icon.label",
+          "options": [
+            { "value": "compass-tool", "label": "t:sections.sample-kit.blocks.feature.settings.icon.options__1.label" },
+            { "value": "waveform", "label": "t:sections.sample-kit.blocks.feature.settings.icon.options__2.label" },
+            { "value": "shield-check", "label": "t:sections.sample-kit.blocks.feature.settings.icon.options__3.label" },
+            { "value": "none", "label": "t:sections.sample-kit.blocks.feature.settings.icon.options__4.label" }
+          ],
+          "default": "compass-tool"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "t:sections.sample-kit.blocks.feature.settings.custom_icon.label",
+          "info": "t:sections.sample-kit.blocks.feature.settings.custom_icon.info"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "default": "Feature",
+          "label": "t:sections.sample-kit.blocks.feature.settings.label.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.sample-kit.presets.name",
+      "blocks": [
+        { "type": "finish" },
+        { "type": "finish" },
+        { "type": "finish" },
+        { "type": "feature", "settings": { "icon": "compass-tool", "label": "No Tools" } },
+        { "type": "feature", "settings": { "icon": "waveform", "label": "Echo-reduction" } },
+        { "type": "feature", "settings": { "icon": "shield-check", "label": "BPA-Free" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -2046,6 +2046,119 @@
         }
       }
     },
+    "sample-kit": {
+      "name": "Sample kit",
+      "settings": {
+        "color_scheme": {
+          "label": "Color scheme"
+        },
+        "background_color": {
+          "label": "Background color"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "header_kit": {
+          "content": "Sample kit"
+        },
+        "product": {
+          "label": "Sample kit product",
+          "info": "Shows the product price and adds it to the cart. Leave empty to use the button link instead."
+        },
+        "kit_title": {
+          "label": "Kit title",
+          "info": "Leave empty to use the product title."
+        },
+        "meta_1": {
+          "label": "Detail 1"
+        },
+        "meta_2": {
+          "label": "Detail 2"
+        },
+        "promo_text": {
+          "label": "Promo text"
+        },
+        "header_delivery": {
+          "content": "Estimated delivery"
+        },
+        "show_delivery": {
+          "label": "Show estimated delivery"
+        },
+        "delivery_label": {
+          "label": "Delivery label"
+        },
+        "delivery_min_days": {
+          "label": "Earliest delivery (days from today)"
+        },
+        "delivery_max_days": {
+          "label": "Latest delivery (days from today)"
+        },
+        "header_button": {
+          "content": "Button"
+        },
+        "button_label": {
+          "info": "Adds the sample kit product to the cart and goes straight to checkout."
+        },
+        "button_link": {
+          "info": "Used only when no sample kit product is selected."
+        },
+        "note": {
+          "label": "Note below button"
+        }
+      },
+      "blocks": {
+        "finish": {
+          "name": "Finish",
+          "settings": {
+            "product": {
+              "label": "Product",
+              "info": "Uses the product image and title, and links to the product."
+            },
+            "image": {
+              "label": "Image",
+              "info": "Overrides the product image."
+            },
+            "title": {
+              "label": "Title",
+              "info": "Overrides the product title."
+            }
+          }
+        },
+        "feature": {
+          "name": "Feature",
+          "settings": {
+            "icon": {
+              "label": "Icon",
+              "options__1": {
+                "label": "No tools"
+              },
+              "options__2": {
+                "label": "Sound wave"
+              },
+              "options__3": {
+                "label": "Shield check"
+              },
+              "options__4": {
+                "label": "None"
+              }
+            },
+            "custom_icon": {
+              "label": "Custom icon",
+              "info": "Replaces the icon above."
+            },
+            "label": {
+              "label": "Label"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Sample kit"
+      }
+    },
     "step-cards": {
       "name": "Step cards",
       "settings": {
