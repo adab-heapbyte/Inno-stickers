@@ -1,10 +1,17 @@
 /* ==========================================================================
    Header - "Minimal" style (header_style: minimal)
    Figma: desktop "Navigation" (4:828), 1920 x 66.
-   Used with the "Center logo with burger menu" layout. Desktop only (990px+);
+   Used with the "Center logo with burger menu" layout. Desktop only (1100px+, the theme's desktop-header breakpoint);
    the mobile header keeps the theme layout.
    ========================================================================== */
-@media screen and (min-width: 990px) {
+/* Solid white bar at every width, so content never shows through
+   the sticky header when scrolling back up */
+.header-wrapper:has(.header--style-minimal),
+.header.header--style-minimal {
+  background-color: rgb(255, 255, 255);
+}
+
+@media screen and (min-width: 1100px) {
   /* Bar: 66px, 8px / 64px padding, 12px between the three areas */
   .header.header--style-minimal {
     display: flex;
@@ -286,8 +293,8 @@
   object-fit: cover;
 }
 
-/* ---------- Mobile / tablet drawer (below 990px): same Figma panel ---------- */
-@media screen and (max-width: 989px) {
+/* ---------- Mobile / tablet drawer (below 1100px): same Figma panel ---------- */
+@media screen and (max-width: 1099px) {
   .header--style-minimal .menu-drawer {
     background-color: rgb(255, 255, 255);
   }
