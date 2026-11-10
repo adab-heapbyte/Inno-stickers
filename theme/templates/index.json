@@ -242,125 +242,6 @@
         "margin_bottom": "l"
       }
     },
-    "room_inspiration_ugc": {
-      "type": "room-inspiration",
-      "blocks": {
-        "story_george": {
-          "type": "story",
-          "settings": {
-            "name": "George’s home",
-            "title": "A garage, reimagined.",
-            "text": "George turned his garage into a stylish home gym. A dedicated workout area gives the garage a new purpose within the home."
-          }
-        },
-        "story_jessica": {
-          "type": "story",
-          "settings": {
-            "name": "Jessica’s home",
-            "title": "A garage, reimagined.",
-            "text": "Jessica turned a corner of her living room into a cozy dining spot. A small update gives everyday meals a space of their own."
-          }
-        },
-        "story_3": {
-          "type": "story",
-          "settings": {
-            "name": "Jessica’s home",
-            "title": "A garage, reimagined.",
-            "text": "Jessica turned a corner of her living room into a cozy dining spot. A small update gives everyday meals a space of their own."
-          }
-        },
-        "story_4": {
-          "type": "story",
-          "settings": {
-            "name": "Customer’s home",
-            "title": "Story title",
-            "text": "A short description of how the customer used the product."
-          }
-        },
-        "story_5": {
-          "type": "story",
-          "settings": {
-            "name": "Customer’s home",
-            "title": "Story title",
-            "text": "A short description of how the customer used the product."
-          }
-        }
-      },
-      "block_order": [
-        "story_george",
-        "story_jessica",
-        "story_3",
-        "story_4",
-        "story_5"
-      ],
-      "settings": {
-        "color_scheme": "background-1",
-        "background_color": "#f4f6f8",
-        "heading": "Real homes. Real inspiration.",
-        "heading_tag": "h2",
-        "description": "Explore customer projects and take a closer look at the finishes and details that make each space feel personal.",
-        "show_banner": true,
-        "banner_title": "Picture it in your space.",
-        "banner_text": "Explore how a finish could look in your own room.",
-        "banner_button_label": "See it in your space",
-        "banner_button_link": "shopify://collections/acoustic-wall-paneling",
-        "margin_top": "l",
-        "margin_bottom": "l"
-      }
-    },
-    "multicolumn_trust_badges": {
-      "type": "multicolumn",
-      "blocks": {
-        "badge_shipping": {
-          "type": "column",
-          "settings": {
-            "badge_icon": "free-shipping",
-            "heading": "Free U.S. shipping",
-            "description": "<p>On orders within the contiguous United States.</p>"
-          }
-        },
-        "badge_returns": {
-          "type": "column",
-          "settings": {
-            "badge_icon": "returns",
-            "heading": "30-day returns",
-            "description": "<p>For eligible unused items in original packaging.</p>"
-          }
-        },
-        "badge_warranty": {
-          "type": "column",
-          "settings": {
-            "badge_icon": "warranty",
-            "heading": "3-year warranty",
-            "description": "<p>Coverage against manufacturing defects.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "badge_shipping",
-        "badge_returns",
-        "badge_warranty"
-      ],
-      "settings": {
-        "color_scheme": "background-1",
-        "subheading": "",
-        "heading": "Shop with confidence.",
-        "heading_size": "h2",
-        "heading_tag": "h2",
-        "description": "<p>Start with the essentials for peel-and-stick acoustic panels.</p>",
-        "heading_alignment": "center",
-        "heading_content_width": "full",
-        "enable_full_screen": true,
-        "swiper": false,
-        "enable_scroll": false,
-        "layout_type": "badges",
-        "multicolumn_to_show": 3,
-        "button_label": "",
-        "button_link": "",
-        "margin_top": "l",
-        "margin_bottom": "l"
-      }
-    },
     "sample_kit_ordering": {
       "type": "sample-kit",
       "blocks": {
@@ -440,6 +321,181 @@
         "margin_bottom": "l"
       }
     },
+    "multicolumn_trust_badges": {
+      "type": "multicolumn",
+      "blocks": {
+        "badge_shipping": {
+          "type": "column",
+          "settings": {
+            "badge_icon": "free-shipping",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "",
+            "heading": "Free U.S. shipping",
+            "card_heading_tag": "h3",
+            "description": "<p>On orders within the contiguous United States.</p>",
+            "button_label": "Learn More",
+            "button_link": "",
+            "column_link": ""
+          }
+        },
+        "badge_returns": {
+          "type": "column",
+          "settings": {
+            "badge_icon": "returns",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "",
+            "heading": "30-day returns",
+            "card_heading_tag": "h3",
+            "description": "<p>For eligible unused items in original packaging.</p>",
+            "button_label": "Learn More",
+            "button_link": "",
+            "column_link": ""
+          }
+        },
+        "badge_warranty": {
+          "type": "column",
+          "settings": {
+            "badge_icon": "warranty",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "",
+            "heading": "3-year warranty",
+            "card_heading_tag": "h3",
+            "description": "<p>Coverage against manufacturing defects.</p>",
+            "button_label": "Learn More",
+            "button_link": "",
+            "column_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "badge_shipping",
+        "badge_returns",
+        "badge_warranty"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "subheading": "",
+        "heading": "Shop with confidence.",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "description": "<p>Start with the essentials for peel-and-stick acoustic panels.</p>",
+        "heading_alignment": "center",
+        "heading_content_width": "full",
+        "enable_full_screen": true,
+        "swiper": false,
+        "stop_autoplay": true,
+        "navigation": false,
+        "slideshow_speed": 20,
+        "enable_scroll": false,
+        "grid_space": "default",
+        "layout_type": "badges",
+        "content_position": "img-top",
+        "always_visible_text": false,
+        "on_hover": "show_text",
+        "multicolumn_to_show": 3,
+        "image_ratio": "portrait",
+        "object_fit": "cover",
+        "card_heading_size": "h1",
+        "button_label": "",
+        "button_style": "simple",
+        "button_link": "",
+        "margin_top": "l",
+        "margin_bottom": "l"
+      }
+    },
+    "room_inspiration_ugc": {
+      "type": "room-inspiration",
+      "blocks": {
+        "story_george": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/0d0f495b41afee0708e9e00eb36a4878c117a850.jpg",
+            "avatar": "shopify://shop_images/023e21ba44055a402f58e09c3fe2657f5f2c46b7.jpg",
+            "name": "George’s home",
+            "title": "A garage, reimagined.",
+            "text": "George turned his garage into a stylish home gym. A dedicated workout area gives the garage a new purpose within the home."
+          }
+        },
+        "story_jessica": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/6588e80a8a7f2596dcc9efc86c188b9170b2cd67.jpg",
+            "avatar": "shopify://shop_images/75c9e7e4eeb044de8c549250e6e3f3dd2761cf81.jpg",
+            "name": "Jessica’s home",
+            "title": "A garage, reimagined.",
+            "text": "Jessica turned a corner of her living room into a cozy dining spot. A small update gives everyday meals a space of their own."
+          }
+        },
+        "story_3": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/f81c3606563a0d5e7bde3e6141b738f771abf65a.jpg",
+            "avatar": "shopify://shop_images/3632fa4fe9fadb7f04ac181b02f28a5b8139f974.jpg",
+            "name": "Jessica’s home",
+            "title": "A garage, reimagined.",
+            "text": "Jessica turned a corner of her living room into a cozy dining spot. A small update gives everyday meals a space of their own."
+          }
+        },
+        "story_4": {
+          "type": "story",
+          "settings": {
+            "name": "Customer’s home",
+            "title": "Story title",
+            "text": "A short description of how the customer used the product."
+          }
+        },
+        "story_5": {
+          "type": "story",
+          "settings": {
+            "name": "Customer’s home",
+            "title": "Story title",
+            "text": "A short description of how the customer used the product."
+          }
+        }
+      },
+      "block_order": [
+        "story_george",
+        "story_jessica",
+        "story_3",
+        "story_4",
+        "story_5"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "background_color": "#f4f6f8",
+        "heading": "Real homes. Real inspiration.",
+        "heading_tag": "h2",
+        "description": "Explore customer projects and take a closer look at the finishes and details that make each space feel personal.",
+        "show_banner": true,
+        "banner_title": "Picture it in your space.",
+        "banner_text": "Explore how a finish could look in your own room.",
+        "banner_button_label": "See it in your space",
+        "banner_button_link": "shopify://collections/acoustic-wall-paneling",
+        "margin_top": "l",
+        "margin_bottom": "l"
+      }
+    },
     "multicolumn": {
       "type": "multicolumn",
       "blocks": {
@@ -447,6 +503,7 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/PSFT-WDC-12-9.jpg",
+            "badge_icon": "none",
             "overlay_opacity": 0.2,
             "video_overlay_on_image": false,
             "background_color": "rgba(0,0,0,0)",
@@ -468,6 +525,7 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/PSFT-WDH-12-8.jpg",
+            "badge_icon": "none",
             "overlay_opacity": 0.2,
             "video_overlay_on_image": false,
             "background_color": "rgba(0,0,0,0)",
@@ -489,6 +547,7 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/PSFT-WDC-12-10.jpg",
+            "badge_icon": "none",
             "overlay_opacity": 0.2,
             "video_overlay_on_image": false,
             "background_color": "rgba(0,0,0,0)",
@@ -510,6 +569,7 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/PSFT-WDH-12-9.jpg",
+            "badge_icon": "none",
             "overlay_opacity": 0.2,
             "video_overlay_on_image": false,
             "background_color": "rgba(0,0,0,0)",
@@ -531,6 +591,7 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/PSFT-WDH-12-10.jpg",
+            "badge_icon": "none",
             "overlay_opacity": 0.2,
             "video_overlay_on_image": false,
             "background_color": "rgba(0,0,0,0)",
@@ -944,6 +1005,7 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/PSFT-WDCS-12-6.jpg",
+            "badge_icon": "none",
             "overlay_opacity": 0.2,
             "video_overlay_on_image": false,
             "background_color": "rgba(0,0,0,0)",
@@ -965,6 +1027,7 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/PSFT-WDL-12-7.jpg",
+            "badge_icon": "none",
             "overlay_opacity": 0.2,
             "video_overlay_on_image": false,
             "background_color": "rgba(0,0,0,0)",
@@ -986,6 +1049,7 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/PSFT-WDL-12-6.jpg",
+            "badge_icon": "none",
             "overlay_opacity": 0.2,
             "video_overlay_on_image": false,
             "background_color": "rgba(0,0,0,0)",
