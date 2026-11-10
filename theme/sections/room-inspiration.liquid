@@ -1,0 +1,353 @@
+{{ 'section-room-inspiration.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'room-inspiration.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  {% render 'section-margin' %}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign story_count = section.blocks.size
+  assign total_label = story_count
+  if story_count < 10
+    assign total_label = '0' | append: story_count
+  endif
+-%}
+
+<div class="room-inspiration color-{{ section.settings.color_scheme }}">
+  <div class="container room-inspiration__container">
+    {%- if section.settings.heading != blank or section.settings.description != blank -%}
+      <div class="room-inspiration__header">
+        {%- if section.settings.heading != blank -%}
+          <{{ section.settings.heading_tag }} class="room-inspiration__heading">
+            {{- section.settings.heading | escape -}}
+          </{{ section.settings.heading_tag }}>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="room-inspiration__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if story_count > 0 -%}
+      <room-inspiration-slider class="room-inspiration__gallery" data-total="{{ story_count }}">
+        <div class="room-inspiration__slider swiper">
+          <ul class="room-inspiration__list swiper-wrapper list-unstyled" role="list">
+            {%- for block in section.blocks -%}
+              <li class="room-inspiration__item swiper-slide" {{ block.shopify_attributes }}>
+                <div class="room-inspiration__media{% if block.settings.image != blank %} room-inspiration__media--has-image{% endif %}">
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 1600
+                      | image_tag:
+                        class: 'room-inspiration__image',
+                        loading: 'lazy',
+                        sizes: '(min-width: 990px) calc((100vw - 16.66vw - 4.8rem) / 3), 300px',
+                        widths: '300, 450, 600, 900, 1034, 1200, 1600',
+                        alt: block.settings.image.alt
+                    }}
+                    <button
+                      type="button"
+                      class="room-inspiration__expand"
+                      data-full="{{ block.settings.image | image_url: width: 2400 }}"
+                      data-alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                      aria-label="{{ 'sections.room_inspiration.expand' | t }}: {{ block.settings.title | escape }}"
+                      aria-haspopup="dialog"
+                    >
+                      <img src="{{ 'icon-arrows-out.svg' | asset_url }}" alt="" width="20" height="20" loading="lazy">
+                    </button>
+                  {%- else -%}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg room-inspiration__image' }}
+                  {%- endif -%}
+                </div>
+
+                <div class="room-inspiration__content">
+                  {%- if block.settings.name != blank -%}
+                    <p class="room-inspiration__owner">
+                      {%- if block.settings.avatar != blank -%}
+                        {{
+                          block.settings.avatar
+                          | image_url: width: 96
+                          | image_tag:
+                            class: 'room-inspiration__avatar',
+                            loading: 'lazy',
+                            width: 24,
+                            height: 24,
+                            alt: ''
+                        }}
+                      {%- endif -%}
+                      <span>{{ block.settings.name | escape }}</span>
+                    </p>
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="room-inspiration__title">{{ block.settings.title | escape }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.text != blank -%}
+                    <p class="room-inspiration__text">{{ block.settings.text }}</p>
+                  {%- endif -%}
+                </div>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <div class="room-inspiration__progress" aria-hidden="true">
+          <p class="room-inspiration__counter">
+            <span class="room-inspiration__counter-current">01</span>
+            <span class="room-inspiration__counter-separator">/</span>
+            <span class="room-inspiration__counter-total">{{ total_label }}</span>
+          </p>
+          <div class="room-inspiration__bar">
+            <span class="room-inspiration__bar-thumb"></span>
+          </div>
+        </div>
+
+        <dialog class="room-inspiration__lightbox" aria-label="{{ section.settings.heading | escape }}">
+          <button type="button" class="room-inspiration__lightbox-close" aria-label="{{ 'accessibility.close' | t }}">
+            {% render 'icon-close' %}
+          </button>
+          <img class="room-inspiration__lightbox-image" src="" alt="">
+        </dialog>
+      </room-inspiration-slider>
+    {%- endif -%}
+
+    {%- if section.settings.show_banner -%}
+      <div class="room-inspiration__banner">
+        <div class="room-inspiration__banner-info">
+          {%- if section.settings.banner_icon != blank -%}
+            {{
+              section.settings.banner_icon
+              | image_url: width: 112
+              | image_tag: class: 'room-inspiration__banner-icon', loading: 'lazy', width: 56, height: 56, alt: ''
+            }}
+          {%- else -%}
+            <img
+              class="room-inspiration__banner-icon"
+              src="{{ 'icon-room-view.svg' | asset_url }}"
+              alt=""
+              width="40"
+              height="40"
+              loading="lazy"
+            >
+          {%- endif -%}
+          <div class="room-inspiration__banner-text">
+            {%- if section.settings.banner_title != blank -%}
+              <p class="room-inspiration__banner-title">{{ section.settings.banner_title | escape }}</p>
+            {%- endif -%}
+            {%- if section.settings.banner_text != blank -%}
+              <p class="room-inspiration__banner-description">{{ section.settings.banner_text | escape }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if section.settings.banner_button_label != blank -%}
+          <a
+            class="button room-inspiration__button"
+            {% if section.settings.banner_button_link != blank %}
+              href="{{ section.settings.banner_button_link }}"
+            {% else %}
+              role="link"
+              aria-disabled="true"
+            {% endif %}
+          >
+            <span>{{ section.settings.banner_button_label | escape }}</span>
+            <img
+              class="room-inspiration__button-icon"
+              src="{{ 'icon-arrow-right-navy.svg' | asset_url }}"
+              alt=""
+              width="20"
+              height="20"
+              loading="lazy"
+            >
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.room-inspiration.name",
+  "tag": "section",
+  "class": "room-inspiration-section",
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-1",
+      "label": "t:sections.room-inspiration.settings.color_scheme.label"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "default": "#F4F6F8",
+      "label": "t:sections.room-inspiration.settings.background_color.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Real homes. Real inspiration.",
+      "label": "t:sections.room-inspiration.settings.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:sections.all.heading.tag",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "div", "label": "div" },
+        { "value": "p", "label": "p" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "default": "Explore customer projects and take a closer look at the finishes and details that make each space feel personal.",
+      "label": "t:sections.room-inspiration.settings.description.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.room-inspiration.settings.header_banner.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_banner",
+      "default": true,
+      "label": "t:sections.room-inspiration.settings.show_banner.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_icon",
+      "label": "t:sections.room-inspiration.settings.banner_icon.label",
+      "info": "t:sections.room-inspiration.settings.banner_icon.info"
+    },
+    {
+      "type": "text",
+      "id": "banner_title",
+      "default": "Picture it in your space.",
+      "label": "t:sections.room-inspiration.settings.banner_title.label"
+    },
+    {
+      "type": "text",
+      "id": "banner_text",
+      "default": "Explore how a finish could look in your own room.",
+      "label": "t:sections.room-inspiration.settings.banner_text.label"
+    },
+    {
+      "type": "text",
+      "id": "banner_button_label",
+      "default": "See it in your space",
+      "label": "t:sections.all.button.button_label.label"
+    },
+    {
+      "type": "url",
+      "id": "banner_button_link",
+      "label": "t:sections.all.button.button_link.label",
+      "info": "t:sections.room-inspiration.settings.banner_button_link.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-margin.header.content"
+    },
+    {
+      "type": "select",
+      "id": "margin_top",
+      "options": [
+        { "value": "no-indent", "label": "t:sections.all.section-margin.options__1.label" },
+        { "value": "xs", "label": "t:sections.all.section-margin.options__2.label" },
+        { "value": "s", "label": "t:sections.all.section-margin.options__3.label" },
+        { "value": "m", "label": "t:sections.all.section-margin.options__4.label" },
+        { "value": "l", "label": "t:sections.all.section-margin.options__5.label" },
+        { "value": "xl", "label": "t:sections.all.section-margin.options__6.label" }
+      ],
+      "default": "l",
+      "label": "t:sections.all.section-margin.margin_top.label"
+    },
+    {
+      "type": "select",
+      "id": "margin_bottom",
+      "options": [
+        { "value": "no-indent", "label": "t:sections.all.section-margin.options__1.label" },
+        { "value": "xs", "label": "t:sections.all.section-margin.options__2.label" },
+        { "value": "s", "label": "t:sections.all.section-margin.options__3.label" },
+        { "value": "m", "label": "t:sections.all.section-margin.options__4.label" },
+        { "value": "l", "label": "t:sections.all.section-margin.options__5.label" },
+        { "value": "xl", "label": "t:sections.all.section-margin.options__6.label" }
+      ],
+      "default": "l",
+      "label": "t:sections.all.section-margin.margin_bottom.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "t:sections.room-inspiration.blocks.story.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.room-inspiration.blocks.story.settings.image.label",
+          "info": "t:sections.room-inspiration.blocks.story.settings.image.info"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "t:sections.room-inspiration.blocks.story.settings.avatar.label"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "default": "Customer’s home",
+          "label": "t:sections.room-inspiration.blocks.story.settings.name.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Story title",
+          "label": "t:sections.room-inspiration.blocks.story.settings.title.label"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "default": "A short description of how the customer used the product.",
+          "label": "t:sections.room-inspiration.blocks.story.settings.text.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.room-inspiration.presets.name",
+      "blocks": [
+        {
+          "type": "story",
+          "settings": {
+            "name": "George’s home",
+            "title": "A garage, reimagined.",
+            "text": "George turned his garage into a stylish home gym. A dedicated workout area gives the garage a new purpose within the home."
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "name": "Jessica’s home",
+            "title": "A corner, uplifted.",
+            "text": "Jessica turned a corner of her living room into a cozy dining spot. A small update gives everyday meals a space of their own."
+          }
+        },
+        { "type": "story" }
+      ]
+    }
+  ]
+}
+{% endschema %}

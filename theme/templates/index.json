@@ -242,6 +242,72 @@
         "margin_bottom": "l"
       }
     },
+    "room_inspiration_ugc": {
+      "type": "room-inspiration",
+      "blocks": {
+        "story_george": {
+          "type": "story",
+          "settings": {
+            "name": "George’s home",
+            "title": "A garage, reimagined.",
+            "text": "George turned his garage into a stylish home gym. A dedicated workout area gives the garage a new purpose within the home."
+          }
+        },
+        "story_jessica": {
+          "type": "story",
+          "settings": {
+            "name": "Jessica’s home",
+            "title": "A garage, reimagined.",
+            "text": "Jessica turned a corner of her living room into a cozy dining spot. A small update gives everyday meals a space of their own."
+          }
+        },
+        "story_3": {
+          "type": "story",
+          "settings": {
+            "name": "Jessica’s home",
+            "title": "A garage, reimagined.",
+            "text": "Jessica turned a corner of her living room into a cozy dining spot. A small update gives everyday meals a space of their own."
+          }
+        },
+        "story_4": {
+          "type": "story",
+          "settings": {
+            "name": "Customer’s home",
+            "title": "Story title",
+            "text": "A short description of how the customer used the product."
+          }
+        },
+        "story_5": {
+          "type": "story",
+          "settings": {
+            "name": "Customer’s home",
+            "title": "Story title",
+            "text": "A short description of how the customer used the product."
+          }
+        }
+      },
+      "block_order": [
+        "story_george",
+        "story_jessica",
+        "story_3",
+        "story_4",
+        "story_5"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "background_color": "#f4f6f8",
+        "heading": "Real homes. Real inspiration.",
+        "heading_tag": "h2",
+        "description": "Explore customer projects and take a closer look at the finishes and details that make each space feel personal.",
+        "show_banner": true,
+        "banner_title": "Picture it in your space.",
+        "banner_text": "Explore how a finish could look in your own room.",
+        "banner_button_label": "See it in your space",
+        "banner_button_link": "shopify://collections/acoustic-wall-paneling",
+        "margin_top": "l",
+        "margin_bottom": "l"
+      }
+    },
     "multicolumn_trust_badges": {
       "type": "multicolumn",
       "blocks": {
@@ -1416,6 +1482,7 @@
     "step_cards_installation",
     "sample_kit_ordering",
     "multicolumn_trust_badges",
+    "room_inspiration_ugc",
     "multicolumn",
     "image-with-text",
     "popular-products1",

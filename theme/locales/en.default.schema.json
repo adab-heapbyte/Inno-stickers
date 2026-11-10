@@ -2046,6 +2046,69 @@
         }
       }
     },
+    "room-inspiration": {
+      "name": "Room inspiration",
+      "settings": {
+        "color_scheme": {
+          "label": "Color scheme"
+        },
+        "background_color": {
+          "label": "Background color"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "header_banner": {
+          "content": "See it in your space banner"
+        },
+        "show_banner": {
+          "label": "Show banner"
+        },
+        "banner_icon": {
+          "label": "Banner icon",
+          "info": "Leave empty to use the default room view icon."
+        },
+        "banner_title": {
+          "label": "Banner title"
+        },
+        "banner_text": {
+          "label": "Banner text"
+        },
+        "banner_button_link": {
+          "info": "Link for the room visualizer (HomeVisioner) once it is set up."
+        }
+      },
+      "blocks": {
+        "story": {
+          "name": "Customer story",
+          "settings": {
+            "image": {
+              "label": "Room photo",
+              "info": "Use real customer photos (UGC)."
+            },
+            "avatar": {
+              "label": "Customer avatar"
+            },
+            "name": {
+              "label": "Home name",
+              "info": "Shown in capitals, e.g. George’s home."
+            },
+            "title": {
+              "label": "Title"
+            },
+            "text": {
+              "label": "Story"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Room inspiration"
+      }
+    },
     "sample-kit": {
       "name": "Sample kit",
       "settings": {

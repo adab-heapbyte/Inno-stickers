@@ -375,6 +375,9 @@
     }
   },
   "sections": {
+    "room_inspiration": {
+      "expand": "View larger photo"
+    },
     "header": {
       "announcement": "Announcement",
       "menu": "Menu",
