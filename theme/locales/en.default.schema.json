@@ -1726,6 +1726,14 @@
     "announcement-bar": {
       "name": "Announcement bar",
       "settings": {
+        "background_color": {
+          "label": "Background color",
+          "info": "Overrides the color scheme background. Leave empty to use the color scheme."
+        },
+        "show_close_button": {
+          "label": "Show close button",
+          "info": "Lets visitors hide the announcement bar for a day."
+        },
         "height": {
           "label": "Height"
         },

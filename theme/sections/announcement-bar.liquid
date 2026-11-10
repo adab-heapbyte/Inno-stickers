@@ -36,7 +36,24 @@
 %}
 
 {% unless template_base == 'customers/login' or template_base == 'customers/register' %}
-  <div class="section-announcement-bar color-{{ section.settings.color_scheme }} {% if section.settings.enable_ticker and speed != 0 and section.settings.ticker_pause_hover %} announcement-bar-ticker--pause-hover{% endif %}">
+  {%- liquid
+    # Optional background colour override (the colour scheme is used when empty)
+    assign bar_bg = section.settings.background_color
+    assign bar_style = ''
+    if bar_bg != blank and bar_bg.alpha > 0
+      capture bar_style
+        echo '--color-background: ' | append: bar_bg.red | append: ',' | append: bar_bg.green | append: ',' | append: bar_bg.blue | append: '; '
+        echo '--gradient-background: ' | append: bar_bg | append: '; '
+        echo 'background-color: ' | append: bar_bg | append: ';'
+      endcapture
+    endif
+  -%}
+  <div
+    class="section-announcement-bar color-{{ section.settings.color_scheme }} {% if section.settings.enable_ticker and speed != 0 and section.settings.ticker_pause_hover %} announcement-bar-ticker--pause-hover{% endif %}"
+    {% if bar_style != blank %}
+      style="{{ bar_style }}"
+    {% endif %}
+  >
     <div class="container">
       <div
         class="announcement-bar background announcement-bar--{{ section.settings.text_align }}"
@@ -104,7 +121,7 @@
               </div>
             {%- endif -%}
           </div>
-          {%- if section.settings.enable_ticker == false or speed == 0 -%}
+          {%- if section.settings.show_close_button and section.settings.enable_ticker == false or section.settings.show_close_button and speed == 0 -%}
             <div class="announcement-bar__close-button">
               <div class="announcement-bar__close-button-icon">
                 {% render 'icon-close' %}
@@ -149,6 +166,19 @@
       "id": "color_scheme",
       "default": "background-1",
       "label": "t:sections.announcement-bar.settings.color_scheme.label"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:sections.announcement-bar.settings.background_color.label",
+      "info": "t:sections.announcement-bar.settings.background_color.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_close_button",
+      "default": false,
+      "label": "t:sections.announcement-bar.settings.show_close_button.label",
+      "info": "t:sections.announcement-bar.settings.show_close_button.info"
     },
     {
       "type": "select",
