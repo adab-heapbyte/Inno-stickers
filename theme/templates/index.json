@@ -73,6 +73,44 @@
         "margin_bottom": "no-indent"
       }
     },
+    "popular-products": {
+      "type": "popular-products",
+      "settings": {
+        "card_style": "catalog",
+        "subheading": "",
+        "heading": "Best Seller",
+        "heading_tag": "h2",
+        "description": "Ideal for patios, balconies, and garden areas—made for daily use, light gardening, and unwinding outdoors.",
+        "heading_size": "h1",
+        "product_list": [
+          "green-coin-waterjet-peel-and-stick-backsplash-tile",
+          "waterjet-leaf-white-peel-and-stick-tile",
+          "green-raindrop-peel-and-stick-backsplash-tile",
+          "aluminium-peel-and-stick-backplash-trim-12inch-black-matte"
+        ],
+        "products_to_show": 4,
+        "enable_swiper": false,
+        "enable_autoplay": false,
+        "enable_loop": false,
+        "navigation": false,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_color_count": false,
+        "show_size_count": false,
+        "show_collection": false,
+        "show_desc": false,
+        "price_suffix": "sq. ft.",
+        "show_rating": true,
+        "card_button_label": "Add Sample",
+        "columns_mobile": "2",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "simple",
+        "margin_top": "l",
+        "margin_bottom": "l"
+      }
+    },
     "product-slider": {
       "type": "product-slider",
       "blocks": {
@@ -94,6 +132,7 @@
             "image": "shopify://shop_images/PSFT-WDC-12-7.jpg",
             "color_scheme": "background-2",
             "overlay_opacity": 0.1,
+            "title": "",
             "description": "Highlight products, promos, or seasonal picks to engage visitors."
           }
         },
@@ -104,6 +143,7 @@
             "image": "shopify://shop_images/MZMLG-WAL-16-6.jpg",
             "color_scheme": "background-2",
             "overlay_opacity": 0.1,
+            "title": "",
             "description": "Uncover the beauty of minimalist design that brings sophistication"
           }
         },
@@ -114,6 +154,7 @@
             "image": "shopify://shop_images/PSFT-WDM-12-6.jpg",
             "color_scheme": "",
             "overlay_opacity": 0.1,
+            "title": "",
             "description": "Transform your living space with sleek, understated design"
           }
         }
@@ -155,44 +196,6 @@
         "show_rating": true,
         "margin_top": "no-indent",
         "margin_bottom": "no-indent"
-      }
-    },
-    "popular-products": {
-      "type": "popular-products",
-      "settings": {
-        "card_style": "catalog",
-        "subheading": "",
-        "heading": "Best Seller",
-        "heading_tag": "h2",
-        "description": "Ideal for patios, balconies, and garden areas—made for daily use, light gardening, and unwinding outdoors.",
-        "heading_size": "h1",
-        "product_list": [
-          "10-pieces-aluminium-peel-and-stick-backsplash-trim-36inch-silver-matte",
-          "10-pieces-aluminium-peel-and-stick-backsplash-trims-36inch-milky-white",
-          "10-pieces-aluminium-peel-and-stick-backplash-trim-36inch-grey-matte",
-          "10-pieces-aluminium-peel-and-stick-backplash-trim-36inch-black-matte"
-        ],
-        "products_to_show": 4,
-        "enable_swiper": false,
-        "enable_autoplay": false,
-        "enable_loop": false,
-        "navigation": false,
-        "image_ratio": "portrait",
-        "image_fit": "cover",
-        "show_vendor": false,
-        "show_color_count": false,
-        "show_size_count": false,
-        "show_collection": false,
-        "show_desc": false,
-        "price_suffix": "sq. ft.",
-        "show_rating": true,
-        "card_button_label": "Add Sample",
-        "columns_mobile": "2",
-        "button_label": "",
-        "button_link": "",
-        "button_style": "simple",
-        "margin_top": "l",
-        "margin_bottom": "l"
       }
     },
     "multicolumn": {
@@ -1232,8 +1235,8 @@
   },
   "order": [
     "slideshow",
-    "product-slider",
     "popular-products",
+    "product-slider",
     "multicolumn",
     "image-with-text",
     "popular-products1",
