@@ -1,0 +1,95 @@
+{% doc %}
+  Renders the article byline: the primary article author, followed by the co-authors stored in the
+  article's `custom.co_authors` metafield.
+
+  Co-authors are `author` metaobject entries with a required `name` field and an optional `title`
+  field (for example "Senior Editor"). The metaobject and metafield definitions are not tracked in
+  this repository and have to be created in the Shopify admin - the setup is described in the info
+  text of the "Show author" setting of the Article header block. Articles without the metafield
+  keep rendering the primary author only.
+
+  Turning `show_primary_author` off credits the co-authors alone, without the author set on the
+  article in the Shopify admin.
+
+  @param {object} article - Article Liquid object
+  @param {boolean} [show_primary_author] - Show the article author itself, defaults to true
+
+  @example
+  {% render 'article-authors', article: article %}
+{% enddoc %}
+
+{% liquid
+  assign co_authors = article.metafields.custom.co_authors.value
+
+  # Only an explicit false hides the primary author, so blocks saved before the setting existed
+  # (where it resolves to nil) keep crediting it.
+  assign render_primary_author = false
+  if show_primary_author != false and article.author != blank
+    assign render_primary_author = true
+  endif
+
+  # Entries without a name are skipped, so the conjunction is placed with a counter of the entries
+  # that are actually rendered instead of with forloop.last.
+  assign co_authors_count = 0
+  for co_author in co_authors
+    if co_author.name.value != blank
+      assign co_authors_count = co_authors_count | plus: 1
+    endif
+  endfor
+
+  assign rendered_co_authors = 0
+%}
+
+{%- if render_primary_author or co_authors_count > 0 -%}
+  <div class="article-template__author secondary_text">
+    <span class="article-template__authors">
+      {%- if render_primary_author -%}
+        <span
+          class="article-template__author-item"
+          itemprop="author"
+          itemscope
+          itemtype="http://schema.org/Person"
+        >
+          <span itemprop="name">{{ article.author | escape }}</span></span
+        >
+      {%- endif -%}
+
+      {%- for co_author in co_authors -%}
+        {%- assign co_author_name = co_author.name.value -%}
+
+        {%- if co_author_name == blank -%}
+          {%- continue -%}
+        {%- endif -%}
+
+        {%- assign co_author_title = co_author.title.value -%}
+        {%- assign rendered_co_authors = rendered_co_authors | plus: 1 -%}
+
+        {%- if render_primary_author or rendered_co_authors > 1 -%}
+          {%- if rendered_co_authors == co_authors_count -%}
+            {{- ' ' -}}
+            {{- 'general.blog.authors_last_separator' | t -}}
+            {{- ' ' }}
+          {%- else -%}
+            {{- 'general.blog.authors_separator' | t -}}
+            {{- ' ' }}
+          {%- endif -%}
+        {%- endif -%}
+
+        <span
+          class="article-template__author-item"
+          itemprop="author"
+          itemscope
+          itemtype="http://schema.org/Person"
+        >
+          <span itemprop="name">{{ co_author_name | escape }}</span>
+          {%- if co_author_title != blank -%}
+            {{- 'general.blog.author_title_separator' | t }}
+            <span class="article-template__author-title" itemprop="jobTitle">
+              {{- co_author_title | escape -}}
+            </span>
+          {%- endif -%}
+        </span>
+      {%- endfor -%}
+    </span>
+  </div>
+{%- endif -%}

@@ -1,0 +1,22 @@
+{%- comment -%}
+  Renders the color group of a single product media item. The group is the part
+  of the media alt text that follows the last "#", handleized. Media without a
+  "#" tag belongs to no group and stays visible for every color.
+
+  Accepts:
+  - media: {Object} Media object
+  - enabled: {Boolean} Whether variant media grouping is active for the product
+
+  Usage:
+  {%- capture media_group -%}
+    {%- render 'variant-media-group', media: media, enabled: alt_media_grouping -%}
+  {%- endcapture -%}
+{%- endcomment -%}
+{%- liquid
+  if enabled
+    assign media_alt = media.alt | default: media.preview_image.alt
+    if media_alt contains '#'
+      echo media_alt | split: '#' | last | handle | strip
+    endif
+  endif
+-%}

@@ -1,0 +1,22 @@
+{% comment %}
+  	Renders a list of product's volume-pricing
+
+  	Accepts:
+  	- product: {Object} Product Liquid object (optional)
+
+  	Usage:
+  {% render 'volume-pricing', product: product %}
+{% endcomment %}
+
+{%- liquid
+  assign has_volume_pricing = false
+  if product.quantity_price_breaks_configured? and product.selected_or_first_available_variant.quantity_price_breaks.size > 0
+    assign has_volume_pricing = true
+  endif
+-%}
+
+{%- if has_volume_pricing == true -%}
+  <div class="product__volume-pricing-note body-sm">
+    {{- 'products.product.price.volume_pricing_note' | t -}}
+  </div>
+{%- endif -%}

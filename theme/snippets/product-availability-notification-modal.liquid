@@ -1,0 +1,209 @@
+{% doc %}
+  Renders the availability notification modal with the contact form that lets a
+  customer ask to be notified when a sold out variant is back in stock.
+  Must be rendered outside of the product form to keep the markup valid.
+
+  @param {object} product - Product Liquid object
+  @param {object} block - Buy buttons block Liquid object
+  @param {string} section_id - Section ID
+
+  @example
+  {% render 'product-availability-notification-modal', product: product, block: block, section_id: section.id %}
+{% enddoc %}
+
+{%- liquid
+  assign form_id = 'AvailabilityNotificationForm-' | append: section_id
+  assign product_title = product.title | escape
+  assign heading_tag = block.settings.availability_notification_heading_tag | default: 'h3'
+
+  assign heading = 'products.product.availability_notification.modal_title' | t
+  if block.settings.availability_notification_heading != blank
+    assign heading = block.settings.availability_notification_heading
+  endif
+
+  assign product_options = ''
+  for product_option in product.options_with_values
+    assign selected_option_value = product_option.selected_value | escape
+    assign product_options = product_options | append: selected_option_value
+    unless forloop.last
+      assign product_options = product_options | append: ' / '
+    endunless
+  endfor
+-%}
+
+<modal-dialog
+  id="AvailabilityNotificationModal-{{ section_id }}"
+  class="product-popup-modal availability-notification-modal"
+>
+  <div
+    role="dialog"
+    aria-labelledby="AvailabilityNotificationHeading-{{ section_id }}"
+    aria-modal="true"
+    class="product-popup-modal__content"
+    tabindex="-1"
+  >
+    <div class="product-popup-modal__top">
+      <{{ heading_tag }} class="product-popup-modal__title h3" id="AvailabilityNotificationHeading-{{ section_id }}">
+        {{ heading }}
+      </{{ heading_tag }}>
+      <button
+        id="ModalClose-AvailabilityNotification-{{ section_id }}"
+        type="button"
+        class="product-popup-modal__close modal-close-button focus-inset"
+        aria-label="{{ 'accessibility.close' | t }}"
+      >
+        {% render 'icon-close' %}
+      </button>
+    </div>
+
+    <div class="product-popup-modal__content-info availability-notification-modal__content">
+      <div class="availability-notification-modal__product">
+        <span class="availability-notification-modal__product-title h5">{{ product_title }}</span>
+        {%- unless product.has_only_default_variant -%}
+          <span
+            class="availability-notification-modal__product-options secondary_text"
+            data-availability-notification-options
+          >
+            {{- product_options -}}
+          </span>
+        {%- endunless -%}
+      </div>
+
+      {%- if block.settings.availability_notification_text != blank -%}
+        <div class="availability-notification-modal__text secondary_text">
+          {{ block.settings.availability_notification_text }}
+        </div>
+      {%- endif -%}
+
+      {%- form 'contact', id: form_id, class: 'availability-notification-form' -%}
+        {%- if form.posted_successfully? -%}
+          <div
+            class="form-status form__message availability-notification-form__status"
+            id="{{ form_id }}-success"
+            tabindex="-1"
+            data-availability-notification-message
+            data-availability-notification-success
+          >
+            {% render 'icon-success' %}
+            {{ 'products.product.availability_notification.post_success' | t }}
+          </div>
+        {%- elsif form.errors.messages.form != blank -%}
+          <div
+            class="form-status form__message availability-notification-form__status availability-notification-form__status--error"
+            id="{{ form_id }}-error"
+            tabindex="-1"
+            data-availability-notification-message
+          >
+            {% render 'icon-error' %}
+            {{ form.errors.messages.form }}
+          </div>
+        {%- endif -%}
+
+        <div class="field">
+          <input
+            dir="ltr"
+            class="field__input focus-inset"
+            type="text"
+            id="AvailabilityNotification-name-{{ section_id }}"
+            name="contact[name]"
+            autocomplete="name"
+            value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            placeholder="{{ 'templates.contact.form.name' | t }}"
+          >
+          <label
+            class="field__label secondary_text"
+            for="AvailabilityNotification-name-{{ section_id }}"
+          >
+            {{ 'templates.contact.form.name' | t }}
+          </label>
+        </div>
+
+        <div class="field">
+          <input
+            dir="ltr"
+            class="field__input focus-inset"
+            type="tel"
+            id="AvailabilityNotification-phone-{{ section_id }}"
+            name="contact[phone]"
+            autocomplete="tel"
+            value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+            placeholder="{{ 'templates.contact.form.phone' | t }}"
+          >
+          <label
+            class="field__label secondary_text"
+            for="AvailabilityNotification-phone-{{ section_id }}"
+          >
+            {{ 'templates.contact.form.phone' | t }}
+          </label>
+        </div>
+
+        <div class="field">
+          <input
+            dir="ltr"
+            class="field__input focus-inset"
+            type="email"
+            id="AvailabilityNotification-email-{{ section_id }}"
+            name="contact[email]"
+            autocomplete="email"
+            spellcheck="false"
+            autocapitalize="off"
+            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            aria-required="true"
+            {% if form.errors contains 'email' %}
+              aria-invalid="true"
+              aria-describedby="AvailabilityNotification-email-error-{{ section_id }}"
+            {% endif %}
+            placeholder="{{ 'templates.contact.form.email' | t }}"
+            required
+          >
+          <label
+            class="field__label secondary_text"
+            for="AvailabilityNotification-email-{{ section_id }}"
+          >
+            {{ 'templates.contact.form.email' | t }}
+          </label>
+          {%- if form.errors contains 'email' -%}
+            <small
+              class="availability-notification-form__field-error"
+              id="AvailabilityNotification-email-error-{{ section_id }}"
+              data-availability-notification-message
+            >
+              <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+              <span class="form__message">
+                {{- form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email -}}
+              </span>
+            </small>
+          {%- endif -%}
+        </div>
+
+        <input
+          type="hidden"
+          name="contact[message]"
+          value="{{ 'products.product.availability_notification.form_body_text' | t }}"
+        >
+        <input type="hidden" name="contact[product_title]" value="{{ product_title }}">
+        {%- unless product.has_only_default_variant -%}
+          <input
+            type="hidden"
+            name="contact[product_options]"
+            value="{{ product_options }}"
+            data-availability-notification-options-input
+          >
+        {%- endunless -%}
+        <input
+          type="hidden"
+          name="return_to"
+          value="{{ product.url }}?variant={{ product.selected_or_first_available_variant.id }}&amp;contact_posted=true"
+          data-availability-notification-return
+        >
+
+        <div class="availability-notification-form__bottom">
+          <button type="submit" class="button button--primary focus-inset">
+            <span>{{ 'products.product.availability_notification.modal_button_label' | t }}</span>
+          </button>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</modal-dialog>

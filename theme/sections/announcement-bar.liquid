@@ -1,0 +1,232 @@
+<style>
+  :root {
+  	--announcement-height: {{ section.settings.height_mobile }}px;
+  }
+
+  @media screen and (min-width: 765px) {
+  	:root {
+  		--announcement-height: {{ section.settings.height }}px;
+  	}
+  }
+  .announcement-hide {
+  	--announcement-height: 0px;
+  }
+</style>
+
+<script src="{{ 'announcement.js' | asset_url }}" defer="defer"></script>
+
+{% assign template_base = template | split: '.' | first %}
+
+{% liquid
+  assign target_ticker_line_width = 4000
+  assign char_width = 4
+
+  assign text_length = section.settings.text.size | default: 1
+  assign text_width = text_length | times: char_width
+  assign block_width = text_width | plus: 280
+  assign ticker_elements_count = target_ticker_line_width | divided_by: block_width | at_least: 1 | plus: 2
+
+  assign min_duration = 60
+  assign max_duration = 140
+  assign speed = section.settings.ticker_speed
+  assign speed_range = 10
+  assign duration_range = max_duration | minus: min_duration
+  assign duration_temp = speed | times: duration_range | divided_by: speed_range
+  assign duration = max_duration | minus: duration_temp
+%}
+
+{% unless template_base == 'customers/login' or template_base == 'customers/register' %}
+  <div class="section-announcement-bar color-{{ section.settings.color_scheme }} {% if section.settings.enable_ticker and speed != 0 and section.settings.ticker_pause_hover %} announcement-bar-ticker--pause-hover{% endif %}">
+    <div class="container">
+      <div
+        class="announcement-bar background announcement-bar--{{ section.settings.text_align }}"
+        role="region"
+        aria-label="{{ 'sections.header.announcement' | t }}"
+      >
+        {%- if section.settings.text != blank -%}
+          <div
+            class="announcement-bar__message {% if section.settings.enable_ticker and speed != 0 %}announcement-bar-ticker announcement-bar-ticker--{{ section.settings.ticker_direction }}{% if section.settings.ticker_pause_hover %} announcement-bar-ticker--pause-hover{% endif %}{% endif %}"
+            {% if section.settings.enable_ticker %}
+              style="--ticker-duration: {{ duration }}s;"
+            {% endif %}
+          >
+            {%- if section.settings.enable_ticker and speed != 0 -%}
+              {%- capture ticker_block -%}
+								<div class="announcement-bar-ticker__block">
+									{%- if section.settings.image != blank -%}
+										<figure class="announcement-bar__image">
+											{{
+												section.settings.image
+												| image_url: width: section.settings.image.width
+												| image_tag:
+													loading: 'lazy',
+													class: 'motion-reduce media--first',
+													widths: '25, 50, 75'
+											}}
+										</figure>
+									{%- endif -%}
+									<div class="announcement-bar-ticker__text secondary_text">
+										{{- section.settings.text -}}
+									</div>
+								</div>
+							{%- endcapture -%}
+
+              <div
+                class="announcement-bar-ticker__line announcement-bar-ticker__line--spacer"
+                style="visibility: hidden;opacity: 0;position: static;"
+              >
+                {{ ticker_block }}
+              </div>
+
+              <div class="announcement-bar-ticker__line{% if speed == 0 %} announcement-bar-ticker__line--stopped{% endif %}">
+                {%- for i in (1..ticker_elements_count) -%}
+                  {{ ticker_block }}
+                {%- endfor -%}
+              </div>
+
+              <div class="announcement-bar-ticker__line announcement-bar-ticker__line--second{% if speed == 0 %} announcement-bar-ticker__line--hidden{% endif %}">
+                {%- for i in (1..ticker_elements_count) -%}
+                  {{ ticker_block }}
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              {%- if section.settings.image != blank -%}
+                <figure class="announcement-bar__image">
+                  {{
+                    section.settings.image
+                    | image_url: width: section.settings.image.width
+                    | image_tag: loading: 'lazy', class: 'motion-reduce media--first', widths: '25, 50, 75'
+                  }}
+                </figure>
+              {%- endif -%}
+              <div class="announcement-bar__text secondary_text">
+                {{ section.settings.text }}
+              </div>
+            {%- endif -%}
+          </div>
+          {%- if section.settings.enable_ticker == false or speed == 0 -%}
+            <div class="announcement-bar__close-button">
+              <div class="announcement-bar__close-button-icon">
+                {% render 'icon-close' %}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{% endunless %}
+
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "class": "section-announcement",
+  "limit": 1,
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "range",
+      "id": "height",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 40,
+      "label": "t:sections.announcement-bar.settings.height.label"
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 40,
+      "label": "t:sections.announcement-bar.settings.height_mobile.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-1",
+      "label": "t:sections.announcement-bar.settings.color_scheme.label"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "t:sections.all.text_align.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.all.text_align.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.all.text_align.options__2.label"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "default": "t:sections.announcement-bar.settings.text.default",
+      "label": "t:sections.announcement-bar.settings.text.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.announcement-bar.settings.image.label",
+      "info": "t:sections.announcement-bar.settings.image.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_ticker",
+      "default": false,
+      "label": "t:sections.announcement-bar.settings.enable_ticker.label",
+      "visible_if": "{{ section.settings.text != blank }}"
+    },
+    {
+      "type": "range",
+      "id": "ticker_speed",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "label": "t:sections.announcement-bar.settings.ticker_speed.label",
+      "visible_if": "{{ section.settings.enable_ticker }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "ticker_pause_hover",
+      "default": true,
+      "label": "t:sections.announcement-bar.settings.ticker_pause_hover.label",
+      "visible_if": "{{ section.settings.enable_ticker }}"
+    },
+    {
+      "type": "select",
+      "id": "ticker_direction",
+      "options": [
+        {
+          "value": "left_to_right",
+          "label": "t:sections.announcement-bar.settings.ticker_direction.options__1.label"
+        },
+        {
+          "value": "right_to_left",
+          "label": "t:sections.announcement-bar.settings.ticker_direction.options__2.label"
+        }
+      ],
+      "default": "left_to_right",
+      "label": "t:sections.announcement-bar.settings.ticker_direction.label",
+      "visible_if": "{{ section.settings.enable_ticker }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.announcement-bar.name",
+      "settings": {
+        "text": "For example, a test of the announcement of some news"
+      }
+    }
+  ]
+}
+{% endschema %}

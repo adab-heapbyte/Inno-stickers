@@ -1,0 +1,63 @@
+{% comment %}
+  Renders the Wholesale menu item for the header navigation.
+
+  Visitors who are logged out, and customers who are not attached to a company,
+  get a link to the customer accounts login. Customers who are attached to a
+  company (native Shopify B2B) are already authenticated, so they get a link to
+  their account instead of a login prompt.
+
+  Accepts:
+  - context: {String} 'inline' for the desktop menu, 'drawer' for the mobile drawer. Default: 'inline'.
+
+  Usage:
+  {% render 'header-wholesale-link', context: 'inline' %}
+{% endcomment %}
+
+{% liquid
+  assign wholesale_context = context | default: 'inline'
+
+  if customer and customer.b2b?
+    assign wholesale_url = routes.account_profile_url
+    assign wholesale_title = 'sections.header.wholesale_account' | t
+  else
+    assign wholesale_url = routes.account_login_url
+    assign wholesale_title = 'sections.header.wholesale' | t
+  endif
+
+  assign wholesale_current = false
+  if request.path == wholesale_url
+    assign wholesale_current = true
+  endif
+%}
+
+{%- if wholesale_context == 'drawer' -%}
+  <li>
+    <a
+      href="{{ wholesale_url }}"
+      class="menu-drawer__menu-item list-menu__item h3 link--text focus-inset{% if wholesale_current %} menu-drawer__menu-item--active{% endif %}"
+      {% if wholesale_current %}
+        aria-current="page"
+      {% endif %}
+    >
+      {{ wholesale_title | escape }}
+    </a>
+  </li>
+{%- else -%}
+  <li class="list-menu-item">
+    <a
+      href="{{ wholesale_url }}"
+      class="header__menu-item list-menu__item link focus-inset {%- if wholesale_current %} header__active-menu-item{% endif %}"
+      {% if wholesale_current %}
+        aria-current="page"
+      {% endif %}
+      aria-label="{{ wholesale_title | escape }}"
+    >
+      <span
+        class="list-menu-line link-hover-line"
+        title="{{ wholesale_title | escape }}"
+      >
+        {{ wholesale_title | escape }}
+      </span>
+    </a>
+  </li>
+{%- endif -%}

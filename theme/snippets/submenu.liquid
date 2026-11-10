@@ -1,0 +1,100 @@
+{% liquid
+  assign has_submenu_media = false
+  assign enable_submenu_media = section.settings.enable_submenu_media
+
+  if enable_submenu_media
+    for childlink in link.links
+      if childlink.object.featured_image != blank
+        assign has_submenu_media = true
+      endif
+    endfor
+  endif
+%}
+<ul
+  class="header__submenu list-menu list-menu--disclosure caption-large motion-reduce {{ header_background_color_scheme }} {% if has_submenu_media %} header__submenu--with-media{% endif %}"
+  role="list"
+>
+  <div class="container header__submenu-inner">
+    {%- if has_submenu_media -%}
+      <div class="header__submenu-media is-hidden" data-submenu-media aria-hidden="true">
+        <div class="media media--16-9">
+          <img
+            class="header__submenu-media-image"
+            data-submenu-media-image
+            alt=""
+            width="900"
+            height="506"
+            loading="lazy"
+          >
+        </div>
+      </div>
+    {%- endif -%}
+    {%- for childlink in link.links -%}
+      <li>
+        {%- if childlink.links == blank -%}
+          <a
+            href="{{ childlink.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if childlink.current %} header__menu-item--active{% endif %}"
+            {% if settings.links_blank and childlink.type == 'http_link' and childlink.url contains '://' %}
+              target="_blank"
+            {% endif %}
+            {% if childlink.current %}
+              aria-current="page"
+            {% endif %}
+            {%- if has_submenu_media -%}
+              data-submenu-media-link
+              data-submenu-media-src="{% if childlink.object.featured_image != blank %}{{ childlink.object.featured_image | image_url: width: 900 }}{% endif %}"
+              data-submenu-media-alt="{{ childlink.object.featured_image.alt | default: childlink.title | escape }}"
+            {%- endif -%}
+          >
+            <span class="link-hover-line">
+              {{ childlink.title | escape }}
+            </span>
+          </a>
+        {%- else -%}
+          <a
+            href="{{ childlink.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if childlink.current %} header__menu-item--active{% endif %}"
+            {% if settings.links_blank and childlink.type == 'http_link' and childlink.url contains '://' %}
+              target="_blank"
+            {% endif %}
+            {% if childlink.current %}
+              aria-current="page"
+            {% endif %}
+            {%- if has_submenu_media -%}
+              data-submenu-media-link
+              data-submenu-media-src="{% if childlink.object.featured_image != blank %}{{ childlink.object.featured_image | image_url: width: 900 }}{% endif %}"
+              data-submenu-media-alt="{{ childlink.object.featured_image.alt | default: childlink.title | escape }}"
+            {%- endif -%}
+          >
+            <span class="link-hover-line">
+              {{ childlink.title | escape }}
+            </span>
+          </a>
+          <ul
+            class="header__submenu list-menu--disclosure list-menu motion-reduce {{ header_background_color_scheme }}"
+          >
+            {%- for grandchildlink in childlink.links -%}
+              <li>
+                <a
+                  href="{{ grandchildlink.url }}"
+                  class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if grandchildlink.current %} header__menu-item--active{% endif %}"
+                  {% if settings.links_blank and grandchildlink.type == 'http_link' and grandchildlink.url contains '://' %}
+                    target="_blank"
+                  {% endif %}
+                  {% if grandchildlink.current %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  <span class="link-hover-line">
+                    {{ grandchildlink.title | escape }}
+                  </span>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </div>
+</ul>

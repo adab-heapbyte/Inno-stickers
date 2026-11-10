@@ -1,0 +1,52 @@
+{% doc %}
+  Renders the "Notify me" button and the availability notification modal.
+  It reuses the notify button wrapper of the notification modal, so both modal
+  types replace the buy buttons in exactly the same way while the selected
+  variant is sold out. Must stay directly before the product form.
+
+  @param {object} product - Product Liquid object
+  @param {object} block - Buy buttons block Liquid object
+  @param {string} section_id - Section ID
+
+  @example
+  {% render 'product-availability-notification', product: product, block: block, section_id: section.id %}
+{% enddoc %}
+
+{%- liquid
+  assign button_label = 'products.product.availability_notification.button_label' | t
+  if block.settings.modal_button_label != blank
+    assign button_label = block.settings.modal_button_label
+  endif
+-%}
+
+<availability-notification
+  class="notify-button availability-notification"
+  id="notify-button-{{ section_id }}"
+  data-section-id="{{ section_id }}"
+  {% if product.selected_or_first_available_variant.available == false %}
+    disabled
+  {% endif %}
+>
+  <modal-opener
+    class="no-js-hidden"
+    data-modal="#AvailabilityNotificationModal-{{ section_id }}"
+  >
+    <button
+      type="button"
+      id="AvailabilityNotificationButton-{{ section_id }}"
+      class="notify-open-button availability-notification__button button button--tertiary focus-inset"
+      aria-haspopup="dialog"
+      title="{{ 'products.product.availability_notification.button_hover_text' | t }}"
+      data-availability-notification-open
+    >
+      <span class="availability-notification__label">
+        {{- button_label -}}
+      </span>
+      <span class="availability-notification__label availability-notification__label--success">
+        {{- 'products.product.availability_notification.button_success_label' | t -}}
+      </span>
+    </button>
+  </modal-opener>
+
+  {% render 'product-availability-notification-modal', product: product, block: block, section_id: section_id %}
+</availability-notification>

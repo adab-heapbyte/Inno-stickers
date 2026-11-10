@@ -1,0 +1,132 @@
+{% comment %}
+  	Renders a product card
+  	Accepts:
+  	- product_card_product: {Object} Product Liquid object (optional)
+  	- media_size: {String} Size of the product image card. Values are "square" and "portrait". Default is "square" (optional)
+  	- show_secondary_image: {Boolean} Show the secondary image on hover. Default: false (optional)
+  	- show_vendor: {Boolean} Show the product vendor. Default: true
+  	- show_desc: {Boolean} Show the product vendor. Default: false
+  	- section_id: {String} The ID of the section that contains this card.
+  	- show_linked_products: {Boolean} Show the linked products options on the card. Default: false (optional)
+  	Usage:
+  {% render 'product-card', show_vendor: section.settings.show_vendor %}
+{% endcomment %}
+
+{%- if settings.quickview_show or settings.show_on_mobile -%}
+  {%- assign first_3d_model = product_card_product.media | where: 'media_type', 'model' | first -%}
+  {%- if first_3d_model -%}
+    {{ 'component-product-model.css' | asset_url | stylesheet_tag }}
+    <link
+      id="ModelViewerStyle"
+      rel="stylesheet"
+      href="https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css"
+      media="print"
+      onload="this.media='all'"
+    >
+    <link
+      id="ModelViewerOverride"
+      rel="stylesheet"
+      href="{{ 'component-model-viewer-ui.css' | asset_url }}"
+      media="print"
+      onload="this.media='all'"
+    >
+  {%- endif -%}
+
+  {%- if first_3d_model -%}
+    <script type="application/json" id="ProductJSON-{{ product.id }}">
+      {{ product_card_product.media | where: 'media_type', 'model' | json }}
+    </script>
+
+    <script src="{{ 'product-model.js' | asset_url }}" defer></script>
+  {%- endif -%}
+{%- endif -%}
+
+{%- if show_slide == false -%}
+  {%- assign show_slide = false -%}
+{% else %}
+  {%- assign show_slide = true -%}
+{%- endif -%}
+
+{%- liquid
+  assign has_linked_products = false
+  if show_linked_products
+    assign linked_products_list = product_card_product.metafields.custom.linked_products.value
+    if linked_products_list != blank and linked_products_list.size > 0
+      assign has_linked_products = true
+    endif
+  endif
+-%}
+
+<div
+  class="card-wrapper js-color-swatches-wrapper color-{{ settings.card_color_scheme }}"
+  data-product="{{ product_card_product.handle }}"
+  {% if has_linked_products %}
+    data-linked-products="true"
+  {% endif %}
+>
+  <span class="visually-hidden">{{ product_card_product.title | escape }}</span>
+
+  <div class="card card--product" tabindex="-1">
+    <div class="card__inner full-unstyled-link">
+      {% render 'product-card-media',
+        product_card_product: product_card_product,
+        media_size: media_size,
+        media_fit: media_fit,
+        columns_mobile: columns_mobile,
+        show_slide: show_slide
+      %}
+    </div>
+  </div>
+
+  <div class="card-information">
+    <div class="card-information__wrapper">
+      <div class="card-information__group">
+        <div class="card-information__inner">
+          {% render 'product-card-info',
+            product_card_product: product_card_product,
+            show_vendor: show_vendor,
+            show_collection: show_collection,
+            show_desc: show_desc,
+            title_size: title_size
+          %}
+        </div>
+        <div class="product-parameters {% if settings.show_on_mobile %} quick-add-block-enable{% endif %} {% if settings.product_color_display_state == 'static' %} quick-add-block-static{% endif %}">
+          {% render 'product-card-options',
+            product_card_product: product_card_product,
+            show_color_count: show_color_count,
+            show_size_count: show_size_count
+          %}
+          {% render 'product-card-quick-add',
+            product_card_product: product_card_product,
+            section_id: section_id,
+            show_color_count: show_color_count
+          %}
+        </div>
+        {%- if has_linked_products -%}
+          {% render 'product-linked-products',
+            product_resource: product_card_product,
+            is_product_card: true,
+            media_size: media_size,
+            media_fit: media_fit,
+            columns_mobile: columns_mobile,
+            show_slide: show_slide,
+            show_vendor: show_vendor,
+            show_collection: show_collection,
+            show_desc: show_desc,
+            show_color_count: show_color_count,
+            show_size_count: show_size_count,
+            title_size: title_size,
+            section_id: section_id
+          %}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {% if settings.on_hover != 'slider' or show_slide == false %}
+    <a
+      href="{{ product_card_product.url | default: '#' }}"
+      class="link link--overlay card-wrapper__link--overlay js-color-swatches-link"
+      aria-label="{{ 'accessibility.product_link' | t }}"
+    ></a>
+  {% endif %}
+</div>

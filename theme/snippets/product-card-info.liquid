@@ -1,0 +1,54 @@
+{% doc %}
+  Renders the textual information of a product card (vendor, collection, title, price, description).
+
+  Extracted from `product-card` so the exact same markup can be regenerated when a
+  linked product is selected in the product grid (see `product-card-linked-data`).
+
+  @param {object} product_card_product - Product Liquid object
+  @param {boolean} [show_vendor] - Show the product vendor
+  @param {boolean} [show_collection] - Show the first collection of the product
+  @param {boolean} [show_desc] - Show a truncated product description
+  @param {string} [title_size] - Heading class applied to the card title. Default: "h3"
+
+  @example
+  {% render 'product-card-info', product_card_product: product %}
+{% enddoc %}
+
+{%- if show_vendor or show_collection -%}
+  <div class="card__subtitles">
+    {%- if show_vendor -%}
+      <span class="visually-hidden">
+        {{- 'accessibility.vendor' | t -}}
+      </span>
+      <div class="subtitle card__subtitle card__vendor">
+        {% if settings.enable_vendor_link %}
+          {{ product_card_product.vendor | link_to_vendor: class: 'focus-inset' }}
+        {% else %}
+          {{ product_card_product.vendor }}
+        {% endif %}
+      </div>
+    {%- endif -%}
+    {% if show_collection and product_card_product.collections[0].title != blank %}
+      <div class="subtitle card__subtitle">
+        {{ product_card_product.collections[0].title }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+<div class="card-information__top">
+  <h3 class="card__title {% if title_size %}{{ title_size }}{% else %}h3{% endif %}">
+    <a
+      class="full-unstyled-link"
+      href="{{ product_card_product.url | default: '#' }}"
+      title="{{ product_card_product.title | escape }}"
+    >
+      {{- product_card_product.title | escape -}}
+    </a>
+  </h3>
+  {% render 'price', product: product_card_product, price_class: '' %}
+</div>
+{%- if show_desc and product_card_product.description != blank -%}
+  <div class="card__description">
+    {{ product_card_product.description | strip_html | truncate: 80 }}
+  </div>
+{%- endif -%}

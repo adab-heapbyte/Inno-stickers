@@ -1,0 +1,82 @@
+{%- comment -%}
+  Renders the variant media grouping data of a product as "position|group":
+  the position of the color option and the handleized value of that option that
+  is currently selected. Outputs "0|" when grouping is off or the product has no
+  color option, which means the gallery keeps its default behavior.
+
+  A color option is an option whose name matches the Swatch trigger settings or
+  whose values carry Shopify swatches.
+
+  Accepts:
+  - product: {Object} Product object
+
+  Usage:
+  {%- capture variant_media_grouping_data -%}
+    {%- render 'variant-media-grouping-data', product: product -%}
+  {%- endcapture -%}
+{%- endcomment -%}
+{%- liquid
+  assign group_option_position = 0
+  assign selected_group = ''
+
+  if settings.enable_variant_media_grouping and product.has_only_default_variant == false
+    assign color_trigger = settings.trigger_swatch | append: '<br />' | append: settings.trigger_swatch_other | strip | newline_to_br | split: '<br />'
+
+    for option in product.options_with_values
+      assign is_color_option = false
+      assign name_option = option.name | handle | strip
+
+      for item in color_trigger
+        assign item_temp = item | handle | strip
+        if item_temp != blank and name_option == item_temp
+          assign is_color_option = true
+          break
+        endif
+      endfor
+
+      unless is_color_option
+        for value in option.values
+          if value.swatch.color != blank or value.swatch.image != blank
+            assign is_color_option = true
+            break
+          endif
+        endfor
+      endunless
+
+      if is_color_option
+        assign group_option_position = option.position
+        assign selected_group = option.selected_value | handle | strip
+        break
+      endif
+    endfor
+  endif
+
+  if selected_group == blank
+    assign group_option_position = 0
+  endif
+
+  comment
+    Grouping stays inert until the merchant tags at least one media, so a
+    product without tagged alt text keeps its default gallery behavior.
+  endcomment
+  if group_option_position > 0
+    assign has_grouped_media = false
+
+    for media in product.media
+      assign media_alt = media.alt | default: media.preview_image.alt
+      if media_alt contains '#'
+        assign has_grouped_media = true
+        break
+      endif
+    endfor
+
+    unless has_grouped_media
+      assign group_option_position = 0
+      assign selected_group = ''
+    endunless
+  endif
+
+  echo group_option_position
+  echo '|'
+  echo selected_group
+-%}

@@ -1,0 +1,257 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "compare": {
+      "type": "compare",
+      "name": "t:sections.compare-block.presets.name",
+      "settings": {
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "button_style": "simple",
+        "button_label": "",
+        "button_link": "",
+        "text_left": "Before",
+        "text_right": "After",
+        "product": "",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_collection": false,
+        "show_desc": false,
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "bannergrid": {
+      "type": "banner-grid",
+      "blocks": {
+        "card_YE3x4k": {
+          "type": "card",
+          "settings": {
+            "color_scheme": "",
+            "horizontal_content_alignment": "center",
+            "vertical_content_alignment": "center",
+            "show_image": true,
+            "background_type": "color",
+            "enable_image_ratio": false,
+            "image_ratio": "landscape",
+            "overlay_style": "overlay",
+            "overlay_opacity": 0.2,
+            "subheading": "",
+            "heading": "Feature Title Here",
+            "heading_size": "h3",
+            "heading_tag": "h2",
+            "description": "",
+            "button_label": "View More",
+            "button_link": "",
+            "button_style": "simple",
+            "link": "",
+            "open_in_new_tab": false
+          }
+        },
+        "card_jhqrcr": {
+          "type": "card",
+          "settings": {
+            "color_scheme": "",
+            "horizontal_content_alignment": "center",
+            "vertical_content_alignment": "center",
+            "show_image": true,
+            "background_type": "color",
+            "enable_image_ratio": false,
+            "image_ratio": "landscape",
+            "overlay_style": "overlay",
+            "overlay_opacity": 0.2,
+            "subheading": "",
+            "heading": "Feature Title Here",
+            "heading_size": "h3",
+            "heading_tag": "h2",
+            "description": "",
+            "button_label": "View More",
+            "button_link": "",
+            "button_style": "simple",
+            "link": "",
+            "open_in_new_tab": false
+          }
+        },
+        "card_afXyqP": {
+          "type": "card",
+          "settings": {
+            "color_scheme": "",
+            "horizontal_content_alignment": "center",
+            "vertical_content_alignment": "center",
+            "show_image": true,
+            "background_type": "color",
+            "enable_image_ratio": false,
+            "image_ratio": "landscape",
+            "overlay_style": "overlay",
+            "overlay_opacity": 0.2,
+            "subheading": "",
+            "heading": "Feature Title Here",
+            "heading_size": "h3",
+            "heading_tag": "h2",
+            "description": "",
+            "button_label": "View More",
+            "button_link": "",
+            "button_style": "simple",
+            "link": "",
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "card_YE3x4k",
+        "card_jhqrcr",
+        "card_afXyqP"
+      ],
+      "name": "t:sections.banner-grid.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "simple",
+        "padding_top": "l",
+        "padding_bottom": "l",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "mediacontentslider": {
+      "type": "media-content-slider",
+      "blocks": {
+        "slide_CATppF": {
+          "type": "slide",
+          "settings": {
+            "title": "This could be your mission statement",
+            "description": "<p>A short explanation of why you do what you do and what you stand for.</p>",
+            "background_color": "",
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_overlay_on_image": false,
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false
+          }
+        },
+        "slide_D77tfN": {
+          "type": "slide",
+          "settings": {
+            "title": "This could be your mission statement",
+            "description": "<p>A short explanation of why you do what you do and what you stand for.</p>",
+            "background_color": "",
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_overlay_on_image": false,
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false
+          }
+        },
+        "slide_H8taYi": {
+          "type": "slide",
+          "settings": {
+            "title": "This could be your mission statement",
+            "description": "<p>A short explanation of why you do what you do and what you stand for.</p>",
+            "background_color": "",
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_overlay_on_image": false,
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false
+          }
+        }
+      },
+      "block_order": [
+        "slide_CATppF",
+        "slide_D77tfN",
+        "slide_H8taYi"
+      ],
+      "name": "t:sections.media-content-slider.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "inner_title": "Featured Content",
+        "inner_heading_size": "h2",
+        "inner_heading_tag": "h3",
+        "description": "",
+        "content_position": "left",
+        "autoplay": true,
+        "autoplay_delay": 6,
+        "enable_auto_deley": false,
+        "slide_heading_size": "h2",
+        "padding_top": "no-indent",
+        "padding_bottom": "no-indent",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "videobanner": {
+      "type": "video-banner",
+      "blocks": {
+        "video_BjiMXg": {
+          "type": "video",
+          "settings": {
+            "color_scheme": "",
+            "autoplay_video": true,
+            "muted_video": true,
+            "loop_video": true,
+            "show_icon_play": true,
+            "show_icon_sound": true,
+            "control_buttons_position": "top",
+            "video_fit": "cover",
+            "opacity_overlay": 0.3,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "subheading": "",
+            "heading": "Banner title",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "text": "Here can be a description of what this banner is about",
+            "position_content": "bottom",
+            "align_content": "left",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "simple",
+            "button_label2": "",
+            "button_link2": "",
+            "button_style2": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "video_BjiMXg"
+      ],
+      "name": "t:sections.video-banner.presets.name",
+      "settings": {
+        "header_overlay": false,
+        "desktop_media_ratio": "21/9",
+        "mobile_media_ratio": "same",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    }
+  },
+  "order": [
+    "compare",
+    "bannergrid",
+    "mediacontentslider",
+    "videobanner"
+  ]
+}

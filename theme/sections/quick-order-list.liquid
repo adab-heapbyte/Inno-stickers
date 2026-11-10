@@ -1,0 +1,479 @@
+{{ 'section-quick-order-list.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-quick-order-list.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  {% render 'section-padding' %}
+  {% render 'section-margin' %}
+{%- endstyle -%}
+
+{% liquid
+  assign items_in_cart = cart | line_items_for: product | sum: 'quantity'
+  if settings.currency_code_enabled
+    assign product_subtotal = cart | line_items_for: product | sum: 'original_line_price' | money_with_currency
+  else
+    assign product_subtotal = cart | line_items_for: product | sum: 'original_line_price' | money
+  endif
+%}
+
+<div class="quick-order-list-section color-{{ section.settings.color_scheme }} background section-{{ section.id }}-padding section-{{ section.id }}-margin">
+  <div class="container">
+    {% render 'section-header', section_heading_tag: section.settings.heading_tag %}
+
+    <quick-order-list
+      id="QuickOrderList-{{ section.id }}-{{ product.id }}"
+      class="quick-order-list"
+      data-section="{{ section.id }}"
+      data-product-id="{{ product.id }}"
+      data-url="{{ product.url }}"
+    >
+      <form action="{{ routes.cart_update_url }}" class="quick-order-list__form" id="QuickOrderListForm-{{ section.id }}" method="post">
+        {%- paginate product.variants by section.settings.variants_per_page -%}
+          <div class="quick-order-list__container" id="main-variant-items-{{ section.id }}">
+            <table class="quick-order-list__table">
+              <caption class="visually-hidden">
+                {{ 'sections.cart.caption' | t }}
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">
+                    <span class="subtitle">
+                      {%- if product.has_only_default_variant -%}
+                        {{ 'sections.cart.headings.product' | t }}
+                      {%- else -%}
+                        {{ 'products.product.product_variants' | t }}
+                      {%- endif -%}
+                    </span>
+                  </th>
+                  <th scope="col">
+                    <span class="subtitle">{{ 'products.product.quantity.label' | t }}</span>
+                  </th>
+                  <th class="right" scope="col">
+                    <span class="subtitle">{{ 'sections.cart.headings.price' | t }}</span>
+                  </th>
+                  <th class="right" scope="col">
+                    <span class="subtitle">
+                      {%- if product.has_only_default_variant -%}
+                        {{ 'sections.quick_order_list.product_total' | t }}
+                      {%- else -%}
+                        {{ 'sections.quick_order_list.variant_total' | t }}
+                      {%- endif -%}
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- if product.has_only_default_variant -%}
+                  {%- render 'quick-order-list-row', item: product, variant: product.selected_or_first_available_variant, settings: section.settings -%}
+                {%- else -%}
+                  {%- for variant in product.variants -%}
+                    {%- render 'quick-order-list-row', item: variant, variant: variant, settings: section.settings -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="quick-order-list__pagination-wrapper pagination-wrapper no-js-block" data-page="{{ paginate.current_page }}">
+            {% render 'pagination', paginate: paginate %}
+          </div>
+        {%- endpaginate -%}
+
+        <p
+          id="quick-order-list-live-region-text-{{ product.id }}"
+          class="visually-hidden"
+          aria-live="polite"
+          role="status"
+        ></p>
+        <p
+          id="shopping-cart-variant-item-status"
+          class="visually-hidden"
+          aria-live="polite"
+          aria-hidden="true"
+          role="status"
+        >
+          {{ 'accessibility.loading' | t }}
+        </p>
+      </form>
+
+      <div class="quick-order-list__total" id="quick-order-list-total-{{ product.id }}-{{ section.id }}">
+        <div class="quick-order-list__total-info">
+          <div class="quick-order-list__total-left">
+            <div class="quick-order-list__total-buttons">
+              <a href="{{ routes.cart_url }}" class="button button--primary focus-inset quick-order-list__cart-button">
+                <span>{{ 'sections.quick_order_list.view_cart' | t }}</span>
+              </a>
+
+              <div class="quick-order-list__remove-all">
+                <div class="loading-overlay__spinner hidden">
+                  {% render 'icon-loading' %}
+                </div>
+
+                <quick-order-list-remove-all-button
+                  data-action="confirm"
+                  class="{% if items_in_cart == 0 %}hidden{% endif %}"
+                >
+                  <button type="button" class="button button--tertiary focus-inset">
+                    <span>{{ 'sections.quick_order_list.remove_all' | t }}</span>
+                  </button>
+                </quick-order-list-remove-all-button>
+              </div>
+            </div>
+
+            <span class="quick-order-list__error"></span>
+          </div>
+
+          <div class="quick-order-list__total-count">
+            <span class="subtitle">{{ 'sections.quick_order_list.total_items' | t }}</span>
+            <span class="secondary_text quick-order-list__total-count-number">{{ items_in_cart }}</span>
+          </div>
+
+          <div class="quick-order-list__total-price">
+            <div class="quick-order-list__total-subtotal">
+              <span class="subtitle">{{ 'sections.quick_order_list.product_total' | t }}</span>
+              <span class="quick-order-list__subtotal-value">{{ product_subtotal }}</span>
+            </div>
+
+            <small class="tax-note secondary_text">
+              {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+                {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+              {%- elsif cart.taxes_included -%}
+                {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
+              {%- elsif shop.shipping_policy.body != blank -%}
+                {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+              {%- else -%}
+                {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+              {%- endif -%}
+            </small>
+          </div>
+        </div>
+
+        <div class="quick-order-list__total-confirmation hidden">
+          <span class="secondary_text">
+            {{ 'sections.quick_order_list.remove_all_items_confirmation' | t: quantity: items_in_cart }}
+          </span>
+
+          <quick-order-list-remove-all-button data-action="remove">
+            <button type="button" class="button button--primary focus-inset">
+              <span>{{ 'sections.quick_order_list.remove_all' | t }}</span>
+            </button>
+          </quick-order-list-remove-all-button>
+
+          <quick-order-list-remove-all-button data-action="cancel">
+            <button type="button" class="button button--tertiary focus-inset">
+              <span>{{ 'sections.quick_order_list.cancel' | t }}</span>
+            </button>
+          </quick-order-list-remove-all-button>
+        </div>
+
+        <script type="application/json" data-cart-contents>
+          {{ cart | line_items_for: product | map: 'variant_id' | json }}
+        </script>
+      </div>
+    </quick-order-list>
+
+    <template id="QuickOrderListErrorTemplate-{{ product.id }}">
+      {% render 'icon-error' %}
+      <span class="quick-order-list__error-message secondary_text" role="alert"></span>
+    </template>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.quick-order-list.name",
+  "tag": "section",
+  "class": "quick-order-list-section",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-1",
+      "label": "t:sections.all.color_scheme.label"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.all.subheading.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "t:sections.quick-order-list.settings.heading.default",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "t:sections.all.text.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:sections.all.heading.tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "div",
+          "label": "div"
+        },
+        {
+          "value": "p",
+          "label": "p"
+        },
+        {
+          "value": "span",
+          "label": "span"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "range",
+      "id": "variants_per_page",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "default": 25,
+      "label": "t:sections.quick-order-list.settings.variants_per_page.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "t:sections.quick-order-list.settings.show_image.label"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "t:sections.all.card.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.all.card.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.all.card.image_ratio.options__3.label"
+        }
+      ],
+      "default": "square",
+      "label": "t:sections.all.card.image_ratio.label",
+      "visible_if": "{{ section.settings.show_image }}"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "t:sections.all.card.image_fit.label",
+      "options": [
+        {
+          "value": "contain",
+          "label": "t:sections.all.card.image_fit.options__1.label"
+        },
+        {
+          "value": "cover",
+          "label": "t:sections.all.card.image_fit.options__2.label"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ section.settings.show_image }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sku",
+      "default": false,
+      "label": "t:sections.quick-order-list.settings.show_sku.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-padding.header.content"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-padding.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-padding.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-padding.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-padding.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-padding.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-padding.options__6.label"
+        }
+      ],
+      "default": "l",
+      "label": "t:sections.all.section-padding.padding_top.label"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-padding.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-padding.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-padding.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-padding.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-padding.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-padding.options__6.label"
+        }
+      ],
+      "default": "l",
+      "label": "t:sections.all.section-padding.padding_bottom.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.section-margin.header.content"
+    },
+    {
+      "type": "select",
+      "id": "margin_top",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_top.label"
+    },
+    {
+      "type": "select",
+      "id": "margin_bottom",
+      "options": [
+        {
+          "value": "no-indent",
+          "label": "t:sections.all.section-margin.options__1.label"
+        },
+        {
+          "value": "xs",
+          "label": "t:sections.all.section-margin.options__2.label"
+        },
+        {
+          "value": "s",
+          "label": "t:sections.all.section-margin.options__3.label"
+        },
+        {
+          "value": "m",
+          "label": "t:sections.all.section-margin.options__4.label"
+        },
+        {
+          "value": "l",
+          "label": "t:sections.all.section-margin.options__5.label"
+        },
+        {
+          "value": "xl",
+          "label": "t:sections.all.section-margin.options__6.label"
+        }
+      ],
+      "default": "no-indent",
+      "label": "t:sections.all.section-margin.margin_bottom.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.quick-order-list.presets.name"
+    }
+  ]
+}
+{% endschema %}

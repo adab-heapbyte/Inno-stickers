@@ -1,0 +1,115 @@
+{% doc %}
+  Linked products is a custom feature similar to Combined listings. It allows displaying linked products as separate options, each leading to its own product page.
+
+  On a product card the options do not navigate: the card is updated in place with the
+  data pre-rendered by `product-card-linked-data`.
+
+  @param {object} product_resource - Product Liquid object
+  @param {object} [block_obj] - Liquid Block object (product page context)
+  @param {boolean} [is_product_card] - Renders the options for a product card (in-place swap instead of navigation)
+  @param {string} [media_size] - Image ratio of the card (product card context)
+  @param {string} [media_fit] - Image fit of the card (product card context)
+  @param {number} [columns_mobile] - Number of columns on mobile (product card context)
+  @param {boolean} [show_slide] - Whether the media slider is allowed on this card (product card context)
+  @param {boolean} [show_vendor] - Show the product vendor (product card context)
+  @param {boolean} [show_collection] - Show the first collection of the product (product card context)
+  @param {boolean} [show_desc] - Show a truncated product description (product card context)
+  @param {boolean} [show_color_count] - Show the color count or the color swatches (product card context)
+  @param {boolean} [show_size_count] - Show the size count or the size values (product card context)
+  @param {string} [title_size] - Heading class applied to the card title (product card context)
+  @param {string} [section_id] - The ID of the section that contains the card (product card context)
+
+  @example
+  {% render 'product-linked-products', product_resource: product %}
+{% enddoc %}
+
+{% liquid
+  assign linked_products = product_resource.metafields.custom.linked_products.value
+  assign current_linked_product_id = null
+  for linked_product in linked_products
+    if linked_product.id == product_resource.id
+      assign current_linked_product_id = product_resource.id
+    endif
+  endfor
+
+  # Media ratio used by the rectangle swatches to match the variant picker swatches.
+  # The rectangle shape is supported on the product page only.
+  unless is_product_card
+    assign swatch_ratio = section.settings.image_ratio
+  endunless
+%}
+
+{%- if linked_products != blank and linked_products.size > 0 -%}
+  <div class="linked-products{% if is_product_card %} linked-products--card{% endif %}">
+    {%- if is_product_card != true and block_obj.settings.linked_products_label != blank -%}
+      <div class="linked-products__title subheading-font">
+        {{- block_obj.settings.linked_products_label -}}
+      </div>
+    {%- endif -%}
+
+    <div class="linked-products__options">
+      {% comment %} Render current linked product {% endcomment %}
+      {%- if current_linked_product_id != product_resource.id -%}
+        {% render 'product-linked-product-value',
+          linked_product: product_resource,
+          is_active_product: true,
+          current_linked_product_id: current_linked_product_id,
+          is_product_card: is_product_card,
+          swatch_ratio: swatch_ratio
+        %}
+      {%- endif -%}
+
+      {% comment %} Render other linked products {% endcomment %}
+      {%- for linked_product in linked_products -%}
+        {% render 'product-linked-product-value',
+          linked_product: linked_product,
+          is_active_product: false,
+          current_linked_product_id: current_linked_product_id,
+          is_product_card: is_product_card,
+          swatch_ratio: swatch_ratio
+        %}
+      {%- endfor -%}
+    </div>
+
+    {%- if is_product_card -%}
+      {% comment %} Data used by product-card.js to update the card in place {% endcomment %}
+      <script type="application/json" data-linked-products-data>
+        [
+          {%- if current_linked_product_id != product_resource.id -%}
+            {%- render 'product-card-linked-data',
+              linked_product: product_resource,
+              media_size: media_size,
+              media_fit: media_fit,
+              columns_mobile: columns_mobile,
+              show_slide: show_slide,
+              show_vendor: show_vendor,
+              show_collection: show_collection,
+              show_desc: show_desc,
+              show_color_count: show_color_count,
+              show_size_count: show_size_count,
+              title_size: title_size,
+              section_id: section_id
+            -%},
+          {%- endif -%}
+          {%- for linked_product in linked_products -%}
+            {%- unless forloop.first -%},{%- endunless -%}
+            {%- render 'product-card-linked-data',
+              linked_product: linked_product,
+              media_size: media_size,
+              media_fit: media_fit,
+              columns_mobile: columns_mobile,
+              show_slide: show_slide,
+              show_vendor: show_vendor,
+              show_collection: show_collection,
+              show_desc: show_desc,
+              show_color_count: show_color_count,
+              show_size_count: show_size_count,
+              title_size: title_size,
+              section_id: section_id
+            -%}
+          {%- endfor -%}
+        ]
+      </script>
+    {%- endif -%}
+  </div>
+{%- endif -%}

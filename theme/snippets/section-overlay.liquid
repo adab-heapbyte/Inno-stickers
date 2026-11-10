@@ -1,0 +1,38 @@
+<script>
+  (function () {
+    const initOverlay = (section) => {
+      const header = document.querySelector('.shopify-section-header');
+      const main = document.querySelector('main');
+      const breadcrumbs = document.querySelector('.breadcrumbs-wrapper');
+      const headerWrapper = document.querySelector('.header-wrapper');
+      const stickyHeaderBackgroundColorScheme =
+        headerWrapper?.dataset.backgroundColorScheme || 'color-background-1';
+      if (
+        main.querySelectorAll('.shopify-section')[0] === section &&
+        !main.querySelectorAll('.shopify-section')[0]?.classList.contains('not-margin')
+      ) {
+        if (header) {
+          header.classList.add(stickyHeaderBackgroundColorScheme, 'color-background-2');
+          header.dataset.headerOverlay = 'true';
+        }
+        if (breadcrumbs) {
+          breadcrumbs.classList.add('color-background-2');
+        }
+      } else if (header) {
+        header.classList.remove(stickyHeaderBackgroundColorScheme, 'color-background-2');
+        delete header.dataset.headerOverlay;
+      }
+    };
+
+    const currentSection = document.currentScript.parentElement;
+    initOverlay(currentSection);
+
+    document.addEventListener('shopify:section:load', function (section) {
+      initOverlay(section.target);
+    });
+
+    document.addEventListener('shopify:section:reorder', function (section) {
+      initOverlay(section.target);
+    });
+  })();
+</script>

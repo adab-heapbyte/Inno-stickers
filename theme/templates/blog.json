@@ -1,0 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "blocks": {
+        "article_LDhw8A": {
+          "type": "article",
+          "settings": {}
+        },
+        "article_mqEY9M": {
+          "type": "article",
+          "settings": {}
+        },
+        "article_w8j7Ei": {
+          "type": "article",
+          "settings": {}
+        },
+        "article_HdqebJ": {
+          "type": "article",
+          "settings": {}
+        },
+        "article_z36Bth": {
+          "type": "article",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "article_LDhw8A",
+        "article_mqEY9M",
+        "article_w8j7Ei",
+        "article_HdqebJ",
+        "article_z36Bth"
+      ],
+      "settings": {
+        "post_limit": 21,
+        "columns_per_row": 4,
+        "post_layout": "column",
+        "enable_animation": true,
+        "stop_autoplay": true,
+        "slideshow_speed": 20,
+        "slider_columns_per_row": 2,
+        "slider_image_ratio": "portrait",
+        "slider_heading_size": "h1",
+        "slider_show_excerpt": true,
+        "heading_size": "h2",
+        "hover_effect": true,
+        "inner_button_label": "Read more",
+        "button_color_scheme": "",
+        "overlay_opacity": 0.2,
+        "tags_position": "bottom",
+        "show_image": true,
+        "show_tags": true,
+        "show_date": true,
+        "show_author": true,
+        "show_excerpt": false,
+        "image_ratio": "square",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    }
+  },
+  "order": ["main"]
+}

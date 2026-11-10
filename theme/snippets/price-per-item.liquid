@@ -1,0 +1,51 @@
+{% comment %}
+  Renders dynamic per-item pricing beside quantity controls when volume pricing exists.
+
+  Accepts:
+  - variant: {Object} Variant Liquid object
+  - quantity: {Number} Current effective quantity
+{% endcomment %}
+
+{%- liquid
+  assign has_volume_pricing = false
+  if variant.quantity_price_breaks.size > 0
+    assign has_volume_pricing = true
+  endif
+
+  assign current_quantity = quantity | default: variant.quantity_rule.min | default: 1
+-%}
+
+{%- if has_volume_pricing -%}
+  {%- capture price_breaks_json -%}
+    [{%- for price_break in variant.quantity_price_breaks -%}{%- unless forloop.first -%},{%- endunless -%}{"quantity":{{ price_break.minimum_quantity }},"price":{%- if settings.currency_code_enabled -%}{{ price_break.price | money_with_currency | json }}{%- else -%}{{ price_break.price | money | json }}{%- endif -%}}{%- endfor -%}]
+  {%- endcapture -%}
+
+  {%- liquid
+    assign display_price = variant.price
+    for price_break in variant.quantity_price_breaks
+      if current_quantity >= price_break.minimum_quantity
+        assign display_price = price_break.price
+      endif
+    endfor
+  -%}
+
+  <price-per-item
+    class="price-per-item"
+    data-variant-id="{{ variant.id }}"
+    data-variant-price="{%- if settings.currency_code_enabled -%}{{ variant.price | money_with_currency | escape }}{%- else -%}{{ variant.price | money | escape }}{%- endif -%}"
+    data-min-quantity="{{ variant.quantity_rule.min | default: 1 }}"
+    data-price-breaks="{{ price_breaks_json | strip | escape }}"
+    data-at-text="{{ 'products.product.price.at' | t | escape }}"
+    data-each-text="{{ 'products.product.price.each_abbreviation' | t | escape }}"
+  >
+    <span class="price-per-item__text" data-price-per-item-text>
+      {{- 'products.product.price.at' | t }}
+      {% if settings.currency_code_enabled %}
+        {{- display_price | money_with_currency -}}
+      {% else %}
+        {{- display_price | money -}}
+      {% endif %}
+      /{{ 'products.product.price.each_abbreviation' | t }}
+    </span>
+  </price-per-item>
+{%- endif -%}

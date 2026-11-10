@@ -1,0 +1,19 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# Shopify CLI
+.shopify/
+theme/.shopify/
+
+# Node (if tooling is added later)
+node_modules/
+npm-debug.log*
+
+# Environment / secrets
+.env
+.env.*

@@ -1,0 +1,1285 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "slideshow-item": {
+          "type": "slideshow-item",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDCS-12-6.jpg",
+            "overlay_opacity": 0.1,
+            "show_video": false,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "heading": "Functional Storage Solutions in Solid Wood",
+            "heading_tag": "h2",
+            "description": "<p>Simple, functional designs that make your<br>home feel open and organized. Less clutter, more comfort.</p>",
+            "tab_subheading": "",
+            "tab_heading": "Minimal Interior",
+            "tab_heading_tag": "p",
+            "button_label": "Shop Acoustic Panels",
+            "button_link": "",
+            "button_style": "tertiary",
+            "enable_fullscreen_link": true
+          }
+        },
+        "slideshow_item_TcQxkG": {
+          "type": "slideshow-item",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDC-12-8.jpg",
+            "overlay_opacity": 0.2,
+            "show_video": false,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "heading": "Showcase What Matters Most",
+            "heading_tag": "h2",
+            "description": "<p>This section allows you to showcase multiple slides featuring different promotions, collections, or brand messages</p>",
+            "tab_subheading": "New Collection",
+            "tab_heading": "Highlight Your Best",
+            "tab_heading_tag": "p",
+            "button_label": "View More",
+            "button_link": "",
+            "button_style": "tertiary",
+            "enable_fullscreen_link": true
+          }
+        },
+        "slideshow-item1": {
+          "type": "slideshow-item",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDH-12-10.jpg",
+            "overlay_opacity": 0.1,
+            "show_video": false,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "heading": "Comfortable Outdoor Furniture for Gardening and Relaxing",
+            "heading_tag": "h2",
+            "description": "<p>Ideal for patios, balconies, and garden areas—made for daily use, light gardening, and unwinding outdoors.</p>",
+            "tab_subheading": "",
+            "tab_heading": "Quiet Ground",
+            "tab_heading_tag": "p",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "button_style": "tertiary",
+            "enable_fullscreen_link": true
+          }
+        },
+        "slideshow-item2": {
+          "type": "slideshow-item",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDH-12-8.jpg",
+            "overlay_opacity": 0.3,
+            "show_video": false,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "heading": "Handcrafted Oak and Walnut Furniture Pieces",
+            "heading_tag": "h2",
+            "description": "<p>Thoughtfully selected decor pieces that bring warmth, personality, and style to any room in your home.</p>",
+            "tab_subheading": "",
+            "tab_heading": "Home Decor",
+            "tab_heading_tag": "p",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "button_style": "tertiary",
+            "enable_fullscreen_link": true
+          }
+        }
+      },
+      "block_order": [
+        "slideshow-item",
+        "slideshow_item_TcQxkG",
+        "slideshow-item1",
+        "slideshow-item2"
+      ],
+      "settings": {
+        "header_overlay": false,
+        "text_color_scheme": "background-2",
+        "layout": "layout_6",
+        "aspect_ratio": "banner",
+        "heading_size": "h1",
+        "tabs_size": "h3",
+        "is_autoplay": true,
+        "is_hover_stop_autoplay": true,
+        "slideshow_speed": 1,
+        "slideshow_delay": 3,
+        "slide_effects": "fade",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "product-slider": {
+      "type": "product-slider",
+      "blocks": {
+        "product_slide": {
+          "type": "product_slide",
+          "settings": {
+            "product": "aluminium-peel-and-stick-backsplash-trim-12inch-silver",
+            "image": "shopify://shop_images/PSFT-WLS-12-8.jpg",
+            "color_scheme": "",
+            "overlay_opacity": 0.1,
+            "description": "Discover how simple, elegant design transforms your space."
+          }
+        },
+        "product_slide_WDfG9B": {
+          "type": "product_slide",
+          "settings": {
+            "product": "aluminium-peel-and-stick-backplash-trim-12inch-grey-matte",
+            "image": "shopify://shop_images/PSFT-WDC-12-7.jpg",
+            "color_scheme": "background-2",
+            "overlay_opacity": 0.1,
+            "description": "Highlight products, promos, or seasonal picks to engage visitors."
+          }
+        },
+        "product_slide1": {
+          "type": "product_slide",
+          "settings": {
+            "product": "aluminium-peel-and-stick-backplash-trim-12inch-black-matte",
+            "image": "shopify://shop_images/MZMLG-WAL-16-6.jpg",
+            "color_scheme": "background-2",
+            "overlay_opacity": 0.1,
+            "description": "Uncover the beauty of minimalist design that brings sophistication"
+          }
+        },
+        "product_slide2": {
+          "type": "product_slide",
+          "settings": {
+            "product": "peel-and-stick-backplash-trim-12inch-shinny-gold",
+            "image": "shopify://shop_images/PSFT-WDM-12-6.jpg",
+            "color_scheme": "",
+            "overlay_opacity": 0.1,
+            "description": "Transform your living space with sleek, understated design"
+          }
+        }
+      },
+      "block_order": [
+        "product_slide",
+        "product_slide_WDfG9B",
+        "product_slide1",
+        "product_slide2"
+      ],
+      "settings": {
+        "image_size": "large",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "simple",
+        "is_autoplay": true,
+        "is_hover_stop_autoplay": true,
+        "navigation_position": "static",
+        "slideshow_speed": 1.1,
+        "slideshow_delay": 3,
+        "slide_effects": "slide",
+        "is_sync_slide": true,
+        "enable_main_image_link": false,
+        "enable_animation": true,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_color_count": true,
+        "show_size_count": false,
+        "show_collection": false,
+        "show_desc": false,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "popular-products": {
+      "type": "popular-products",
+      "settings": {
+        "subheading": "This Year",
+        "heading": "Best Seller",
+        "heading_tag": "h2",
+        "description": "",
+        "heading_size": "h1",
+        "product_list": [
+          "10-pieces-aluminium-peel-and-stick-backsplash-trim-36inch-silver-matte",
+          "10-pieces-aluminium-peel-and-stick-backsplash-trims-36inch-milky-white",
+          "10-pieces-aluminium-peel-and-stick-backplash-trim-36inch-grey-matte",
+          "10-pieces-aluminium-peel-and-stick-backplash-trim-36inch-black-matte"
+        ],
+        "products_to_show": 4,
+        "enable_swiper": false,
+        "enable_autoplay": false,
+        "enable_loop": false,
+        "navigation": false,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_color_count": false,
+        "show_size_count": false,
+        "show_collection": false,
+        "show_desc": true,
+        "columns_mobile": "1",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "simple",
+        "margin_top": "l",
+        "margin_bottom": "l"
+      }
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "column": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDC-12-9.jpg",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "",
+            "heading": "Bedroom",
+            "card_heading_tag": "h3",
+            "description": "<p>Soft textures and serene tones bring comfort to your private space.</p>",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "column_link": ""
+          }
+        },
+        "column1": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDH-12-8.jpg",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "",
+            "heading": "Living Room",
+            "card_heading_tag": "h3",
+            "description": "<p>These pieces offer the perfect balance between comfort and elegance.</p>",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "column_link": ""
+          }
+        },
+        "column2": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDC-12-10.jpg",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "",
+            "heading": "Dining Room",
+            "card_heading_tag": "h3",
+            "description": "<p>Find everything you need to set the perfect atmosphere for any meal.</p>",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "column_link": ""
+          }
+        },
+        "column3": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDH-12-9.jpg",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "",
+            "heading": "Storage",
+            "card_heading_tag": "h3",
+            "description": "<p>Smart and stylish storage solutions to keep your home organized and clutter-free.</p>",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "column_link": ""
+          }
+        },
+        "column_7ppE9q": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDH-12-10.jpg",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "",
+            "heading": "Outdoor",
+            "card_heading_tag": "h3",
+            "description": "<p>Durable, modern pieces designed for relaxing, dining, and hosting outside.</p>",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "column_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column",
+        "column1",
+        "column2",
+        "column3",
+        "column_7ppE9q"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "description": "",
+        "heading_alignment": "left",
+        "heading_content_width": "full",
+        "enable_full_screen": true,
+        "swiper": true,
+        "stop_autoplay": true,
+        "navigation": true,
+        "slideshow_speed": 20,
+        "enable_scroll": false,
+        "grid_space": "default",
+        "layout_type": "overlay",
+        "content_position": "img-top",
+        "always_visible_text": false,
+        "on_hover": "show_text",
+        "multicolumn_to_show": 2,
+        "image_ratio": "portrait",
+        "object_fit": "cover",
+        "card_heading_size": "h1",
+        "button_label": "",
+        "button_style": "simple",
+        "button_link": "",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "color_scheme": "",
+        "layout_symmetry": "default",
+        "column_split": "50-50",
+        "content_position": "center",
+        "aspect_ratio": "original",
+        "heading_position": "center",
+        "text_width": "small",
+        "subheading": "",
+        "heading": "The Story Behind Us",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "text": "<p>We started with a simple goal—offering well-designed, practical home essentials that fit modern living. Quality, functionality, and simplicity have been at the core of our store from day one. Today, we continue to bring timeless pieces that make every space feel right.</p>",
+        "enable_animation": true,
+        "button_label": "Read Our Story",
+        "button_link": "",
+        "button_style": "simple",
+        "image": "shopify://shop_images/4_7e104f0e-713b-4cc3-bf90-efb60a1e38c6.png",
+        "image_width": "small",
+        "height": "portrait",
+        "layout": "image_right",
+        "margin_top": "l",
+        "margin_bottom": "l"
+      }
+    },
+    "popular-products1": {
+      "type": "popular-products",
+      "settings": {
+        "subheading": "",
+        "heading": "",
+        "heading_tag": "h2",
+        "description": "",
+        "heading_size": "h1",
+        "product_list": [
+          "12x24-subway-calacatta-gold-peel-and-stick-backsplash-tile",
+          "12x24-subway-carrara-white-peel-and-stick-backsplash-tile",
+          "12x24-subway-pure-white-peel-and-stick-backsplash-tile",
+          "2-hex-botanical-green-peel-and-stick-tile"
+        ],
+        "products_to_show": 4,
+        "enable_swiper": false,
+        "enable_autoplay": false,
+        "enable_loop": false,
+        "navigation": false,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_color_count": true,
+        "show_size_count": false,
+        "show_collection": false,
+        "show_desc": false,
+        "columns_mobile": "1",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "simple",
+        "margin_top": "m",
+        "margin_bottom": "m"
+      }
+    },
+    "media-banner": {
+      "type": "media-banner",
+      "blocks": {
+        "media_slide": {
+          "type": "media_slide",
+          "settings": {
+            "color_scheme": "",
+            "image": "shopify://shop_images/PSFT-WDH-12-7.jpg",
+            "overlay_opacity": 0.2,
+            "enable_hover": false,
+            "show_video": false,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "subheading": "Why Inno?",
+            "heading": "Get the Latest Products",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "description": "",
+            "position_content": "top",
+            "align_content": "left",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "button_style": "tertiary",
+            "button_label2": "",
+            "button_link2": "",
+            "button_style2": "secondary",
+            "full_link": true
+          }
+        }
+      },
+      "block_order": [
+        "media_slide"
+      ],
+      "settings": {
+        "header_overlay": false,
+        "sticky": "sticky-text-effect",
+        "layout": "overlay",
+        "title_link": false,
+        "gap": false,
+        "aspect_ratio": "full",
+        "aspect_ratio_mobile": "full",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "media-banner-1": {
+      "type": "media-banner",
+      "blocks": {
+        "media_slide": {
+          "type": "media_slide",
+          "settings": {
+            "color_scheme": "",
+            "image": "shopify://shop_images/PSFT-WLS-12-8.jpg",
+            "overlay_opacity": 0.2,
+            "enable_hover": false,
+            "show_video": false,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "subheading": "Customer Favorite",
+            "heading": "The Best Outdoor Collection for Modern Gardening",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "description": "",
+            "position_content": "top",
+            "align_content": "left",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "button_style": "tertiary",
+            "button_label2": "",
+            "button_link2": "",
+            "button_style2": "secondary",
+            "full_link": true
+          }
+        }
+      },
+      "block_order": [
+        "media_slide"
+      ],
+      "settings": {
+        "header_overlay": false,
+        "sticky": "sticky-text-effect",
+        "layout": "overlay",
+        "title_link": false,
+        "gap": false,
+        "aspect_ratio": "full",
+        "aspect_ratio_mobile": "full",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "product_carousel_Kmb4XK": {
+      "type": "product-carousel",
+      "settings": {
+        "collection": "acoustic-felt",
+        "collection_list": [],
+        "subheading": "Small Stickers, Big Personality",
+        "heading": "Top Picks",
+        "heading_tag": "h2",
+        "text": "Discover our most popular and best-loved pieces, chosen for their quality, style, and functionality.",
+        "button_label1": "Shop All",
+        "button_link": "",
+        "button_style": "tertiary",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_color_count": true,
+        "show_size_count": false,
+        "show_sku": false,
+        "show_desc": false,
+        "overlay_opacity": 0.3,
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "product_markers_T4aQep": {
+      "type": "product-markers",
+      "blocks": {
+        "product_markers_item_fNNE9G": {
+          "type": "product_markers_item",
+          "settings": {
+            "product_id": "3d-beige-natural-marble-peel-and-stick-backsplash-tile",
+            "position_x": 21,
+            "position_y": 24,
+            "enable_card_positioning": false,
+            "position_card_x": 1,
+            "position_card_y": 1
+          }
+        },
+        "product_markers_item_RHUPwE": {
+          "type": "product_markers_item",
+          "settings": {
+            "product_id": "",
+            "position_x": 1,
+            "position_y": 1,
+            "enable_card_positioning": false,
+            "position_card_x": 1,
+            "position_card_y": 1
+          }
+        },
+        "product_markers_item_iDnTRp": {
+          "type": "product_markers_item",
+          "settings": {
+            "product_id": "",
+            "position_x": 1,
+            "position_y": 1,
+            "enable_card_positioning": false,
+            "position_card_x": 1,
+            "position_card_y": 1
+          }
+        },
+        "product_markers_item_Hrrbei": {
+          "type": "product_markers_item",
+          "settings": {
+            "product_id": "",
+            "position_x": 1,
+            "position_y": 1,
+            "enable_card_positioning": false,
+            "position_card_x": 1,
+            "position_card_y": 1
+          }
+        }
+      },
+      "block_order": [
+        "product_markers_item_fNNE9G",
+        "product_markers_item_RHUPwE",
+        "product_markers_item_iDnTRp",
+        "product_markers_item_Hrrbei"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/PSFT-WLS-12-10.jpg",
+        "main_image_ratio": "landscape",
+        "overlay_opacity": 0,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": true,
+        "show_button": true,
+        "button_style": "tertiary",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "collapsible_content_Q7Kj7D": {
+      "type": "collapsible-content",
+      "blocks": {
+        "accordion_XPpif6": {
+          "type": "accordion",
+          "settings": {
+            "default_open": true,
+            "question": "How does your online returns policy work?",
+            "subheading_tag": "h3",
+            "answer": "<p>We offer hassle-free returns within 30 days of purchase. Items must be in their original condition with tags attached. Please visit our Returns page for more details and to initiate a return.</p>"
+          }
+        },
+        "accordion_QmQhEe": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Which countries do you deliver to?",
+            "subheading_tag": "h3",
+            "answer": "<p>We ship to most countries around the world. For a complete list of eligible countries and shipping rates, please visit our Shipping Information page.</p>"
+          }
+        },
+        "accordion_8BBcfz": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "What should I know about duties, taxes, and border charges?",
+            "subheading_tag": "h3",
+            "answer": "<p>Duties and taxes are calculated at checkout based on your shipping destination. Please note that international orders may incur additional customs fees, which are the responsibility of the buyer.</p>"
+          }
+        },
+        "accordion_LnfCaw": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "How can I collect my order in-store?",
+            "subheading_tag": "h3",
+            "answer": "<p>You can choose to collect your online order at any of our participating stores. Simply select the \"In-Store Pickup\" option during checkout, and we'll notify you when your order is ready.</p>"
+          }
+        },
+        "accordion_rFmQn7": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Is it possible to buy a physical gift card?",
+            "subheading_tag": "h3",
+            "answer": "<p>Yes, physical gift cards are available for purchase in-store and online. You can choose the amount and have the card mailed to the recipient with a personalized message.</p>"
+          }
+        },
+        "accordion_igifqR": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Which countries accept Afterpay?",
+            "subheading_tag": "h3",
+            "answer": "<p>Afterpay is currently available in select countries, including the United States, Australia, New Zealand, and the United Kingdom. Please check our Payment Options page for the latest list of supported countries.</p>"
+          }
+        },
+        "image_FBHXHM": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDCS-12-5.jpg"
+          }
+        },
+        "image_qn9jXJ": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/MZMLG-WAL-16-6.jpg"
+          }
+        },
+        "image_Y7He7m": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/1_7f94d48f-6db4-4453-a517-5dbb46079aea.png"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_XPpif6",
+        "accordion_QmQhEe",
+        "accordion_8BBcfz",
+        "accordion_LnfCaw",
+        "accordion_rFmQn7",
+        "accordion_igifqR",
+        "image_FBHXHM",
+        "image_qn9jXJ",
+        "image_Y7He7m"
+      ],
+      "settings": {
+        "aspect_ratio": "full",
+        "heading": "Quick Answers",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "enable_animation": true,
+        "slideshow_speed": 4,
+        "button_label": "View Customer Care",
+        "button_link": "",
+        "button_style": "simple",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "multicolumn_r4bmEH": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_zYpx9T": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDCS-12-6.jpg",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "italy",
+            "heading": "Via Condotti, 85, Rome, 00187",
+            "card_heading_tag": "h3",
+            "description": "",
+            "button_label": "",
+            "button_link": "",
+            "column_link": ""
+          }
+        },
+        "column_87BMPn": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDL-12-7.jpg",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "usa",
+            "heading": "5th Avenue, 789, New York, NY 10022, USA",
+            "card_heading_tag": "h3",
+            "description": "",
+            "button_label": "",
+            "button_link": "",
+            "column_link": ""
+          }
+        },
+        "column_wADiLP": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDL-12-6.jpg",
+            "overlay_opacity": 0.2,
+            "video_overlay_on_image": false,
+            "background_color": "rgba(0,0,0,0)",
+            "video_url": "",
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false,
+            "subheading": "usa",
+            "heading": "160 Spring Street, New York, NY 10012",
+            "card_heading_tag": "h3",
+            "description": "",
+            "button_label": "",
+            "button_link": "",
+            "column_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_zYpx9T",
+        "column_87BMPn",
+        "column_wADiLP"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "subheading": "",
+        "heading": "Our Shops",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "description": "",
+        "heading_alignment": "left",
+        "heading_content_width": "full",
+        "enable_full_screen": false,
+        "swiper": false,
+        "stop_autoplay": false,
+        "navigation": false,
+        "slideshow_speed": 20,
+        "enable_scroll": false,
+        "grid_space": "default",
+        "layout_type": "overlay",
+        "content_position": "img-top",
+        "always_visible_text": false,
+        "on_hover": "hide_text",
+        "multicolumn_to_show": 3,
+        "image_ratio": "portrait",
+        "object_fit": "cover",
+        "card_heading_size": "h2",
+        "button_label": "",
+        "button_style": "simple",
+        "button_link": "",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "featured-blog": {
+      "type": "featured-blog",
+      "settings": {
+        "blog": "新闻",
+        "post_limit": 6,
+        "columns_per_row": 4,
+        "post_layout": "grid",
+        "subheading": "",
+        "heading": "Journal",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "description": "",
+        "blog_button_label": "View Journal",
+        "button_style": "simple",
+        "card_heading_size": "h2",
+        "card_heading_tag": "h2",
+        "hover_effect": true,
+        "inner_button_label": "Read More",
+        "button_color_scheme": "",
+        "overlay_opacity": 0.2,
+        "tags_position": "bottom",
+        "show_image": true,
+        "show_tags": true,
+        "show_date": true,
+        "show_author": true,
+        "show_excerpt": false,
+        "image_ratio": "square",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "brands_iBfeF6": {
+      "type": "brands",
+      "blocks": {
+        "column_xiTJew": {
+          "type": "column",
+          "settings": {
+            "heading": "Artisan Haven",
+            "image_1": "shopify://shop_images/PEBBLE-BLK-10_20240201.jpg",
+            "brand_link": ""
+          }
+        },
+        "column_APRYhY": {
+          "type": "column",
+          "settings": {
+            "heading": "Velvet & Oak",
+            "image_1": "shopify://shop_images/WPR-CAR-1_20260603.jpg",
+            "brand_link": ""
+          }
+        },
+        "column_nKVCc8": {
+          "type": "column",
+          "settings": {
+            "heading": "Ethereal Living Vibes",
+            "brand_link": ""
+          }
+        },
+        "column_GBbnji": {
+          "type": "column",
+          "settings": {
+            "heading": "Charm",
+            "brand_link": ""
+          }
+        },
+        "column_JEUXmL": {
+          "type": "column",
+          "settings": {
+            "heading": "Nordic Nest",
+            "brand_link": ""
+          }
+        },
+        "column_QVwRgi": {
+          "type": "column",
+          "settings": {
+            "heading": "Gilded Grove",
+            "brand_link": ""
+          }
+        },
+        "column_4q84qW": {
+          "type": "column",
+          "settings": {
+            "heading": "Urban Oasis Company",
+            "brand_link": ""
+          }
+        },
+        "column_kDQLBG": {
+          "type": "column",
+          "settings": {
+            "heading": "Timeless",
+            "brand_link": ""
+          }
+        },
+        "column_YD3CXb": {
+          "type": "column",
+          "settings": {
+            "heading": "Cottage Chic",
+            "brand_link": ""
+          }
+        },
+        "column_6YwWBU": {
+          "type": "column",
+          "settings": {
+            "heading": "Luxe Lineage Studio",
+            "brand_link": ""
+          }
+        },
+        "column_wxXUkD": {
+          "type": "column",
+          "settings": {
+            "heading": "Modern Manor",
+            "brand_link": ""
+          }
+        },
+        "column_wm9yJN": {
+          "type": "column",
+          "settings": {
+            "heading": "Vintage",
+            "brand_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_xiTJew",
+        "column_APRYhY",
+        "column_nKVCc8",
+        "column_GBbnji",
+        "column_JEUXmL",
+        "column_QVwRgi",
+        "column_4q84qW",
+        "column_kDQLBG",
+        "column_YD3CXb",
+        "column_6YwWBU",
+        "column_wxXUkD",
+        "column_wm9yJN"
+      ],
+      "settings": {
+        "subheading": "Our Designers",
+        "subheading_tag": "span",
+        "aspect_ratio": "medium",
+        "content_position": "left",
+        "height": "portrait",
+        "image_width": "large",
+        "heading_size": "h2",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "newsletter_FCfRnb": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "background-2",
+        "aspect_ratio": "medium",
+        "heading": "Subscribe to our Newsletter",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "newsletter_text": "Subscribe to our Newsletter & get 25% off your first order.",
+        "text_align": "center",
+        "image": "shopify://shop_images/PSFT-WDCS-12-5.jpg",
+        "overlay_opacity": 0.2,
+        "show_gdpr_checkbox": false,
+        "gdpr_text": "I agree to receive marketing emails. Read our <a href=\"/policies/privacy-policy\">privacy policy</a>.",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "featured_product_w8rkpa": {
+      "type": "featured-product",
+      "blocks": {
+        "tags_D6ifYx": {
+          "type": "tags",
+          "settings": {}
+        },
+        "text_xwmBaf": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product_item.vendor }}"
+          }
+        },
+        "title_eRXJLM": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h2",
+            "subheading_tag": "h2"
+          }
+        },
+        "price_GQtK86": {
+          "type": "price",
+          "settings": {}
+        },
+        "description_CzUehK": {
+          "type": "description",
+          "settings": {
+            "description": "Must-Have of the Moment"
+          }
+        },
+        "inventory_tJiB8E": {
+          "type": "inventory",
+          "settings": {}
+        },
+        "variant_picker_GxMEPL": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "dropdown",
+            "pill_group": false,
+            "show_size_guide": false,
+            "size_guide_text": "Size Guide",
+            "size_guide_header": "Select Your Preferences",
+            "size_guide_description": "<p>Customize your selection by choosing from available variants. Simply pick the size, color, or style you prefer to make it truly yours.</p>",
+            "page": ""
+          }
+        },
+        "buy_buttons_kCemFb": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_quantity": false,
+            "notification_modal": true,
+            "modal_button_label": "Notify Me",
+            "heading": "Ready to Order?",
+            "heading_tag": "h3",
+            "description": "Don't wait—secure your item now and enjoy fast shipping!",
+            "button_label": "Buy Now",
+            "button_link": "",
+            "description_2": "Add your favorite items to your cart and check out with ease. It's quick, simple, and secure.",
+            "button_label_2": "Add to Cart",
+            "button_link_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "tags_D6ifYx",
+        "text_xwmBaf",
+        "title_eRXJLM",
+        "price_GQtK86",
+        "description_CzUehK",
+        "inventory_tJiB8E",
+        "variant_picker_GxMEPL",
+        "buy_buttons_kCemFb"
+      ],
+      "name": "t:sections.featured-product.name",
+      "settings": {
+        "subheading": "Short introduction to this product",
+        "heading": "Highlight A Key Item",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "description": "<p>Here can be a short description of the featured product, its key features and benefits.</p>",
+        "product_item": "12x24-subway-pure-white-peel-and-stick-backsplash-tile",
+        "desktop_alignment": "right",
+        "mobile_alignment": "before",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "button_label": "See Details",
+        "button_link": "",
+        "button_style": "simple",
+        "margin_top": "m",
+        "margin_bottom": "m"
+      }
+    },
+    "image_banner_DXgEiU": {
+      "type": "image-banner",
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "",
+        "info_position": "inside",
+        "image": "shopify://shop_images/PSFT-WDS-12-10.jpg",
+        "image_ratio": "2/1",
+        "opacity_overlay": 0.2,
+        "heading": "Banner title",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "text_information": "<p>This is where you can tell a quick story, highlight a collection, or introduce an event, making your visuals more impactful.</p>",
+        "text_align": "center",
+        "text_width": "full",
+        "additional_text": "Elevate the everyday with quality you can trust.",
+        "button_label": "Shop now",
+        "button_style": "tertiary",
+        "button_link": "",
+        "button_label2": "Explore More",
+        "button_style2": "tertiary",
+        "button_link2": "",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "rich_text_9KhfTb": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_tUhQfx": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "Here can be a brief introduction"
+          }
+        },
+        "heading_3z869N": {
+          "type": "heading",
+          "settings": {
+            "heading": "Here can be a compelling message summarizing the section’s focus",
+            "heading_size": "h1",
+            "subheading_tag": "div"
+          }
+        },
+        "text_3FirNc": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Here can be a detailed paragraph that expands on the heading, providing insights, background information, or key details.</p>",
+            "enable_scrollable_text": false,
+            "scrollable_text_height": 200
+          }
+        },
+        "button_Xn7xWw": {
+          "type": "button",
+          "settings": {
+            "button_label": "Write CTA",
+            "button_link": "",
+            "button_style": "simple"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_tUhQfx",
+        "heading_3z869N",
+        "text_3FirNc",
+        "button_Xn7xWw"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "alignment": "center",
+        "width": "medium",
+        "margin_top": "m",
+        "margin_bottom": "m"
+      }
+    },
+    "newsletter_G8QjCT": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "color_scheme": "background-2",
+        "aspect_ratio": "medium",
+        "heading": "Here can be your newsletter title",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "newsletter_text": "Use this space to tell visitors why they should subscribe, highlighting perks like early access to sales, special discounts, or curated content.",
+        "text_align": "center",
+        "image": "shopify://shop_images/MZMLG-WAL-16-6.jpg",
+        "overlay_opacity": 0.5,
+        "show_gdpr_checkbox": false,
+        "gdpr_text": "I agree to receive marketing emails. Read our <a href=\"/policies/privacy-policy\">privacy policy</a>.",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "contact_form_7zywTk": {
+      "type": "contact-form",
+      "blocks": {
+        "contact_description_HbyYwE": {
+          "type": "contact-description",
+          "settings": {
+            "subheading": "",
+            "heading": "We’d Love to Hear From You",
+            "heading_size": "h3",
+            "subheading_tag": "p",
+            "description": "<p>Have a question, comment, or just want to say hello? Fill out the form and we’ll get back to you as soon as possible.</p>"
+          }
+        },
+        "contact_description_wgND3f": {
+          "type": "contact-description",
+          "settings": {
+            "subheading": "",
+            "heading": "We’d Love to Hear From You",
+            "heading_size": "h3",
+            "subheading_tag": "p",
+            "description": "<p>Have a question, comment, or just want to say hello? Fill out the form and we’ll get back to you as soon as possible.</p>"
+          }
+        },
+        "contact_description_nWxg4m": {
+          "type": "contact-description",
+          "settings": {
+            "subheading": "",
+            "heading": "We’d Love to Hear From You",
+            "heading_size": "h3",
+            "subheading_tag": "p",
+            "description": "<p>Have a question, comment, or just want to say hello? Fill out the form and we’ll get back to you as soon as possible.</p>"
+          }
+        },
+        "form_name_YrwUEk": {
+          "type": "form_name",
+          "settings": {
+            "show_field": true,
+            "label": "",
+            "placeholder": "",
+            "required": false
+          }
+        },
+        "phone_number_9hKHQq": {
+          "type": "phone_number",
+          "settings": {
+            "show_field": true,
+            "label": "",
+            "placeholder": "",
+            "required": false
+          }
+        }
+      },
+      "block_order": [
+        "contact_description_HbyYwE",
+        "contact_description_wgND3f",
+        "contact_description_nWxg4m",
+        "form_name_YrwUEk",
+        "phone_number_9hKHQq"
+      ],
+      "name": "t:sections.contact-form.presets.name",
+      "settings": {
+        "position": "right",
+        "enable_form": false,
+        "heading": "Get in Touch",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "text": "",
+        "additional_text": "Submit your request and we'll respond soon.",
+        "button_style": "secondary",
+        "show_gdpr_checkbox": false,
+        "required_consent_checkbox": false,
+        "gdpr_text": "I agree to the processing of my personal data. Read our <a href=\"/policies/privacy-policy\">privacy policy</a>.",
+        "email_label": "",
+        "email_placeholder": "",
+        "comment_label": "",
+        "comment_placeholder": "",
+        "button_label": "",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    }
+  },
+  "order": [
+    "slideshow",
+    "product-slider",
+    "popular-products",
+    "multicolumn",
+    "image-with-text",
+    "popular-products1",
+    "media-banner",
+    "media-banner-1",
+    "product_carousel_Kmb4XK",
+    "product_markers_T4aQep",
+    "collapsible_content_Q7Kj7D",
+    "multicolumn_r4bmEH",
+    "featured-blog",
+    "brands_iBfeF6",
+    "newsletter_FCfRnb",
+    "featured_product_w8rkpa",
+    "image_banner_DXgEiU",
+    "rich_text_9KhfTb",
+    "newsletter_G8QjCT",
+    "contact_form_7zywTk"
+  ]
+}

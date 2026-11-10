@@ -1,0 +1,140 @@
+{% doc %}
+  Renders a linked product value. Use in conjunction with `product-linked-products` snippet.
+
+  When the linked product value is a color, the value is rendered as a color swatch styled with the
+  "Linked products swatches" theme settings (shape, size and the optional color name).
+
+  The "Swatch rectangle shape" setting is a product page only shape: it replaces the shape and size
+  settings there, while product cards keep rendering with the "Swatch shape" and "Swatch size" settings.
+
+  @param {object} linked_product - Product Liquid object
+  @param {boolean} [is_active_product] - Indicates if the linked product is the active product
+  @param {number} current_linked_product_id - ID of the current linked product
+  @param {boolean} [is_product_card] - Renders the value for a product card (in-place swap instead of navigation)
+  @param {string} [swatch_ratio] - Media ratio used by the rectangle swatch shape on the product page. Values are "landscape", "portrait" and "square"
+
+  @example
+  {% render 'product-linked-product-value', linked_product: product %}
+{% enddoc %}
+
+{% liquid
+  # Linked product values
+  assign linked_product_color = linked_product.metafields.custom.linked_product_color.value
+  # Linked product color title
+  assign linked_product_color_title = linked_product.metafields.custom.linked_product_color_title.value
+  # Linked product color metafield takes priority over Linked product option
+  assign linked_product_option = linked_product.metafields.custom.linked_product_option.value
+
+  # The color metafield value is also used as the color name when the setting is enabled
+  assign linked_product_color_name = linked_product_color
+
+  # Fallback value
+  if linked_product_color == blank and linked_product_option == blank and linked_product.featured_media == blank
+    assign linked_product_color = '#000000'
+  endif
+
+  # Swatch styling (shared by the product page and the product card)
+  assign swatch_shape = settings.linked_products_swatch_shape | default: 'circle'
+  assign swatch_size = settings.linked_products_swatch_size | default: 'medium'
+
+  # The rectangle shape is a product page only option, product cards keep the "Swatch shape" setting
+  unless is_product_card
+    if settings.linked_products_swatch_rectangle
+      assign swatch_shape = 'rectangle'
+    endif
+  endunless
+
+  assign show_color_name = false
+  if settings.linked_products_show_color_name and linked_product_color_name != blank
+    assign show_color_name = true
+  endif
+
+  # The value is rendered as a swatch when it resolves to a color or to the product image
+  assign is_swatch = false
+  if linked_product_color != blank
+    assign is_swatch = true
+  elsif linked_product_option == blank and linked_product.featured_media != blank
+    assign is_swatch = true
+  endif
+
+  assign option_classes = 'linked-products__option'
+  if is_swatch
+    assign option_classes = option_classes | append: ' linked-products__option--swatch'
+    assign option_classes = option_classes | append: ' linked-products__option--' | append: swatch_shape
+
+    # Rectangle swatches take their dimensions from the media ratio, the same way the variant
+    # picker swatches do, so the swatch size setting does not apply to them.
+    if swatch_shape == 'rectangle'
+      if swatch_ratio == 'landscape' or swatch_ratio == 'portrait' or swatch_ratio == 'square'
+        assign option_classes = option_classes | append: ' linked-products__option--ratio-' | append: swatch_ratio
+      endif
+    else
+      assign option_classes = option_classes | append: ' linked-products__option--' | append: swatch_size
+    endif
+  endif
+  if is_swatch and show_color_name
+    assign option_classes = option_classes | append: ' linked-products__option--with-name'
+  endif
+
+  assign is_active = false
+  if is_active_product or linked_product.id == current_linked_product_id
+    assign is_active = true
+  endif
+
+  # Active product is rendered as non-clickable element.
+  assign option_tag = 'a'
+  if is_active and is_product_card != true
+    assign option_tag = 'div'
+  endif
+%}
+
+{%- if linked_product != blank -%}
+  <{{ option_tag | default: 'a' }}
+    {% if option_tag == 'a' %}
+      href="{{ linked_product.url }}"
+      aria-label="{{ linked_product.title }}"
+    {% endif %}
+    {% if is_product_card %}
+      data-linked-product-id="{{ linked_product.id }}"
+      {% if is_active %}
+        aria-current="true"
+      {% endif %}
+    {% endif %}
+    class="{{ option_classes }}{% if is_active %} active{% endif %}"
+  >
+    {%- if linked_product_color != blank -%}
+      <span class="linked-products__option-color" style="background: {{ linked_product_color }};"></span>
+
+      {%- if show_color_name -%}
+        <span class="linked-products__option-name">
+          {%- if linked_product_color_title != blank -%}
+            {{- linked_product_color_title -}}
+          {%- else -%}
+            {{- linked_product_color_name -}}
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+    {%- elsif linked_product_option != blank -%}
+      {{- linked_product_option -}}
+    {%- elsif linked_product.featured_media != blank -%}
+      {% comment %} Render default state (fallback) product image {% endcomment %}
+      {% liquid
+        assign swatch_image_width = 80
+        if swatch_shape == 'rectangle'
+          # Matches the image width requested by the variant picker swatches
+          assign swatch_image_width = 250
+        endif
+        assign swatch_image_ratio = linked_product.featured_image.aspect_ratio
+        assign swatch_calc_ratio = 1
+        if swatch_image_ratio > 1
+          assign swatch_calc_ratio = swatch_image_ratio | divided_by: 1 | round: 2
+          assign swatch_image_width = swatch_image_width | times: swatch_calc_ratio
+        endif
+
+        assign image_url = linked_product.featured_image | image_url: width: swatch_image_width
+        assign background_prop = 'url(' | append: image_url | append: ') no-repeat center/cover'
+      %}
+      <span class="linked-products__option-color" style="background: {{ background_prop }};"></span>
+    {%- endif -%}
+  </{{ option_tag | default: 'a' }}>
+{%- endif -%}

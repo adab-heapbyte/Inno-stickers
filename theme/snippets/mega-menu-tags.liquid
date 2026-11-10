@@ -1,0 +1,44 @@
+{%- comment -%}
+  Renders the tags of a mega menu block next to a matching menu link.
+
+  Accepts:
+  - blocks: {Array} Header section blocks.
+  - menu_handle: {String} Handle of the top level menu link the mega menu is attached to.
+  - handle: {String} Handle of the menu link the tags are rendered for.
+
+  Usage:
+  {% render 'mega-menu-tags', blocks: section.blocks, menu_handle: link.handle, handle: childlink.handle %}
+{%- endcomment -%}
+
+{%- if handle != blank -%}
+  {%- for block in blocks -%}
+    {%- if block.type == 'mega_menu' -%}
+      {%- assign mega_menu_trigger = block.settings.mega_menu_trigger | handle | strip -%}
+      {%- if mega_menu_trigger != blank and mega_menu_trigger == menu_handle -%}
+        {%- liquid
+          assign tag_1_trigger = block.settings.tag_1_trigger | handle | strip
+          assign tag_2_trigger = block.settings.tag_2_trigger | handle | strip
+          assign tag_3_trigger = block.settings.tag_3_trigger | handle | strip
+          assign tag_4_trigger = block.settings.tag_4_trigger | handle | strip
+          assign tag_5_trigger = block.settings.tag_5_trigger | handle | strip
+        -%}
+        {%- if block.settings.tag_1 != blank and tag_1_trigger == handle -%}
+          <span class="menu-tag caption">{{- block.settings.tag_1 | escape -}}</span>
+        {%- endif -%}
+        {%- if block.settings.tag_2 != blank and tag_2_trigger == handle -%}
+          <span class="menu-tag caption">{{- block.settings.tag_2 | escape -}}</span>
+        {%- endif -%}
+        {%- if block.settings.tag_3 != blank and tag_3_trigger == handle -%}
+          <span class="menu-tag caption">{{- block.settings.tag_3 | escape -}}</span>
+        {%- endif -%}
+        {%- if block.settings.tag_4 != blank and tag_4_trigger == handle -%}
+          <span class="menu-tag caption">{{- block.settings.tag_4 | escape -}}</span>
+        {%- endif -%}
+        {%- if block.settings.tag_5 != blank and tag_5_trigger == handle -%}
+          <span class="menu-tag caption">{{- block.settings.tag_5 | escape -}}</span>
+        {%- endif -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}

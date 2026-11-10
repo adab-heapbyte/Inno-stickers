@@ -1,0 +1,399 @@
+{% liquid
+  assign slider_main_class = slider_main_selector | default: 'js-media-list'
+  assign slider_sub_class = slider_sub_selector | default: 'js-media-sublist'
+
+  assign alt_media_grouping = false
+  if alt_media_grouping_enabled and variant_media_group_option_position > 0
+    assign alt_media_grouping = true
+  endif
+%}
+
+{% if product.media.size > 0 %}
+  <div
+    class="product__media-wrapper {{ wrapper_class }}"
+    data-section="product-media-{{ section.id }}"
+    data-source="{{ section.id }}"
+    data-mobile-gallery-type="{{ mobile_gallery_type }}"
+    {%- if alt_media_grouping %}
+      data-alt-media-grouping="true"
+      data-media-grouping-section="{{ section.id }}"
+      data-group-option-position="{{ variant_media_group_option_position }}"
+    {%- endif %}
+  >
+    <div class="product__media-list-wrapper">
+      <div
+        class="product__media-list media_size-{{ section.settings.image_ratio }} {% if gallery_type != 'static_multicolumns_aside' and gallery_type != 'static_column_aside' and gallery_type != 'two_column_aside' %} {{ slider_main_class }} swiper {% endif %} {% if gallery_type == 'static_multicolumns_aside' and product.media.size == 1 %} product__media-list--full{% endif %} {% if section.settings.enable_full_screen %} product__media-list--full_screen {% endif %} {% if section.settings.disable_scrolling and gallery_type == "two_column_aside" %}product__media-list__disable-scrolling{% endif %} no-js-hidden"
+        data-direction="{{ section.settings.slider_direction }}"
+        data-gallery-type="{{ gallery_type }}"
+        data-mobile-show-next-preview="{{ section.settings.mobile_show_next_preview }}"
+        {% if gallery_type == 'thumbs_aside_horizontal'
+          or gallery_type == 'mobile_sliding_bar'
+          or gallery_type == 'full_horizontal_slider'
+        %}
+          data-direction_desc="horizontal"
+        {% else %}
+          data-direction_desc="vertical"
+        {% endif %}
+        data-slider-type="main-product"
+        data-enable-video-autoplay="{{ section.settings.enable_video_autoplay }}"
+        data-slider-loop="{{ slider_loop }}"
+      >
+        {% if gallery_type != 'static_multicolumns_aside'
+          and gallery_type != 'static_column_aside'
+          and gallery_type != 'two_column_aside'
+        %}
+          <div class="swiper-wrapper">
+        {% endif %}
+        {%- liquid
+          assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
+          assign media_count = product.media.size
+        -%}
+
+        {%- if product.selected_or_first_available_variant.featured_media != null -%}
+          {%- assign featured_media = product.selected_or_first_available_variant.featured_media -%}
+          {%- capture media_group -%}
+            {%- render 'variant-media-group', media: featured_media, enabled: alt_media_grouping -%}
+          {%- endcapture -%}
+          {%- liquid
+            assign media_group = media_group | strip
+            assign media_hidden = false
+            if media_group != blank and media_group != selected_variant_media_group
+              assign media_hidden = true
+            endif
+          -%}
+          <div
+            class="product__media-item {% unless media_hidden %}swiper-slide{% endunless %} {% if section.settings.image_fit == 'contain' %}product__media-item--contain{% endif %}{% if media_hidden %} product__media-item--variant-hidden{% endif %}"
+            data-media-id="{{ section.id }}-{{ featured_media.id }}"
+            {%- if alt_media_grouping %}
+              data-media-group="{{ media_group }}"
+              data-media-order="0"
+              data-media-slide="true"
+            {%- endif %}
+          >
+            {% render 'product-thumbnail',
+              product_card_product: product,
+              media: featured_media,
+              position: 'featured',
+              modal_id: section.id,
+              lazy_load: false,
+              class: 'img-responsive',
+              gallery_type: gallery_type
+            %}
+            {% if gallery_type == 'two_column_aside' %}
+              <div id="image_number" class="image_number secondary_text">
+                <span class="first_number"></span>
+                <span>
+                  {% if product.media.size > 10 %}
+                    {{ product.media.size }}
+                  {% else %}
+                    0{{ product.media.size }}
+                  {%- endif -%}
+                </span>
+              </div>
+            {% endif %}
+          </div>
+        {%- endif -%}
+
+        {%- for media in product.media -%}
+          {% if show_only_variant_media and alt_media_grouping == false %}
+            {% break %}
+          {% endif %}
+
+          {% if section.settings.variant_media_display == 'hide_unselected_variant_media'
+            and alt_media_grouping == false
+            and variant_images contains media.src
+          %}
+            {% continue %}
+          {% endif %}
+          {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
+            {%- capture media_group -%}
+              {%- render 'variant-media-group', media: media, enabled: alt_media_grouping -%}
+            {%- endcapture -%}
+            {%- liquid
+              assign media_group = media_group | strip
+              assign media_hidden = false
+              if media_group != blank and media_group != selected_variant_media_group
+                assign media_hidden = true
+              endif
+            -%}
+            <div
+              class="product__media-item {% unless media_hidden %}swiper-slide{% endunless %}{% if media.media_type != 'image' %} product__media-item--full{% endif %} {% if variant_images contains media.src %} product__media-item--variant{% endif %} {% if section.settings.image_fit == 'contain' %} product__media-item--contain{% endif %}{% if media_hidden %} product__media-item--variant-hidden{% endif %}"
+              data-media-id="{{ section.id }}-{{ media.id }}"
+              {%- if alt_media_grouping %}
+                data-media-group="{{ media_group }}"
+                data-media-order="{{ forloop.index }}"
+                data-media-slide="true"
+              {%- endif %}
+            >
+              {% render 'product-thumbnail',
+                media: media,
+                position: forloop.index,
+                modal_id: section.id,
+                lazy_load: false,
+                class: 'img-responsive',
+                gallery_type: gallery_type
+              %}
+              {% if gallery_type == 'two_column_aside' and forloop.index == 1 %}
+                <div id="image_number" class="image_number secondary_text">
+                  <span class="first_number"></span>
+                  <span>
+                    {% if product.media.size > 10 %}
+                      {{ product.media.size }}
+                    {% else %}
+                      0{{ product.media.size }}
+                    {%- endif -%}
+                  </span>
+                </div>
+              {% endif %}
+            </div>
+          {%- endunless -%}
+        {%- endfor -%}
+        {% if gallery_type != 'static_multicolumns_aside'
+          and gallery_type != 'static_column_aside'
+          and gallery_type != 'two_column_aside'
+        %}
+          </div>
+        {% endif %}
+
+        {% if gallery_type != 'static_multicolumns_aside'
+          and gallery_type != 'static_column_aside'
+          and gallery_type != 'two_column_aside'
+        %}
+          {% if product.media.size > 1 %}
+            <div class="container product__pagination-wrapper {% if gallery_type == 'mobile_sliding_bar' or gallery_type == 'full_horizontal_slider'%}product__pagination-mobile_sliding_bar-wrapper{% endif %} {% if gallery_type == 'full_horizontal_slider'%}product__pagination-desktop_sliding_bar-wrapper{% endif %}">
+              <div class="product__pagination swiper-pagination"></div>
+            </div>
+
+            <div class="product__slider-nav container no-js-hidden {% if slider_navigation == true %} product__slider-nav-show{% endif %}">
+              <div class="swiper-button-prev focus-inset">
+                {% render 'icon-caret-left' %}
+              </div>
+              <div class="swiper-button-next focus-inset">
+                {% render 'icon-caret-right' %}
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+
+      {% if gallery_type == 'thumbs_aside'
+        or gallery_type == 'thumbs_aside_horizontal'
+        or gallery_type == 'mobile_sliding_bar'
+      %}
+        <div class="product__media-sublist-outer media_size-{{ section.settings.image_ratio }} no-js-hidden {% if gallery_type == 'mobile_sliding_bar' %} product__media-sublist-outer__mobile_sliding_bar {% endif %}">
+          <div
+            class="product__media-sublist {% if product.media.size < 2 %}product__media-sublist--height{% endif %} {{ slider_sub_class }} swiper"
+            {% if gallery_type == 'thumbs_aside_horizontal' or gallery_type == 'mobile_sliding_bar' %}
+              data-direction="horizontal"
+            {% else %}
+              data-direction="vertical"
+            {% endif %}
+            data-slider-type="sub-product"
+          >
+            <div class="swiper-wrapper">
+              {%- if product.selected_or_first_available_variant.featured_media != null -%}
+                {%- assign featured_media = product.selected_or_first_available_variant.featured_media -%}
+                {%- capture media_group -%}
+                  {%- render 'variant-media-group', media: featured_media, enabled: alt_media_grouping -%}
+                {%- endcapture -%}
+                {%- liquid
+                  assign media_group = media_group | strip
+                  assign media_hidden = false
+                  if media_group != blank and media_group != selected_variant_media_group
+                    assign media_hidden = true
+                  endif
+                -%}
+                <div
+                  class="product__media-subitem {% unless media_hidden %}swiper-slide{% endunless %} {% if section.settings.image_fit == 'contain' %} product__media-item--contain{% endif %}{% if media_hidden %} product__media-subitem--variant-hidden{% endif %}"
+                  data-media-sub-id="{{ section.id }}-{{ featured_media.id }}"
+                  {%- if alt_media_grouping %}
+                    data-media-group="{{ media_group }}"
+                    data-media-order="0"
+                    data-media-slide="true"
+                  {%- endif %}
+                >
+                  {%- liquid
+                    assign aspect_ratio_img = 100 | divided_by: featured_media.preview_image.aspect_ratio | round: 2
+                    assign width_ratio = 1
+                    if aspect_ratio_img < 132
+                      assign width_ratio = 132.0 | divided_by: aspect_ratio_img | round: 2
+                    endif
+                    assign width_ratio_mobile = 1
+                    if aspect_ratio_img < 155
+                      assign width_ratio_mobile = 155.0 | divided_by: aspect_ratio_img | round: 2
+                    endif
+                  -%}
+                  {% capture sizes %}
+										(min-width: 1100px) calc(200px * {{ width_ratio }}),
+										calc(((100vw - 6rem) / 4) * {{ width_ratio_mobile }})
+									{% endcapture %}
+
+                  <div class="product__media">
+                    {{
+                      featured_media.preview_image
+                      | image_url: width: featured_media.preview_image.width
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '150, 200, 250, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2200, 2400, 2600, 2800, 3000, 3200 ',
+                        sizes: sizes
+                    }}
+                  </div>
+                </div>
+              {%- endif -%}
+
+              {%- for media in product.media -%}
+                {% if show_only_variant_media and alt_media_grouping == false %}
+                  {% break %}
+                {% endif %}
+
+                {% if section.settings.variant_media_display == 'hide_unselected_variant_media'
+                  and alt_media_grouping == false
+                  and variant_images contains media.src
+                %}
+                  {% continue %}
+                {% endif %}
+                {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
+                  {%- capture media_group -%}
+                    {%- render 'variant-media-group', media: media, enabled: alt_media_grouping -%}
+                  {%- endcapture -%}
+                  {%- liquid
+                    assign media_group = media_group | strip
+                    assign media_hidden = false
+                    if media_group != blank and media_group != selected_variant_media_group
+                      assign media_hidden = true
+                    endif
+                  -%}
+                  <div
+                    class="product__media-subitem {% unless media_hidden %}swiper-slide{% endunless %} {% if variant_images contains media.src %} product__media-item--variant{% endif %} {% if section.settings.image_fit == 'contain' %} product__media-item--contain{% endif %}{% if media_hidden %} product__media-subitem--variant-hidden{% endif %}"
+                    data-media-sub-id="{{ section.id }}-{{ media.id }}"
+                    {%- if alt_media_grouping %}
+                      data-media-group="{{ media_group }}"
+                      data-media-order="{{ forloop.index }}"
+                      data-media-slide="true"
+                    {%- endif %}
+                  >
+                    {%- liquid
+                      assign aspect_ratio_img = 100 | divided_by: media.preview_image.aspect_ratio | round: 2
+                      assign width_ratio = 1
+                      if aspect_ratio_img < 132
+                        assign width_ratio = 132.0 | divided_by: aspect_ratio_img | round: 2
+                      endif
+                      assign width_ratio_mobile = 1
+                      if aspect_ratio_img < 155
+                        assign width_ratio_mobile = 155.0 | divided_by: aspect_ratio_img | round: 2
+                      endif
+                    -%}
+                    {% capture sizes %}
+											(min-width: 1100px) calc(200px * {{ width_ratio }}),
+											calc(((100vw - 6rem) / 4) * {{ width_ratio_mobile }})
+										{% endcapture %}
+
+                    <div class="product__media">
+                      {{
+                        media.preview_image
+                        | image_url: width: media.preview_image.width
+                        | image_tag:
+                          loading: 'lazy',
+                          height: '187',
+                          widths: '150, 200, 250, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2200, 2400, 2600, 2800, 3000, 3200 ',
+                          sizes: sizes
+                      }}
+                    </div>
+                  </div>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="product__media-grid-noscript js-hidden">
+        <div class="product__media-list">
+          {%- if product.selected_or_first_available_variant.featured_media != null -%}
+            {%- assign featured_media = product.selected_or_first_available_variant.featured_media -%}
+            {%- capture media_group -%}
+              {%- render 'variant-media-group', media: featured_media, enabled: alt_media_grouping -%}
+            {%- endcapture -%}
+            {%- liquid
+              assign media_group = media_group | strip
+              assign media_hidden = false
+              if media_group != blank and media_group != selected_variant_media_group
+                assign media_hidden = true
+              endif
+            -%}
+            <div
+              class="product__media-item {% if section.settings.image_fit == 'contain' %}product__media-item--contain{% endif %}{% if media_hidden %} product__media-item--variant-hidden{% endif %}"
+              data-media-id="{{ section.id }}-{{ featured_media.id }}"
+              {%- if alt_media_grouping %}
+                data-media-group="{{ media_group }}"
+                data-media-order="0"
+              {%- endif %}
+            >
+              {% render 'product-thumbnail',
+                product_card_product: product,
+                media: featured_media,
+                position: 'featured',
+                modal_id: section.id,
+                lazy_load: false,
+                gallery_type: gallery_type
+              %}
+            </div>
+          {%- endif -%}
+
+          {%- for media in product.media -%}
+            {% if show_only_variant_media and alt_media_grouping == false %}
+              {% break %}
+            {% endif %}
+
+            {% if section.settings.variant_media_display == 'hide_unselected_variant_media'
+              and alt_media_grouping == false
+              and variant_images contains media.src
+            %}
+              {% continue %}
+            {% endif %}
+            {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
+              {%- capture media_group -%}
+                {%- render 'variant-media-group', media: media, enabled: alt_media_grouping -%}
+              {%- endcapture -%}
+              {%- liquid
+                assign media_group = media_group | strip
+                assign media_hidden = false
+                if media_group != blank and media_group != selected_variant_media_group
+                  assign media_hidden = true
+                endif
+              -%}
+              <div
+                class="product__media-item {% if media.media_type != 'image' %} product__media-item--full{% endif %} {% if variant_images contains media.src %} product__media-item--variant{% endif %} {% if section.settings.image_fit == 'contain' %} product__media-item--contain{% endif %}{% if media_hidden %} product__media-item--variant-hidden{% endif %}"
+                data-media-id="{{ section.id }}-{{ media.id }}"
+                {%- if alt_media_grouping %}
+                  data-media-group="{{ media_group }}"
+                  data-media-order="{{ forloop.index }}"
+                {%- endif %}
+              >
+                {% render 'product-thumbnail',
+                  media: media,
+                  position: forloop.index,
+                  modal_id: section.id,
+                  lazy_load: false,
+                  gallery_type: gallery_type
+                %}
+              </div>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="product__media-wrapper" data-section="product-media-{{ section.id }}" data-source="{{ section.id }}">
+    <div class="product__media-list-wrapper product__media-placeholder-wrapper">
+      <div class="product__media-list {% if gallery_type == 'static_multicolumns_aside' %} product__media-list--full{% endif %}">
+        <div class="product__media-item">
+          <div class="product__media media">
+            {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

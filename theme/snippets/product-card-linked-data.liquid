@@ -1,0 +1,71 @@
+{% doc %}
+  Outputs a JSON object describing a single product used by the product grid
+  "Linked products" card swap. Rendered inside a JSON array by `product-linked-products`
+  (in product card context) and consumed by `product-card.js`.
+
+  The card fragments are pre-rendered with the very same snippets the card itself uses,
+  so a swapped card is markup-identical to a server-rendered one.
+
+  @param {object} linked_product - Product Liquid object
+  @param {string} [media_size] - Image ratio of the card
+  @param {string} [media_fit] - Image fit of the card
+  @param {number} [columns_mobile] - Number of columns on mobile
+  @param {boolean} [show_slide] - Whether the media slider is allowed on this card
+  @param {boolean} [show_vendor] - Show the product vendor
+  @param {boolean} [show_collection] - Show the first collection of the product
+  @param {boolean} [show_desc] - Show a truncated product description
+  @param {boolean} [show_color_count] - Show the color count or the color swatches
+  @param {boolean} [show_size_count] - Show the size count or the size values
+  @param {string} [title_size] - Heading class applied to the card title
+  @param {string} [section_id] - The ID of the section that contains the card
+
+  @example
+  {% render 'product-card-linked-data', linked_product: product %}
+{% enddoc %}
+
+{%- capture linked_media_html -%}
+  {%- render 'product-card-media',
+    product_card_product: linked_product,
+    media_size: media_size,
+    media_fit: media_fit,
+    columns_mobile: columns_mobile,
+    show_slide: show_slide
+  -%}
+{%- endcapture -%}
+
+{%- capture linked_info_html -%}
+  {%- render 'product-card-info',
+    product_card_product: linked_product,
+    show_vendor: show_vendor,
+    show_collection: show_collection,
+    show_desc: show_desc,
+    title_size: title_size
+  -%}
+{%- endcapture -%}
+
+{%- capture linked_options_html -%}
+  {%- render 'product-card-options',
+    product_card_product: linked_product,
+    show_color_count: show_color_count,
+    show_size_count: show_size_count
+  -%}
+{%- endcapture -%}
+
+{%- capture linked_quick_add_html -%}
+  {%- render 'product-card-quick-add',
+    product_card_product: linked_product,
+    section_id: section_id,
+    show_color_count: show_color_count
+  -%}
+{%- endcapture -%}
+
+{
+  "id": {{ linked_product.id | json }},
+  "title": {{ linked_product.title | json }},
+  "handle": {{ linked_product.handle | json }},
+  "url": {{ linked_product.url | default: '#' | json }},
+  "media_html": {{ linked_media_html | strip | json }},
+  "info_html": {{ linked_info_html | strip | json }},
+  "options_html": {{ linked_options_html | strip | json }},
+  "quick_add_html": {{ linked_quick_add_html | strip | json }}
+}

@@ -1,0 +1,1126 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_image": false,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 32,
+        "grid_space": "standard",
+        "enable_row_count_control": false,
+        "products_to_show_row": 6,
+        "enable_per_row_button": true,
+        "default_per_row": "small",
+        "enable_filtering": true,
+        "enable_tag": true,
+        "filter_type": "vertical",
+        "enable_sorting": true,
+        "image_filter_ratio": "4/5",
+        "image_filter_fit": "cover",
+        "image_filter_columns": 5,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_collection": false,
+        "show_color_count": true,
+        "show_size_count": false,
+        "show_desc": false,
+        "enable_linked_products": false,
+        "columns_mobile": "1",
+        "show_collection_description": true,
+        "description_products": "",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "page_4a7F3K": {
+      "type": "page",
+      "name": "t:sections.page.presets.name",
+      "settings": {
+        "page": "about-us",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "about_us_aAF4Yz": {
+      "type": "about-us",
+      "blocks": {
+        "image_AAQhyq": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/4_7e104f0e-713b-4cc3-bf90-efb60a1e38c6.png",
+            "image_ratio": "portrait"
+          }
+        },
+        "image_DciqiX": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2_aef231ec-d26b-4793-bf8e-0efbb90a5d18.jpg",
+            "image_ratio": "portrait"
+          }
+        },
+        "about_us_description_6wLPfh": {
+          "type": "about-us-description",
+          "settings": {
+            "subheading": "Where your story begins",
+            "heading": "This could be your mission statement",
+            "heading_size": "h2",
+            "subheading_tag": "p",
+            "description": "<p>A short explanation of why you do what you do and what you stand for.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "image_AAQhyq",
+        "image_DciqiX",
+        "about_us_description_6wLPfh"
+      ],
+      "name": "t:sections.about-us.name",
+      "settings": {
+        "subheading": "",
+        "heading": "Here can be your main title",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "simple",
+        "sticky": false,
+        "margin_top": "xs",
+        "margin_bottom": "m"
+      }
+    },
+    "banner_with_popup_gXN6wa": {
+      "type": "banner-with-popup",
+      "blocks": {
+        "image_pw6Jig": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/3_277fe0c4-e62f-4773-94eb-6340384ea4bc.png"
+          }
+        },
+        "image_7CWxYg": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/1_7f94d48f-6db4-4453-a517-5dbb46079aea.png"
+          }
+        },
+        "image_pHaMWb": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDH-12-8.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_pw6Jig",
+        "image_7CWxYg",
+        "image_pHaMWb"
+      ],
+      "name": "t:sections.banner-with-popup.name",
+      "settings": {
+        "aspect_ratio": "full",
+        "full_screen_image_mode": false,
+        "heading": "Banner Title Goes Here",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "description": "<p>Share a quick story, highlight a collection, or introduce an event to enhance your visuals.</p>",
+        "button_label": "View more",
+        "button_link": "",
+        "button_style": "simple",
+        "button_function": "popup",
+        "enable_animation": true,
+        "slideshow_speed": 2,
+        "popup_heading": "Here can be your popup title",
+        "popup_content_heading": "Ready to Shop?",
+        "popup_content": "<p>This section is where you can share a quick, engaging story that captures the essence of your brand or products. Whether it's about your brand’s journey, the inspiration behind a collection, or an upcoming event, it’s an opportunity to connect with your audience on a deeper level.</p><p>You can also use this space to highlight a specific collection, showcase limited-time offers, or introduce a special event. By adding context and narrative to your visuals, you’ll make them more impactful and memorable for your customers.</p>",
+        "popup_image_size": "portrait",
+        "popup_button_label": "View Details",
+        "popup_button_link": "",
+        "popup_button_style": "tertiary",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "compare_TbKf6N": {
+      "type": "compare",
+      "disabled": true,
+      "name": "t:sections.compare-block.presets.name",
+      "settings": {
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "button_style": "simple",
+        "button_label": "",
+        "button_link": "",
+        "text_left": "Before",
+        "text_right": "After",
+        "product": "",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_collection": false,
+        "show_desc": false,
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "brands_6rjKiB": {
+      "type": "brands",
+      "blocks": {
+        "column_qQ4ABe": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_3W7E8H": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_W38DVW": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_3ELQqY": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_znnNFa": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_bhMnhC": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_98HXQ8": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_qMA9fD": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_3HbJGa": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_LeXyrw": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_gXmzUR": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_LKbexQ": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "brand_link": ""
+          }
+        },
+        "column_GDrAh4": {
+          "type": "column",
+          "settings": {
+            "heading": "Brand name",
+            "image_1": "shopify://shop_images/MCM_BLK_4.jpg",
+            "brand_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_qQ4ABe",
+        "column_3W7E8H",
+        "column_W38DVW",
+        "column_3ELQqY",
+        "column_znnNFa",
+        "column_bhMnhC",
+        "column_98HXQ8",
+        "column_qMA9fD",
+        "column_3HbJGa",
+        "column_LeXyrw",
+        "column_gXmzUR",
+        "column_LKbexQ",
+        "column_GDrAh4"
+      ],
+      "name": "t:sections.brands.name",
+      "settings": {
+        "subheading": "Here can be a short introduction to the brands you carry",
+        "subheading_tag": "span",
+        "aspect_ratio": "original",
+        "content_position": "left",
+        "height": "portrait",
+        "image_width": "medium",
+        "heading_size": "h2",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "product_carousel_Ghknnk": {
+      "type": "product-carousel",
+      "name": "t:sections.product-carousel.name",
+      "settings": {
+        "collection": "{{ collection }}",
+        "collection_list": [],
+        "subheading": "",
+        "heading": "Collections title",
+        "heading_tag": "h2",
+        "text": "A quick look at our featured collections and seasonal picks.",
+        "button_label1": "Shop Now",
+        "button_link": "",
+        "button_style": "tertiary",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_color_count": true,
+        "show_size_count": false,
+        "show_sku": false,
+        "show_desc": false,
+        "overlay_opacity": 0.3,
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "categories_list_GD4rcc": {
+      "type": "categories-list",
+      "blocks": {
+        "collection_item_hMag9t": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "hexagon-mosaic-tile",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "overlay_opacity": 0.2
+          }
+        },
+        "collection_item_XjknHE": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "6x7-marble-tile",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "overlay_opacity": 0.2
+          }
+        },
+        "collection_item_HfAVHd": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "2-hex-botanical-tiles",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "overlay_opacity": 0.2
+          }
+        },
+        "collection_item_Rz8Nj3": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "3x6-subway-tile",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "overlay_opacity": 0.2
+          }
+        },
+        "collection_item_PXtidy": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "6x7-art-deco-tile",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "overlay_opacity": 0.2
+          }
+        }
+      },
+      "block_order": [
+        "collection_item_hMag9t",
+        "collection_item_XjknHE",
+        "collection_item_HfAVHd",
+        "collection_item_Rz8Nj3",
+        "collection_item_PXtidy"
+      ],
+      "name": "t:sections.categories-list.presets.name",
+      "settings": {
+        "subheading": "",
+        "heading": "Collections title",
+        "heading_tag": "h2",
+        "heading_size": "h1",
+        "button_label": "Learn More",
+        "button_link": "",
+        "button_style": "simple",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_desc": false,
+        "collection_heading_size": "h2",
+        "collections_to_show": 3,
+        "margin_top": "m",
+        "margin_bottom": "m"
+      }
+    },
+    "countdown_fWWgpQ": {
+      "type": "countdown",
+      "name": "t:sections.countdown.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "aspect_ratio": "full",
+        "sticky-effect": false,
+        "text_alignment": "center",
+        "text_width": "medium",
+        "enable_mock_timer": true,
+        "mock_date_picker_day": 2,
+        "mock_date_picker_hours": 3,
+        "date_picker": "2025-06-01",
+        "time_picker": "00:00",
+        "countdown_block_font": "h2",
+        "completed_countdown": "show_text",
+        "countdown_heading": "Short introduction to a special offer or event",
+        "image": "shopify://shop_images/PSFT-WDCS-12-5.jpg",
+        "show_video": false,
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "opacity_overlay": 0.1,
+        "subheading": "",
+        "heading": "Announce a limited-time event",
+        "heading_tag": "h2",
+        "heading_size": "h1",
+        "text": "Here can be a description of the countdown—use this space to inform customers about the event, or promotion.",
+        "button_label": "Shop now",
+        "button_link": "",
+        "button_style": "tertiary",
+        "button_label2": "See Details",
+        "button_link2": "",
+        "button_style2": "tertiary",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "featured_products_tjqQQf": {
+      "type": "featured-products",
+      "blocks": {
+        "product_slide_Vt4mhy": {
+          "type": "product-slide",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDC-12-7.jpg",
+            "heading": "Highlight featured products here",
+            "heading_tag": "p",
+            "product": ""
+          }
+        },
+        "product_slide_UpTPPx": {
+          "type": "product-slide",
+          "settings": {
+            "image": "shopify://shop_images/4_7e104f0e-713b-4cc3-bf90-efb60a1e38c6.png",
+            "heading": "Highlight featured products here",
+            "heading_tag": "p",
+            "product": ""
+          }
+        },
+        "product_slide_Wx8mT7": {
+          "type": "product-slide",
+          "settings": {
+            "image": "shopify://shop_images/MZMLG-OAK-16-6.jpg",
+            "heading": "Highlight featured products here",
+            "heading_tag": "p",
+            "product": ""
+          }
+        },
+        "product_slide_RzG7ME": {
+          "type": "product-slide",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDC-12-10.jpg",
+            "heading": "Highlight featured products here",
+            "heading_tag": "p",
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_slide_Vt4mhy",
+        "product_slide_UpTPPx",
+        "product_slide_Wx8mT7",
+        "product_slide_RzG7ME"
+      ],
+      "name": "t:sections.featured-products.name",
+      "settings": {
+        "color_scheme": "",
+        "big_image_ratio": "square",
+        "heading_size": "h3",
+        "columns": 2,
+        "slider": true,
+        "stop_autoplay": true,
+        "navigation": false,
+        "slideshow_speed": 20,
+        "hover_effect": false,
+        "animate_on_scroll": true,
+        "overlay_opacity": 0.2,
+        "image_ratio": "portrait",
+        "show_vendor": true,
+        "show_collection": false,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "media_banner_jFXrLH": {
+      "type": "media-banner",
+      "blocks": {
+        "media_slide_aaktLr": {
+          "type": "media_slide",
+          "settings": {
+            "color_scheme": "background-2",
+            "overlay_opacity": 0.1,
+            "enable_hover": true,
+            "show_video": false,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "subheading": "Here can be a short phrase introducing your featured content",
+            "heading": "Featured Content",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "description": "Use this space to give context to the image or video, explaining what it represents and why it matters.",
+            "position_content": "bottom",
+            "align_content": "left",
+            "button_label": "Shop Now",
+            "button_link": "",
+            "button_style": "simple",
+            "button_label2": "",
+            "button_link2": "",
+            "button_style2": "secondary",
+            "full_link": true
+          }
+        },
+        "media_slide_3kBkgN": {
+          "type": "media_slide",
+          "settings": {
+            "color_scheme": "",
+            "overlay_opacity": 0.1,
+            "enable_hover": true,
+            "show_video": false,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "subheading": "Here can be a short phrase introducing your featured content",
+            "heading": "Featured Content",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "description": "Use this space to give context to the image or video, explaining what it represents and why it matters.",
+            "position_content": "bottom",
+            "align_content": "left",
+            "button_label": "Shop Now",
+            "button_link": "",
+            "button_style": "simple",
+            "button_label2": "",
+            "button_link2": "",
+            "button_style2": "secondary",
+            "full_link": true
+          }
+        },
+        "media_slide_zYJ3rV": {
+          "type": "media_slide",
+          "settings": {
+            "color_scheme": "",
+            "overlay_opacity": 0.1,
+            "enable_hover": true,
+            "show_video": false,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "subheading": "Here can be a short phrase introducing your featured content",
+            "heading": "Featured Content",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "description": "Use this space to give context to the image or video, explaining what it represents and why it matters.",
+            "position_content": "bottom",
+            "align_content": "left",
+            "button_label": "Shop Now",
+            "button_link": "",
+            "button_style": "simple",
+            "button_label2": "",
+            "button_link2": "",
+            "button_style2": "secondary",
+            "full_link": true
+          }
+        }
+      },
+      "block_order": [
+        "media_slide_aaktLr",
+        "media_slide_3kBkgN",
+        "media_slide_zYJ3rV"
+      ],
+      "name": "t:sections.media-banner.name",
+      "settings": {
+        "header_overlay": true,
+        "sticky": "sticky-none",
+        "layout": "overlay",
+        "title_link": false,
+        "gap": false,
+        "aspect_ratio": "full",
+        "aspect_ratio_mobile": "full",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "popular_products_7NQakQ": {
+      "type": "popular-products",
+      "name": "t:sections.popular-products.presets.name",
+      "settings": {
+        "subheading": "Here can be a short introduction to the most popular products",
+        "heading": "Announce your bestsellers here",
+        "heading_tag": "h2",
+        "description": "Here can be a brief overview of the most popular products, helping customers quickly find what others are loving.",
+        "heading_size": "h1",
+        "product_list": [],
+        "products_to_show": 4,
+        "enable_swiper": false,
+        "enable_autoplay": false,
+        "enable_loop": false,
+        "navigation": false,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_color_count": true,
+        "show_size_count": false,
+        "show_collection": false,
+        "show_desc": false,
+        "columns_mobile": "1",
+        "button_label": "See All",
+        "button_link": "",
+        "button_style": "simple",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "product_markers_MN7aH3": {
+      "type": "product-markers",
+      "blocks": {
+        "product_markers_item_xQntCQ": {
+          "type": "product_markers_item",
+          "settings": {
+            "product_id": "12x24-subway-pure-white-peel-and-stick-backsplash-tile",
+            "position_x": 1,
+            "position_y": 1,
+            "enable_card_positioning": false,
+            "position_card_x": 1,
+            "position_card_y": 1
+          }
+        }
+      },
+      "block_order": [
+        "product_markers_item_xQntCQ"
+      ],
+      "name": "t:sections.product_markers.name",
+      "settings": {
+        "image": "shopify://shop_images/PSFT-WDC-12-10.jpg",
+        "main_image_ratio": "landscape",
+        "overlay_opacity": 0.1,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": true,
+        "show_button": true,
+        "button_style": "tertiary",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "product_popup_jnP4pr": {
+      "type": "product-popup",
+      "blocks": {
+        "item_7dfEwW": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/PSFT-WDS-12-8.jpg",
+            "overlay_opacity": 0.1,
+            "heading": "",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "description": "",
+            "button_label": "Shop Now",
+            "button_style": "tertiary",
+            "popup_heading": "Ready to Shop?",
+            "products_list": []
+          }
+        }
+      },
+      "block_order": [
+        "item_7dfEwW"
+      ],
+      "name": "t:sections.product-popup.name",
+      "settings": {
+        "aspect_ratio": "full",
+        "margin_top": "no-indent",
+        "margin_bottom": "m"
+      }
+    },
+    "product_slider_GXJEeT": {
+      "type": "product-slider",
+      "blocks": {
+        "product_slide_Fh8MbE": {
+          "type": "product_slide",
+          "settings": {
+            "product": "12x24-subway-calacatta-gold-peel-and-stick-backsplash-tile",
+            "image": "shopify://shop_images/PSFT-WDH-12-9.jpg",
+            "color_scheme": "background-2",
+            "overlay_opacity": 0.1,
+            "description": "Highlight products, promos, or seasonal picks to engage visitors."
+          }
+        },
+        "product_slide_aAUx6R": {
+          "type": "product_slide",
+          "settings": {
+            "product": "2-hexagon-blue-peel-and-stick-backsplash-wall-tile",
+            "image": "shopify://shop_images/MZMLG_2.jpg",
+            "color_scheme": "",
+            "overlay_opacity": 0.1,
+            "description": "Highlight products, promos, or seasonal picks to engage visitors."
+          }
+        },
+        "product_slide_pN9RG4": {
+          "type": "product_slide",
+          "settings": {
+            "product": "12x24-subway-pure-white-peel-and-stick-backsplash-tile",
+            "image": "shopify://shop_images/PSFT-WDH-12-10.jpg",
+            "color_scheme": "",
+            "overlay_opacity": 0.1,
+            "description": "Highlight products, promos, or seasonal picks to engage visitors."
+          }
+        },
+        "product_slide_FL34QV": {
+          "type": "product_slide",
+          "settings": {
+            "product": "",
+            "color_scheme": "background-2",
+            "overlay_opacity": 0.1,
+            "description": "Highlight products, promos, or seasonal picks to engage visitors."
+          }
+        }
+      },
+      "block_order": [
+        "product_slide_Fh8MbE",
+        "product_slide_aAUx6R",
+        "product_slide_pN9RG4",
+        "product_slide_FL34QV"
+      ],
+      "name": "t:sections.product-slider.presets.name",
+      "settings": {
+        "image_size": "1/1",
+        "subheading": "Use this space to highlight different categories, bestsellers, or new arrivals",
+        "heading": "Your product grid title",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "description": "<p>Use this space to showcase handpicked products, whether they are new arrivals, customer favorites, or special offers.</p>",
+        "button_label": "Explore More",
+        "button_link": "",
+        "button_style": "simple",
+        "is_autoplay": true,
+        "is_hover_stop_autoplay": true,
+        "navigation_position": "cursor",
+        "slideshow_speed": 1.1,
+        "slideshow_delay": 3,
+        "slide_effects": "slide",
+        "is_sync_slide": true,
+        "enable_main_image_link": false,
+        "enable_animation": true,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_color_count": true,
+        "show_size_count": false,
+        "show_collection": false,
+        "show_desc": false,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "products_grid_KktaBH": {
+      "type": "products-grid",
+      "name": "t:sections.products-grid.name",
+      "settings": {
+        "subheading": "",
+        "heading": "Your product grid title",
+        "description": "",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "collection": "",
+        "product_list": [],
+        "products_per_page": 12,
+        "products_to_show": 4,
+        "sort": "alphabetical",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_color_count": true,
+        "show_size_count": false,
+        "show_collection": false,
+        "show_desc": false,
+        "columns_mobile": "1",
+        "button_label": "Explore More",
+        "button_link": "",
+        "button_style": "simple",
+        "margin_top": "m",
+        "margin_bottom": "m"
+      }
+    },
+    "recently_viewed_N3DqmU": {
+      "type": "recently-viewed",
+      "name": "t:sections.recently-viewed.presets.name",
+      "settings": {
+        "products_limit": 12,
+        "products_to_show": 4,
+        "columns_mobile": "2",
+        "subheading": "",
+        "heading": "You have recently viewed",
+        "description": "",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_vendor": false,
+        "show_color_count": true,
+        "show_size_count": false,
+        "show_collection": false,
+        "show_desc": false,
+        "button_label": "Explore More",
+        "button_link": "",
+        "button_style": "simple",
+        "margin_top": "m",
+        "margin_bottom": "m"
+      }
+    },
+    "steps_MhRNDp": {
+      "type": "steps",
+      "blocks": {
+        "steps_item_fUayBX": {
+          "type": "steps-item",
+          "settings": {
+            "date": "2025",
+            "heading": "Here can be your story title",
+            "heading_tag": "p",
+            "description": "<p>Use this space to highlight a significant milestone,</p><p>such as expansion, product launch, or industry recognition.</p>",
+            "image": "shopify://shop_images/4_7e104f0e-713b-4cc3-bf90-efb60a1e38c6.png"
+          }
+        },
+        "steps_item_eUBdcR": {
+          "type": "steps-item",
+          "settings": {
+            "date": "2025",
+            "heading": "Here can be your story title",
+            "heading_tag": "p",
+            "description": "<p>Use this space to highlight a significant milestone,</p><p>such as expansion, product launch, or industry recognition.</p>",
+            "image": "shopify://shop_images/MZMLG_1.jpg"
+          }
+        },
+        "steps_item_biqXFk": {
+          "type": "steps-item",
+          "settings": {
+            "date": "2025",
+            "heading": "Here can be your story title",
+            "heading_tag": "p",
+            "description": "<p>Use this space to highlight a significant milestone,</p><p>such as expansion, product launch, or industry recognition.</p>",
+            "image": "shopify://shop_images/MZMLG-OAK-16-6.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "steps_item_fUayBX",
+        "steps_item_eUBdcR",
+        "steps_item_biqXFk"
+      ],
+      "name": "t:sections.steps.name",
+      "settings": {
+        "image_ratio": "portrait",
+        "heading_size": "h2",
+        "sticky": false,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "video_banner_fMmAAN": {
+      "type": "video-banner",
+      "blocks": {
+        "video_BjiMXg": {
+          "type": "video",
+          "settings": {
+            "color_scheme": "",
+            "autoplay_video": true,
+            "muted_video": true,
+            "loop_video": true,
+            "show_icon_play": true,
+            "show_icon_sound": true,
+            "control_buttons_position": "top",
+            "video_fit": "cover",
+            "opacity_overlay": 0.3,
+            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "description_video": "",
+            "subheading": "",
+            "heading": "Banner title",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "text": "Here can be a description of what this banner is about",
+            "position_content": "bottom",
+            "align_content": "left",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "simple",
+            "button_label2": "",
+            "button_link2": "",
+            "button_style2": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "video_BjiMXg"
+      ],
+      "disabled": true,
+      "name": "t:sections.video-banner.presets.name",
+      "settings": {
+        "header_overlay": false,
+        "desktop_media_ratio": "21/9",
+        "mobile_media_ratio": "same",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "banner_grid_RQhKCr": {
+      "type": "banner-grid",
+      "blocks": {
+        "card_YE3x4k": {
+          "type": "card",
+          "settings": {
+            "color_scheme": "",
+            "horizontal_content_alignment": "center",
+            "vertical_content_alignment": "center",
+            "show_image": true,
+            "background_type": "color",
+            "enable_image_ratio": false,
+            "image_ratio": "landscape",
+            "overlay_style": "overlay",
+            "overlay_opacity": 0.2,
+            "subheading": "",
+            "heading": "Feature Title Here",
+            "heading_size": "h3",
+            "heading_tag": "h2",
+            "description": "",
+            "button_label": "View More",
+            "button_link": "",
+            "button_style": "simple",
+            "link": "",
+            "open_in_new_tab": false
+          }
+        },
+        "card_jhqrcr": {
+          "type": "card",
+          "settings": {
+            "color_scheme": "",
+            "horizontal_content_alignment": "center",
+            "vertical_content_alignment": "center",
+            "show_image": true,
+            "background_type": "color",
+            "enable_image_ratio": false,
+            "image_ratio": "landscape",
+            "overlay_style": "overlay",
+            "overlay_opacity": 0.2,
+            "subheading": "",
+            "heading": "Feature Title Here",
+            "heading_size": "h3",
+            "heading_tag": "h2",
+            "description": "",
+            "button_label": "View More",
+            "button_link": "",
+            "button_style": "simple",
+            "link": "",
+            "open_in_new_tab": false
+          }
+        },
+        "card_afXyqP": {
+          "type": "card",
+          "settings": {
+            "color_scheme": "",
+            "horizontal_content_alignment": "center",
+            "vertical_content_alignment": "center",
+            "show_image": true,
+            "background_type": "color",
+            "enable_image_ratio": false,
+            "image_ratio": "landscape",
+            "overlay_style": "overlay",
+            "overlay_opacity": 0.2,
+            "subheading": "",
+            "heading": "Feature Title Here",
+            "heading_size": "h3",
+            "heading_tag": "h2",
+            "description": "",
+            "button_label": "View More",
+            "button_link": "",
+            "button_style": "simple",
+            "link": "",
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "card_YE3x4k",
+        "card_jhqrcr",
+        "card_afXyqP"
+      ],
+      "disabled": true,
+      "name": "t:sections.banner-grid.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "simple",
+        "padding_top": "l",
+        "padding_bottom": "l",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "media_content_slider_RJqUai": {
+      "type": "media-content-slider",
+      "blocks": {
+        "slide_CATppF": {
+          "type": "slide",
+          "settings": {
+            "title": "This could be your mission statement",
+            "description": "<p>A short explanation of why you do what you do and what you stand for.</p>",
+            "background_color": "",
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_overlay_on_image": false,
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false
+          }
+        },
+        "slide_D77tfN": {
+          "type": "slide",
+          "settings": {
+            "title": "This could be your mission statement",
+            "description": "<p>A short explanation of why you do what you do and what you stand for.</p>",
+            "background_color": "",
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_overlay_on_image": false,
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false
+          }
+        },
+        "slide_H8taYi": {
+          "type": "slide",
+          "settings": {
+            "title": "This could be your mission statement",
+            "description": "<p>A short explanation of why you do what you do and what you stand for.</p>",
+            "background_color": "",
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_overlay_on_image": false,
+            "vid_autoplay": true,
+            "vid_mute": true,
+            "vid_loop": true,
+            "vid_controls": false
+          }
+        }
+      },
+      "block_order": [
+        "slide_CATppF",
+        "slide_D77tfN",
+        "slide_H8taYi"
+      ],
+      "disabled": true,
+      "name": "t:sections.media-content-slider.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "inner_title": "Featured Content",
+        "inner_heading_size": "h2",
+        "inner_heading_tag": "h3",
+        "description": "",
+        "content_position": "left",
+        "autoplay": true,
+        "autoplay_delay": 6,
+        "enable_auto_deley": false,
+        "slide_heading_size": "h2",
+        "padding_top": "no-indent",
+        "padding_bottom": "no-indent",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "page_4a7F3K",
+    "about_us_aAF4Yz",
+    "banner_with_popup_gXN6wa",
+    "compare_TbKf6N",
+    "brands_6rjKiB",
+    "product_carousel_Ghknnk",
+    "categories_list_GD4rcc",
+    "countdown_fWWgpQ",
+    "featured_products_tjqQQf",
+    "media_banner_jFXrLH",
+    "popular_products_7NQakQ",
+    "product_markers_MN7aH3",
+    "product_popup_jnP4pr",
+    "product_slider_GXJEeT",
+    "products_grid_KktaBH",
+    "recently_viewed_N3DqmU",
+    "steps_MhRNDp",
+    "video_banner_fMmAAN",
+    "banner_grid_RQhKCr",
+    "media_content_slider_RJqUai"
+  ]
+}
