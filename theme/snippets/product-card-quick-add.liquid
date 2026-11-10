@@ -44,14 +44,18 @@
         assign can_quick_add = true
       endif
 
-      # A section-provided label forces the add to cart button (shown disabled when sold out)
+      # A section-provided label always renders a button (disabled when sold out):
+      # products without options add to cart directly, products with options open
+      # the theme quick view popup so the customer can pick the variant first.
       assign show_add_to_cart = false
       if button_label != blank
         assign quick_add = true
-        assign quick_view = false
         assign hide_desktop = false
         if can_quick_add
           assign show_add_to_cart = true
+          assign quick_view = false
+        else
+          assign quick_view = true
         endif
       elsif quick_add and can_quick_add and product_card_product.selected_or_first_available_variant.available
         assign show_add_to_cart = true
@@ -142,7 +146,7 @@
         {%- endform -%}
       </product-form>
     {%- elsif quick_view -%}
-      <div class="quick-add no-js-hidden {% if hide_desktop %} hide-desktop {% endif %}">
+      <div class="quick-add no-js-hidden{% if button_label != blank %} card__add-to-cart--labelled{% endif %} {% if hide_desktop %} hide-desktop {% endif %}">
         {%- assign product_form_id = 'quick-add-' | append: section_id | append: product_card_product.id -%}
         <modal-opener data-modal="#QuickAdd-{{ product_card_product.id }}">
           <button
@@ -155,12 +159,29 @@
               {% if settings.show_on_mobile %} card__link--show{% endif %}
               card-focused
             "
-            aria-label="{{ 'general.card.quick__view' | t }}"
+            {% if button_label != blank %}
+              aria-label="{{ button_label | escape }}: {{ product_card_product.title | escape }}"
+              {% if product_card_product.available == false %}
+                disabled
+              {% endif %}
+            {% else %}
+              aria-label="{{ 'general.card.quick__view' | t }}"
+              aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ product_card_product.id }}"
+            {% endif %}
             aria-haspopup="dialog"
-            aria-labelledby="{{ product_form_id }}-submit title-{{ section_id }}-{{ product_card_product.id }}"
             data-product-url="{{ product_card_product.url }}"
           >
-            {% if settings.quickview_button_style != 'link'
+            {% if button_label != blank %}
+              <img
+                class="card__add-to-cart-icon"
+                src="{{ 'icon-plus-sample.svg' | asset_url }}"
+                alt=""
+                width="20"
+                height="20"
+                loading="lazy"
+              >
+              <span class="card__quickview-text">{{ button_label | escape }}</span>
+            {% elsif settings.quickview_button_style != 'link'
               or settings.quickview_button_style_mobile != 'link'
             %}
               <span class="card__quickview-text">

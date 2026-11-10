@@ -509,3 +509,15 @@
     width: 81.08% !important;
   }
 }
+
+/* Button for products with options: opens the theme quick view popup */
+.popular-products--catalog .card__add-to-cart--labelled modal-opener {
+  display: block;
+  width: 100%;
+}
+
+/* ---------- Card image slider: no arrows or dots (Figma) ---------- */
+.popular-products--catalog .card__inner .product-button-group,
+.popular-products--catalog .card__inner .product-pagination {
+  display: none !important;
+}

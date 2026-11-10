@@ -37,7 +37,9 @@
 -%}
 
 {%- if card_button_label != blank -%}
+  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
 <div class="popular-products popular-products--{{ card_style }} section-{{ section.id }}-padding background color-background-1">
