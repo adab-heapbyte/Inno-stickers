@@ -53,6 +53,9 @@
     endif
   %}
 
+  {%- if section.settings.footer_style == 'simple' -%}
+    {% render 'footer-simple', section: section %}
+  {%- else -%}
   <footer class="footer color-{{ section.settings.color_scheme }} background {% if section.settings.show_border %} footer--border {% endif %} section-{{ section.id }}-padding{% if center_subscribe %} footer--center_subscribe{% if hide_last_block %} footer--center_subscribe__four-parts{% endif %}{% endif %}">
     {% if center_subscribe %}
       <div class="newsletter__form footer--newsletter__form--center container">
@@ -1105,6 +1108,7 @@
       </div>
     </div>
   </footer>
+  {%- endif -%}
 {% endunless %}
 
 {% schema %}
@@ -1212,6 +1216,23 @@
     }
   ],
   "settings": [
+    {
+      "type": "select",
+      "id": "footer_style",
+      "label": "t:sections.footer.settings.footer_style.label",
+      "info": "t:sections.footer.settings.footer_style.info",
+      "options": [
+        { "value": "default", "label": "t:sections.footer.settings.footer_style.options__1.label" },
+        { "value": "simple", "label": "t:sections.footer.settings.footer_style.options__2.label" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "color",
+      "id": "simple_background",
+      "default": "#333333",
+      "label": "t:sections.footer.settings.simple_background.label"
+    },
     {
       "type": "color_scheme",
       "id": "color_scheme",

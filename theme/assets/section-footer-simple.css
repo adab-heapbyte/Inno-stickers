@@ -1,0 +1,327 @@
+/* ==========================================================================
+   Footer - "Simple" style
+   Figma: footer · 394 (desktop 3:813), footer · 393 (mobile 3:477).
+   Mobile first; four columns from 990px.
+   ========================================================================== */
+.footer-simple {
+  --fs-text: 255, 255, 255; /* White */
+  --fs-line: 72, 72, 72; /* #484848 social grid */
+  --fs-field: 226, 228, 233; /* Neutral/200 #E2E4E9 */
+  --fs-placeholder: 127, 133, 159; /* Neutral/500 #7F859F */
+  --fs-primary: 42, 100, 137; /* Primary Teal #2A6489 */
+  background-color: var(--footer-simple-bg, #333333);
+  color: rgb(var(--fs-text));
+}
+
+.footer-simple__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 4.2rem;
+  padding: 6.4rem 1.6rem;
+}
+
+/* ---------- Columns: stacked on mobile, 42px apart ---------- */
+.footer-simple__columns {
+  display: flex;
+  flex-direction: column;
+  gap: 4.2rem;
+}
+
+.footer-simple__column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  min-width: 0;
+}
+
+/* Logo then contact info: 24px on mobile, 32px on desktop */
+.footer-simple__column--brand {
+  gap: 2.4rem;
+}
+
+.footer-simple__group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 32.5rem;
+}
+
+.footer-simple__logo {
+  display: inline-block;
+  align-self: flex-start;
+  color: rgb(var(--fs-text));
+  text-decoration: none;
+}
+
+.footer-simple__logo-image {
+  display: block;
+  width: 12.7rem; /* mobile 127 x 54 */
+  height: auto;
+}
+
+.footer-simple__logo-text {
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+/* ---------- Text ---------- */
+.footer-simple__heading {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: rgb(var(--fs-text));
+}
+
+.footer-simple__contact,
+.footer-simple__text,
+.footer-simple__link {
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: rgb(var(--fs-text));
+}
+
+/* Contact lines 12px apart */
+.footer-simple__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* .footer-simple prefix: the theme colours paragraphs dark */
+.footer-simple .footer-simple__contact p,
+.footer-simple .footer-simple__text {
+  margin: 0;
+  color: rgb(var(--fs-text));
+}
+
+.footer-simple__contact a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-simple__text {
+  margin: 0;
+}
+
+.footer-simple__links {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-simple__link {
+  display: inline-block;
+  text-decoration: none;
+  transition: opacity var(--duration-default);
+}
+
+.footer-simple__link:hover,
+.footer-simple__contact a:hover {
+  color: rgb(var(--fs-text));
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+/* ---------- Newsletter: field + 48px teal square button ---------- */
+.footer-simple__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.footer-simple__field-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.footer-simple__input {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 4.8rem;
+  margin: 0;
+  padding: 0 1.2rem;
+  border: 0.1rem solid rgb(var(--fs-field));
+  border-radius: 0.4rem;
+  background: transparent;
+  font-family: var(--font-body-family);
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--fs-text));
+  box-shadow: none;
+  outline: none;
+}
+
+.footer-simple__input::placeholder {
+  color: rgb(var(--fs-placeholder));
+  opacity: 1;
+}
+
+.footer-simple__input:focus-visible {
+  border-color: rgb(var(--fs-text));
+}
+
+.footer-simple__submit {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 4.8rem;
+  align-items: center;
+  justify-content: center;
+  width: 4.8rem;
+  height: 4.8rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0.4rem;
+  background-color: rgb(var(--fs-primary));
+  cursor: pointer;
+  transition: filter var(--duration-default);
+}
+
+.footer-simple__submit:hover {
+  filter: brightness(1.1);
+}
+
+.footer-simple__submit:focus-visible {
+  outline: 0.2rem solid rgb(var(--fs-text));
+  outline-offset: 0.2rem;
+}
+
+.footer-simple__submit img {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+}
+
+.footer-simple__message {
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--fs-text));
+}
+
+/* ---------- Social: 45px boxes on a 1px #484848 grid ---------- */
+.footer-simple__social {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-simple__social-item {
+  width: 4.5rem;
+  height: 4.5rem;
+  box-shadow:
+    1px 0 0 0 rgb(var(--fs-line)),
+    0 1px 0 0 rgb(var(--fs-line)),
+    1px 1px 0 0 rgb(var(--fs-line)),
+    inset 1px 0 0 0 rgb(var(--fs-line)),
+    inset 0 1px 0 0 rgb(var(--fs-line));
+}
+
+.footer-simple__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: rgb(var(--fs-text));
+  transition: background-color var(--duration-default);
+}
+
+.footer-simple__social-link:hover {
+  background-color: rgba(var(--fs-text), 0.06);
+}
+
+.footer-simple__social-link img {
+  display: block;
+}
+
+.footer-simple__social-icon {
+  display: flex;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.footer-simple__social-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* ---------- Payment icons: 38 x 24, 8px apart (7 per row on mobile) ---------- */
+.footer-simple__payment {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  max-width: 31.4rem;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-simple__payment-item,
+.footer-simple__payment-icon {
+  display: block;
+  width: 3.8rem;
+  height: 2.4rem;
+}
+
+/* ---------- Desktop ---------- */
+@media screen and (min-width: 990px) {
+  .footer-simple__inner {
+    padding: 6.4rem;
+  }
+
+  /* Four equal columns, 40px apart */
+  .footer-simple__columns {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+
+  .footer-simple__column {
+    flex: 1 1 0;
+  }
+
+  .footer-simple__column--brand {
+    gap: 3.2rem;
+  }
+
+  .footer-simple__logo-image {
+    width: var(--footer-simple-logo, 90px);
+  }
+
+  .footer-simple__heading {
+    font-size: 1.4rem;
+  }
+
+  .footer-simple__contact,
+  .footer-simple__text,
+  .footer-simple__link {
+    font-size: 1.6rem;
+  }
+
+  /* Figma keeps the field at 361px even though field + gap + button (421px)
+     is a little wider than the 418px column */
+  .footer-simple__input {
+    flex: 0 0 36.1rem;
+    width: 36.1rem;
+  }
+
+  .footer-simple__payment {
+    max-width: 54rem;
+  }
+}

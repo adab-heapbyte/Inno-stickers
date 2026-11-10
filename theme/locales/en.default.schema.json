@@ -3250,6 +3250,19 @@
         }
       },
       "settings": {
+        "footer_style": {
+          "label": "Style",
+          "info": "Simple: four columns (logo + contact, menu, newsletter, social) with payment icons below, no accordions on mobile.",
+          "options__1": {
+            "label": "Default"
+          },
+          "options__2": {
+            "label": "Simple"
+          }
+        },
+        "simple_background": {
+          "label": "Background color (Simple style)"
+        },
         "footer-group": {
           "label": "Footer Group"
         },

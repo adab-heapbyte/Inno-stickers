@@ -14,49 +14,49 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "footer-1": {
-          "type": "link_list",
+        "footer_contact": {
+          "type": "contacts",
           "settings": {
-            "subheading": "Quick links",
-            "menu": "footer",
+            "subheading": "Contact info",
+            "contact_info": "<p>Phone: +1 646-586-1686</p><p>Email: inno@innostickers.com</p>",
             "default_open": false
           }
         },
-        "footer-2": {
+        "footer_support": {
           "type": "link_list",
           "settings": {
-            "subheading": "Quick links",
-            "menu": "footer",
+            "subheading": "Customer support",
+            "menu": "customer-support",
             "default_open": false
           }
         },
-        "footer-3": {
-          "type": "link_list",
+        "footer_social": {
+          "type": "show_socials",
           "settings": {
-            "subheading": "Quick links",
-            "menu": "footer",
+            "heading": "Follow us",
+            "show_social_icons": true,
             "default_open": false
           }
         }
       },
       "block_order": [
-        "footer-1",
-        "footer-2",
-        "footer-3"
+        "footer_contact",
+        "footer_support",
+        "footer_social"
       ],
       "settings": {
         "color_scheme": "background-2",
         "show_border": true,
         "logo": "shopify://shop_images/vectorized.svg_1_2.png",
         "logo_2": "shopify://shop_images/vectorized.svg_1_1.png",
-        "logo_width": 160,
+        "logo_width": 90,
         "logo_layout": "left",
         "description": "This space offers a brief overview of your brand’s mission, highlighting what makes it unique. Share the values that drive your products and help visitors understand what sets your offerings apart from the rest.",
         "language_button_type": "text",
         "region_button_type": "text",
         "enable_subscribe": true,
-        "subscribe_heading": "Subscribe to Our Newsletter",
-        "subscribe_text": "",
+        "subscribe_heading": "Newsletter",
+        "subscribe_text": "Promotions, new products and sales. Directly to your inbox.",
         "enable_country_selector": true,
         "show_country_flag": false,
         "enable_language_selector": true,
@@ -66,7 +66,9 @@
         "enable_copyright_date": true,
         "enable_copyright_shopname": true,
         "padding_top": "m",
-        "padding_bottom": "xs"
+        "padding_bottom": "xs",
+        "footer_style": "simple",
+        "simple_background": "#333333"
       }
     }
   },

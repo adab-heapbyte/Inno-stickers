@@ -1,0 +1,215 @@
+{% doc %}
+  "Simple" footer layout (Figma: footer · 394 desktop 3:813, footer · 393 mobile 3:477).
+  Rendered by sections/footer.liquid when the footer style is "Simple"; reuses the
+  footer settings and blocks (logo, Contacts, Menu, Policies, Social icons,
+  newsletter, payment icons). The default footer markup is not used in this style.
+
+  @param {object} section - The footer section
+{% enddoc %}
+
+{{ 'section-footer-simple.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign contact_blocks = section.blocks | where: 'type', 'contacts'
+  assign social_blocks = section.blocks | where: 'type', 'show_socials'
+  assign logo_width = section.settings.logo_width | default: 90
+-%}
+
+<footer
+  class="footer-simple"
+  style="--footer-simple-bg: {{ section.settings.simple_background | default: '#333333' }}; --footer-simple-logo: {{ logo_width }}px;"
+>
+  <div class="footer-simple__inner">
+    <div class="footer-simple__columns">
+      {%- comment -%} Column 1: logo + contact info {%- endcomment -%}
+      <div class="footer-simple__column footer-simple__column--brand">
+        <a href="{{ routes.root_url }}" class="footer-simple__logo">
+          {%- if section.settings.logo != blank -%}
+            {%- assign logo_alt = section.settings.logo.alt | default: shop.name | escape -%}
+            {{
+              section.settings.logo
+              | image_url: width: 400
+              | image_tag:
+                class: 'footer-simple__logo-image',
+                widths: '127, 180, 254, 400',
+                sizes: '(min-width: 990px) var(--footer-simple-logo), 127px',
+                alt: logo_alt
+            }}
+          {%- else -%}
+            <span class="footer-simple__logo-text">{{ shop.name }}</span>
+          {%- endif -%}
+        </a>
+
+        {%- for block in contact_blocks -%}
+          <div class="footer-simple__group" {{ block.shopify_attributes }}>
+            {%- if block.settings.subheading != blank -%}
+              <h2 class="footer-simple__heading">{{ block.settings.subheading | escape }}</h2>
+            {%- endif -%}
+            {%- if block.settings.contact_info != blank -%}
+              <div class="footer-simple__contact">{{ block.settings.contact_info }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Menu and policies columns, in block order {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'link_list' -%}
+            <div class="footer-simple__column" {{ block.shopify_attributes }}>
+              {%- if block.settings.subheading != blank -%}
+                <h2 class="footer-simple__heading">{{ block.settings.subheading | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.menu != blank -%}
+                <ul class="footer-simple__links list-unstyled" role="list">
+                  {%- for link in block.settings.menu.links -%}
+                    <li>
+                      <a
+                        href="{{ link.url }}"
+                        class="footer-simple__link{% if link.active %} footer-simple__link--active{% endif %}"
+                        {% if link.active %}
+                          aria-current="page"
+                        {% endif %}
+                      >
+                        {{- link.title | escape -}}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          {%- when 'policies' -%}
+            <div class="footer-simple__column" {{ block.shopify_attributes }}>
+              {%- if block.settings.subheading != blank -%}
+                <h2 class="footer-simple__heading">{{ block.settings.subheading | escape }}</h2>
+              {%- endif -%}
+              <ul class="footer-simple__links list-unstyled" role="list">
+                {%- for policy in shop.policies -%}
+                  {%- if policy != blank -%}
+                    <li>
+                      <a href="{{ policy.url }}" class="footer-simple__link">{{ policy.title | escape }}</a>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {%- comment -%} Newsletter column (same Shopify customer form as the theme) {%- endcomment -%}
+      {%- if section.settings.enable_subscribe -%}
+        <div class="footer-simple__column footer-simple__column--newsletter">
+          {%- if section.settings.subscribe_heading != blank -%}
+            <h2 class="footer-simple__heading">{{ section.settings.subscribe_heading | escape }}</h2>
+          {%- endif -%}
+          {%- form 'customer', id: 'FooterSimpleNewsletter', class: 'footer-simple__form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            {%- if section.settings.subscribe_text != blank -%}
+              <p class="footer-simple__text">{{ section.settings.subscribe_text }}</p>
+            {%- endif -%}
+            <div class="footer-simple__field-row">
+              <label class="visually-hidden" for="FooterSimpleEmail-{{ section.id }}">{{ 'newsletter.label' | t }}</label>
+              <input
+                id="FooterSimpleEmail-{{ section.id }}"
+                class="footer-simple__input"
+                type="email"
+                name="contact[email]"
+                value="{{ form.email }}"
+                placeholder="{{ 'newsletter.label' | t }}"
+                autocomplete="email"
+                autocorrect="off"
+                autocapitalize="off"
+                required
+                {% if form.errors %}
+                  aria-invalid="true"
+                  aria-describedby="FooterSimpleError-{{ section.id }}"
+                {% endif %}
+              >
+              <button type="submit" class="footer-simple__submit" name="commit">
+                <span class="visually-hidden">{{ 'newsletter.button_label' | t }}</span>
+                <img
+                  src="{{ 'icon-arrow-right-white.svg' | asset_url }}"
+                  alt=""
+                  width="20"
+                  height="20"
+                  loading="lazy"
+                >
+              </button>
+            </div>
+            {%- if form.errors -%}
+              <p class="footer-simple__message" id="FooterSimpleError-{{ section.id }}" role="alert">
+                {{- form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email -}}
+              </p>
+            {%- elsif form.posted_successfully? -%}
+              <p class="footer-simple__message" role="status">{{ 'newsletter.success' | t }}</p>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Social column {%- endcomment -%}
+      {%- for block in social_blocks -%}
+        <div class="footer-simple__column" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <h2 class="footer-simple__heading">{{ block.settings.heading | escape }}</h2>
+          {%- endif -%}
+          <ul class="footer-simple__social list-unstyled" role="list">
+            {%- liquid
+              assign socials = 'facebook,instagram,pinterest,youtube,tiktok,twitter,linkedin,snapchat,tumblr,vimeo' | split: ','
+            -%}
+            {%- for network in socials -%}
+              {%- liquid
+                assign setting_key = 'social_' | append: network | append: '_link'
+                assign url = settings[setting_key]
+              -%}
+              {%- if url != blank -%}
+                <li class="footer-simple__social-item">
+                  <a
+                    href="{{ url }}"
+                    class="footer-simple__social-link"
+                    {% if settings.new_tab %}
+                      target="_blank" rel="noopener"
+                    {% endif %}
+                  >
+                    <span class="visually-hidden">{{ 'general.social.links.' | append: network | t }}</span>
+                    {%- case network -%}
+                      {%- when 'facebook' -%}
+                        <img src="{{ 'icon-social-facebook.svg' | asset_url }}" alt="" width="9" height="17" loading="lazy">
+                      {%- when 'instagram' -%}
+                        <img src="{{ 'icon-social-instagram.svg' | asset_url }}" alt="" width="16" height="16" loading="lazy">
+                      {%- when 'pinterest' -%}
+                        <img src="{{ 'icon-social-pinterest.svg' | asset_url }}" alt="" width="12" height="16" loading="lazy">
+                      {%- when 'youtube' -%}
+                        <img src="{{ 'icon-social-youtube.svg' | asset_url }}" alt="" width="18" height="13" loading="lazy">
+                      {%- when 'tiktok' -%}
+                        <span class="footer-simple__social-icon">{%- render 'icon-tiktok' -%}</span>
+                      {%- when 'twitter' -%}
+                        <span class="footer-simple__social-icon">{%- render 'icon-twitter' -%}</span>
+                      {%- when 'linkedin' -%}
+                        <span class="footer-simple__social-icon">{%- render 'icon-linkedIn' -%}</span>
+                      {%- when 'snapchat' -%}
+                        <span class="footer-simple__social-icon">{%- render 'icon-snapchat' -%}</span>
+                      {%- when 'tumblr' -%}
+                        <span class="footer-simple__social-icon">{%- render 'icon-tumblr' -%}</span>
+                      {%- when 'vimeo' -%}
+                        <span class="footer-simple__social-icon">{%- render 'icon-vimeo' -%}</span>
+                    {%- endcase -%}
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.payment_enable and shop.enabled_payment_types.size > 0 -%}
+      <ul class="footer-simple__payment list-unstyled" role="list">
+        {%- for type in shop.enabled_payment_types -%}
+          <li class="footer-simple__payment-item">{{ type | payment_type_svg_tag: class: 'footer-simple__payment-icon' }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</footer>

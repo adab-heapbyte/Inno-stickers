@@ -160,7 +160,11 @@
           "color_border": "#e1e1e1"
         }
       }
-    }
+    },
+    "social_facebook_link": "https://www.facebook.com/innostickers/",
+    "social_instagram_link": "https://www.instagram.com/innostickers/",
+    "social_pinterest_link": "https://www.pinterest.com/innostickers/",
+    "social_youtube_link": "https://www.youtube.com/@innostickers"
   },
   "installed_preset_name": "Furnish",
   "presets": {
