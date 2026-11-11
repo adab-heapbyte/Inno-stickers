@@ -1,0 +1,239 @@
+/* ==========================================================================
+   Collapsible content - "FAQ" style (section_style: faq)
+   Figma PLP FAQ - desktop (9:679): #F4F6F8, 120px / 160px padding, centred
+     900px column, 40px gaps; "FAQs" Display 5 (Bold 40 / 1.2); questions
+     Headline 5 (Bold 18 / 1.5, Primary Teal); answers Body 1 (18 / 1.5,
+     Neutral/700 #212226); #E2E4E9 dividers; 20px plus/minus icons;
+     48px outline button "View Customer Care" + arrow.
+   Mobile (9:652): 64px / 16px padding, 24px gaps, "FAQs" Headline 4
+     (Bold 20 / 1.5), questions Title 3 (Bold 14), answers Body 3 (14).
+   ========================================================================== */
+.collapsible-content.collapsible-content--faq {
+  --faq-title: 42, 100, 137; /* Primary Teal #2A6489 */
+  --faq-text: 33, 34, 38; /* Neutral/700 #212226 */
+  --faq-line: 226, 228, 233; /* Neutral/200 #E2E4E9 */
+  background-color: rgb(244, 246, 248); /* Cool Gray #F4F6F8 */
+  color: rgb(15, 15, 15);
+}
+
+.collapsible-content--faq > .container {
+  display: block;
+  max-width: none;
+  padding: 6.4rem 1.6rem;
+}
+
+.collapsible-content--faq .collapsible-content__info,
+.collapsible-content--faq .collapsible-content__info--wrapper,
+.collapsible-content--faq .collapsible-content__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.4rem;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Figma: heading left-aligned, full width of the column */
+.collapsible-content--faq .collapsible-content__top {
+  align-self: stretch;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.collapsible-content--faq .collapsible-content__heading {
+  text-align: left;
+}
+
+.collapsible-content--faq .collapsible-content__heading {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgb(15, 15, 15); /* Neutral/900 #0F0F0F */
+}
+
+/* ---------- Items: one 1px divider between and around them ---------- */
+.collapsible-content--faq .collapsible-content__items {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-top: 0.1rem solid rgb(var(--faq-line));
+}
+
+.collapsible-content--faq .collapsible-content__item {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-bottom: 0.1rem solid rgb(var(--faq-line));
+}
+
+.collapsible-content--faq .collapsible-content__toggle {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 1.6rem 0;
+  cursor: pointer;
+}
+
+/* Open item (Figma): 16px + 12px above the question, 12px below it */
+.collapsible-content--faq .collapsible-content__item.active .collapsible-content__toggle {
+  padding: 2.8rem 0 1.2rem;
+}
+
+.collapsible-content--faq .collapsible-content__toggle-group {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.collapsible-content--faq .collapsible-content__question {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgb(var(--faq-title));
+}
+
+/* ---------- Plus / minus icon ---------- */
+.collapsible-content--faq .collapsible-content__icon {
+  position: relative;
+  display: block;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+  transform: none;
+}
+
+.collapsible-content--faq .collapsible-content__faq-icon {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  transition: opacity var(--duration-default, 0.2s) ease;
+}
+
+.collapsible-content--faq .collapsible-content__faq-icon--minus,
+.collapsible-content--faq .collapsible-content__item.active .collapsible-content__faq-icon--plus {
+  opacity: 0;
+}
+
+.collapsible-content--faq .collapsible-content__item.active .collapsible-content__faq-icon--minus {
+  opacity: 1;
+}
+
+/* ---------- Answer ---------- */
+.collapsible-content--faq .collapsible-content__answer {
+  margin: 0;
+  padding: 0;
+}
+
+.collapsible-content--faq .collapsible-content__answer-inner {
+  margin: 0;
+  padding: 0 0 2.8rem;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: rgb(var(--faq-text));
+}
+
+.collapsible-content--faq .collapsible-content__answer-inner > * {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.collapsible-content--faq .collapsible-content__answer-inner > * + * {
+  margin-top: 0.8em;
+}
+
+/* ---------- "View Customer Care": 48px outline button with arrow ---------- */
+.collapsible-content--faq .collapsible-content__button.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-width: 0;
+  min-height: 4.8rem;
+  height: 4.8rem;
+  margin: 0;
+  padding: 0 2.4rem;
+  border: 0.1rem solid rgb(var(--faq-title));
+  border-radius: 0.4rem;
+  background: transparent;
+  color: rgb(var(--faq-title));
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: none;
+  box-shadow: none;
+  transition: background-color var(--duration-default);
+}
+
+.collapsible-content--faq .collapsible-content__button.button:hover {
+  background-color: rgba(var(--faq-title), 0.06);
+  color: rgb(var(--faq-title));
+}
+
+/* the theme's "simple" button draws its own arrow / underline */
+.collapsible-content--faq .collapsible-content__button.button::before,
+.collapsible-content--faq .collapsible-content__button.button::after,
+.collapsible-content--faq .collapsible-content__button.button span::before,
+.collapsible-content--faq .collapsible-content__button.button span::after {
+  content: none;
+  display: none;
+}
+
+.collapsible-content--faq .collapsible-content__faq-arrow {
+  display: block;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+/* ---------- Desktop ---------- */
+@media screen and (min-width: 990px) {
+  .collapsible-content--faq > .container {
+    padding: 12rem max(2.4rem, 8.33vw);
+  }
+
+  .collapsible-content--faq .collapsible-content__info {
+    align-items: center;
+  }
+
+  .collapsible-content--faq .collapsible-content__info--wrapper {
+    gap: 4rem;
+    max-width: 90rem;
+  }
+
+  .collapsible-content--faq .collapsible-content__content {
+    gap: 4rem;
+  }
+
+  .collapsible-content--faq .collapsible-content__heading {
+    font-size: 4rem;
+    line-height: 1.2;
+  }
+
+  .collapsible-content--faq .collapsible-content__question,
+  .collapsible-content--faq .collapsible-content__answer-inner {
+    font-size: 1.8rem;
+  }
+}

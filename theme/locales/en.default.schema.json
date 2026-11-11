@@ -1894,6 +1894,16 @@
     "collapsible-content": {
       "name": "Collapsible content",
       "settings": {
+        "section_style": {
+          "label": "Style",
+          "info": "FAQ: centred 900px list on a light grey background with plus/minus icons and an outline button (images are not shown).",
+          "options__1": {
+            "label": "Default"
+          },
+          "options__2": {
+            "label": "FAQ"
+          }
+        },
         "heading": {
           "default": "Common Questions Answered"
         },

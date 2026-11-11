@@ -1,4 +1,9 @@
 {{ 'section-collapsible-content.css' | asset_url | stylesheet_tag }}
+{%- assign is_faq_style = false -%}
+{%- if section.settings.section_style == 'faq' -%}
+  {%- assign is_faq_style = true -%}
+  {{ 'section-collapsible-faq.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 
 <script src="{{ 'collapsible-content.js' | asset_url }}" defer="defer"></script>
 
@@ -8,7 +13,7 @@
 
 {% assign count = 0 %}
 {%- for block in section.blocks -%}
-  {% if block.type == 'image' %}
+  {% if block.type == 'image' and is_faq_style == false %}
     {% assign count = count | plus: 1 %}
   {%- endif -%}
 {%- endfor -%}
@@ -20,7 +25,7 @@
   {%- endif -%}
 {%- endfor -%}
 
-<div class="collapsible-content{% if count != 0 %} collapsible-content--{{ section.settings.aspect_ratio }}{% endif %} background color-background-1 section-{{ section.id }}">
+<div class="collapsible-content{% if count != 0 %} collapsible-content--{{ section.settings.aspect_ratio }}{% endif %}{% if is_faq_style %} collapsible-content--faq{% endif %} background color-background-1 section-{{ section.id }}">
   <div class="container">
     {% if count != 0 %}
       <div
@@ -94,7 +99,12 @@
                       {%- endif -%}
                     </div>
                     <div class="collapsible-content__icon no-js-hidden">
-                      {% render 'icon-caret' %}
+                      {%- if is_faq_style -%}
+                        <img class="collapsible-content__faq-icon collapsible-content__faq-icon--plus" src="{{ 'icon-faq-plus.svg' | asset_url }}" alt="" width="20" height="20" loading="lazy">
+                        <img class="collapsible-content__faq-icon collapsible-content__faq-icon--minus" src="{{ 'icon-faq-minus.svg' | asset_url }}" alt="" width="20" height="20" loading="lazy">
+                      {%- else -%}
+                        {% render 'icon-caret' %}
+                      {%- endif -%}
                     </div>
                   </div>
                   {%- if block.settings.answer != blank -%}
@@ -124,6 +134,9 @@
             class="collapsible-content__button button button--{{ section.settings.button_style }}{% if section.settings.button_style == 'simple' %} button--arrow {% endif %} focus-inset"
           >
             <span>{{ section.settings.button_label }}</span>
+            {%- if is_faq_style -%}
+              <img class="collapsible-content__faq-arrow" src="{{ 'icon-arrow-right-teal.svg' | asset_url }}" alt="" width="20" height="20" loading="lazy">
+            {%- endif -%}
           </a>
         {% endif %}
       </div>
@@ -250,6 +263,17 @@
     }
   ],
   "settings": [
+    {
+      "type": "select",
+      "id": "section_style",
+      "label": "t:sections.collapsible-content.settings.section_style.label",
+      "info": "t:sections.collapsible-content.settings.section_style.info",
+      "options": [
+        { "value": "default", "label": "t:sections.collapsible-content.settings.section_style.options__1.label" },
+        { "value": "faq", "label": "t:sections.collapsible-content.settings.section_style.options__2.label" }
+      ],
+      "default": "default"
+    },
     {
       "type": "select",
       "id": "aspect_ratio",

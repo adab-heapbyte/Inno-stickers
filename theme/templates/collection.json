@@ -1119,11 +1119,81 @@
         "margin_top": "no-indent",
         "margin_bottom": "no-indent"
       }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_item_1": {
+          "type": "accordion",
+          "settings": {
+            "default_open": true,
+            "question": "How does your online returns policy work?",
+            "subheading_tag": "h3",
+            "answer": "<p>We offer hassle-free returns within 30 days of purchase. Items must be in their original condition with tags attached. Please visit our Returns page for more details and to initiate a return.</p>"
+          }
+        },
+        "faq_item_2": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Which countries do you deliver to?",
+            "subheading_tag": "h3",
+            "answer": ""
+          }
+        },
+        "faq_item_3": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Is it possible to buy a physical gift card?",
+            "subheading_tag": "h3",
+            "answer": ""
+          }
+        },
+        "faq_item_4": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "How can I collect my order in-store?",
+            "subheading_tag": "h3",
+            "answer": ""
+          }
+        },
+        "faq_item_5": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Which countries accept Afterpay?",
+            "subheading_tag": "h3",
+            "answer": ""
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_1",
+        "faq_item_2",
+        "faq_item_3",
+        "faq_item_4",
+        "faq_item_5"
+      ],
+      "settings": {
+        "section_style": "faq",
+        "heading": "FAQs",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "enable_animation": false,
+        "button_label": "View Customer Care",
+        "button_link": "shopify://pages/contact",
+        "button_style": "simple",
+        "margin_bottom": "no-indent",
+        "margin_top": "no-indent"
+      }
     }
   },
   "order": [
     "banner",
     "product-grid",
+    "faq",
     "page_4a7F3K",
     "about_us_aAF4Yz",
     "banner_with_popup_gXN6wa",
