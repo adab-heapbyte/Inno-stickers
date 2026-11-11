@@ -1,6 +1,7 @@
 {% assign template_base = template | split: '.' | first %}
 
 {% unless template_base == 'index' or template_base == 'customers/login' or template_base == 'customers/register' %}
+  {{ 'component-breadcrumbs.css' | asset_url | stylesheet_tag }}
   <div class="breadcrumbs-wrapper">
     <div class="container">
       <nav id="breadcrumbs" class="breadcrumb secondary_text" role="navigation" aria-label="breadcrumbs">

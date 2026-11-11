@@ -4725,6 +4725,20 @@
     "main-collection-banner": {
       "name": "Collection banner",
       "settings": {
+        "banner_style": {
+          "label": "Style",
+          "info": "Editorial: large rounded image with the title and description below (title first on mobile, square image).",
+          "options__1": {
+            "label": "Default"
+          },
+          "options__2": {
+            "label": "Editorial"
+          }
+        },
+        "show_description": {
+          "label": "Show collection description",
+          "info": "Editorial style only."
+        },
         "paragraph": {
           "content": "To change collection descriptions or collection images, [edit your collections.](/admin/collections)"
         },
@@ -4765,6 +4779,28 @@
     "main-collection-product-grid": {
       "name": "Product grid",
       "settings": {
+        "card_style": {
+          "label": "Card style",
+          "info": "Catalog: the home page Best Seller card with price suffix, rating, sale badges and an Add Sample button.",
+          "options__1": {
+            "label": "Classic"
+          },
+          "options__2": {
+            "label": "Catalog"
+          }
+        },
+        "price_suffix": {
+          "label": "Price suffix",
+          "info": "Catalog style. Shown after the price, e.g. sq. ft."
+        },
+        "show_rating": {
+          "label": "Show product rating",
+          "info": "Catalog style. Uses the reviews app rating (reviews.rating metafield); hidden when a product has none."
+        },
+        "card_button_label": {
+          "label": "Sample button label",
+          "info": "Catalog style. Adds the product's Sample variant to the cart; hidden when there is no sample, disabled when it is sold out."
+        },
         "products_per_page": {
           "label": "Products per page"
         },

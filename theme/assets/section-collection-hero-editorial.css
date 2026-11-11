@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Collection banner - "Editorial" style (banner_style: editorial)
+   Figma PLP desktop (9:714): image 1600 x 500 (r 4px), 40px gap, then
+     title Display 5 (Poppins Bold 40 / 1.2, #0F0F0F) and description
+     Body 1 (18 / 1.5, Neutral/600 #3C404F, max 820px), 12px apart;
+     40px down to the toolbar.
+   Figma PLP mobile (9:1149): title Headline 3 (24 / 1.31) + description
+     Body 3 (14 / 1.5) 4px apart, 24px gap, then a square image (r 4px);
+     24px down to the toolbar.
+   ========================================================================== */
+.collection-hero-editorial {
+  background-color: rgb(255, 255, 255);
+}
+
+.collection-hero-editorial__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding: 0 1.6rem 2.4rem;
+}
+
+/* Mobile: title first, image second */
+.collection-hero-editorial__text {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.collection-hero-editorial__media {
+  order: 2;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.4rem;
+}
+
+.collection-hero-editorial__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.collection-hero-editorial__title {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.31;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgb(15, 15, 15); /* Neutral/900 #0F0F0F */
+}
+
+.collection-hero-editorial__description {
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: rgb(60, 64, 79); /* Neutral/600 #3C404F */
+}
+
+.collection-hero-editorial .collection-hero-editorial__description > *,
+.collection-hero-editorial .collection-hero-editorial__description p {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.collection-hero-editorial__description > * + * {
+  margin-top: 0.6em;
+}
+
+@media screen and (min-width: 990px) {
+  .collection-hero-editorial__inner {
+    gap: 4rem;
+    padding: 0 max(2.4rem, 8.33vw) 4rem;
+  }
+
+  /* Desktop: image first, title + description below */
+  .collection-hero-editorial__media {
+    order: 1;
+    aspect-ratio: 1600 / 500;
+  }
+
+  .collection-hero-editorial__text {
+    order: 2;
+    gap: 1.2rem;
+  }
+
+  .collection-hero-editorial__title {
+    font-size: 4rem;
+    line-height: 1.2;
+  }
+
+  .collection-hero-editorial__description {
+    max-width: 82rem;
+    font-size: 1.8rem;
+  }
+}

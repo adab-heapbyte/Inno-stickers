@@ -54,6 +54,29 @@
   {% render 'section-margin' %}
 {%- endstyle -%}
 
+{%- liquid
+  # Card style "catalog" (Figma PLP): the home page Best Seller card (price suffix, rating,
+  # "-x%" badge, Add Sample button). Other options keep the theme card.
+  assign card_style = section.settings.card_style | default: 'classic'
+  assign card_price_suffix = blank
+  assign card_show_rating = false
+  assign card_button_label = blank
+  assign card_sale_badge_format = blank
+  if card_style == 'catalog'
+    assign card_price_suffix = section.settings.price_suffix
+    assign card_show_rating = section.settings.show_rating
+    assign card_button_label = section.settings.card_button_label
+    assign card_sale_badge_format = 'percent_off'
+  endif
+-%}
+{%- if card_style == 'catalog' -%}
+  {{ 'section-collection-catalog.css' | asset_url | stylesheet_tag }}
+  {%- if card_button_label != blank -%}
+    {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+{%- endif -%}
 {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
 {%- assign count = 0 -%}
 
@@ -125,6 +148,7 @@
       id="ProductGridContainer"
       class="
         products-grid container
+        {% if card_style == 'catalog' %} collection-catalog {%- endif -%}
         {% if section.settings.enable_filtering == false %} products-grid_no-filter {%- endif -%}
         {% if section.settings.enable_row_count_control == true %} row-count-control {%- endif -%}
       "
@@ -340,7 +364,11 @@
                     section_id: section.id,
                     add_id: forloop.index,
                     columns_mobile: section.settings.columns_mobile,
-                    show_linked_products: section.settings.enable_linked_products
+                    show_linked_products: section.settings.enable_linked_products,
+                    price_suffix: card_price_suffix,
+                    show_rating: card_show_rating,
+                    card_button_label: card_button_label,
+                    sale_badge_format: card_sale_badge_format
                   %}
                 </li>
               {%- endfor -%}
@@ -460,6 +488,36 @@
     }
   ],
   "settings": [
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "t:sections.main-collection-product-grid.settings.card_style.label",
+      "info": "t:sections.main-collection-product-grid.settings.card_style.info",
+      "options": [
+        { "value": "classic", "label": "t:sections.main-collection-product-grid.settings.card_style.options__1.label" },
+        { "value": "catalog", "label": "t:sections.main-collection-product-grid.settings.card_style.options__2.label" }
+      ],
+      "default": "classic"
+    },
+    {
+      "type": "text",
+      "id": "price_suffix",
+      "label": "t:sections.main-collection-product-grid.settings.price_suffix.label",
+      "info": "t:sections.main-collection-product-grid.settings.price_suffix.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_rating.label",
+      "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
+    },
+    {
+      "type": "text",
+      "id": "card_button_label",
+      "label": "t:sections.main-collection-product-grid.settings.card_button_label.label",
+      "info": "t:sections.main-collection-product-grid.settings.card_button_label.info"
+    },
     {
       "type": "range",
       "id": "products_per_page",
