@@ -396,6 +396,46 @@
   display: none;
 }
 
+/* Loading state (while the sample is added to the cart).
+   component-card.css moves .card__link.loading by translateX(-50%) - meant for
+   the theme's centred floating quick-add button. This button is full width, so
+   keep it in place and swap the label for a centred spinner instead. */
+.popular-products.popular-products--catalog .card__add-to-cart--labelled .card__link.button.loading {
+  transform: none;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.popular-products--catalog .card__add-to-cart--labelled .card__link.loading > .card__add-to-cart-icon,
+.popular-products--catalog .card__add-to-cart--labelled .card__link.loading > .card__quickview-text {
+  visibility: hidden;
+}
+
+.popular-products--catalog .card__add-to-cart--labelled .card__link.loading .loading-overlay__spinner:not(.hidden) {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  margin: 0;
+  transform: none;
+}
+
+/* base.css positions the svg absolutely (top/left 50%); the rotate animation
+   overrides its transform, so let flexbox centre it instead */
+.popular-products--catalog .card__add-to-cart--labelled .card__link.loading .spinner {
+  position: static;
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+}
+
+.popular-products--catalog .card__add-to-cart--labelled .card__link.loading .spinner .path {
+  stroke: rgb(var(--catalog-primary));
+}
+
 .popular-products--catalog .card__add-to-cart-icon {
   display: block;
   flex: 0 0 2rem;
