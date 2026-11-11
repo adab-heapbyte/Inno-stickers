@@ -14,9 +14,9 @@
       "settings": {
         "banner_style": "editorial",
         "show_collection_image": true,
-        "margin_top": "no-indent",
         "margin_bottom": "no-indent",
-        "show_description": true
+        "show_description": true,
+        "margin_top": "no-indent"
       }
     },
     "product-grid": {
