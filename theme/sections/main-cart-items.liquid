@@ -13,6 +13,11 @@
   {% render 'section-margin' %}
 {% endstyle %}
 
+{%- if section.settings.cart_style == 'figma' -%}
+  {{ 'section-cart-figma.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'cart-figma.js' | asset_url }}" defer="defer"></script>
+  {% render 'cart-page-figma', section: section %}
+{%- else -%}
 <div class="main-cart section-{{ section.id }}">
   <div class="container">
     {% comment %}
@@ -539,6 +544,7 @@
     </div>
   </div>
 </div>
+{%- endif -%}
 
 {% javascript %}
   //class CartNote extends HTMLElement {
@@ -563,6 +569,50 @@
   "name": "t:sections.main-cart-items.name",
   "class": "section-cart-items",
   "settings": [
+    {
+      "type": "select",
+      "id": "cart_style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:sections.main-cart-items.settings.cart_style.options__1.label"
+        },
+        {
+          "value": "figma",
+          "label": "t:sections.main-cart-items.settings.cart_style.options__2.label"
+        }
+      ],
+      "default": "default",
+      "label": "t:sections.main-cart-items.settings.cart_style.label",
+      "info": "t:sections.main-cart-items.settings.cart_style.info"
+    },
+    {
+      "type": "range",
+      "id": "figma_quantity_max",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "default": 10,
+      "label": "t:sections.main-cart-items.settings.figma_quantity_max.label"
+    },
+    {
+      "type": "text",
+      "id": "figma_trust_1",
+      "default": "30-Day return",
+      "label": "t:sections.main-cart-items.settings.figma_trust_1.label"
+    },
+    {
+      "type": "text",
+      "id": "figma_trust_2",
+      "default": "Damage protection",
+      "label": "t:sections.main-cart-items.settings.figma_trust_2.label"
+    },
+    {
+      "type": "text",
+      "id": "figma_trust_3",
+      "default": "1-year warranty",
+      "label": "t:sections.main-cart-items.settings.figma_trust_3.label"
+    },
     {
       "type": "checkbox",
       "id": "show_cart_note",

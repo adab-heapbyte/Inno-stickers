@@ -451,7 +451,7 @@
 
     {% sections 'header-group' %}
 
-    {% if settings.show_breadcrumbs and template.name == 'collection' %}
+    {% if settings.show_breadcrumbs and template.name == 'collection' or settings.show_breadcrumbs and template.name == 'cart' %}
       {% render 'breadcrumbs' %}
     {% endif %}
     <main
@@ -472,8 +472,8 @@
         </div>
       {% endif %}
     </main>
-    {%- comment -%} Collection pages show the breadcrumb under the header (Figma PLP); other pages keep it above the footer {%- endcomment -%}
-    {% if settings.show_breadcrumbs and template.name != 'collection' %}
+    {%- comment -%} Collection and cart pages show the breadcrumb under the header (Figma); other pages keep it above the footer {%- endcomment -%}
+    {% if settings.show_breadcrumbs and template.name != 'collection' and template.name != 'cart' %}
       {% render 'breadcrumbs' %}
     {% endif %}
     {% if settings.home_page_slider == false or template.name != 'index' %}

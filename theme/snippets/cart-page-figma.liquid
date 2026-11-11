@@ -1,0 +1,381 @@
+{% comment %}
+  Cart page - "Figma" style of the main cart section (Figma Cart desktop 5:1361).
+  Left: "Cart (N items)" + item rows; right: "Order Summary".
+  Keeps the ids / classes cart.js re-renders and listens to:
+  cart-items, #main-cart-shipping (.js-contents-shipping), #main-cart-items (.js-contents),
+  .cart-item[data-variant-id], #Quantity-N[data-index], cart-remove-button[data-index],
+  #main-cart-footer (.js-contents-totals), #cart-live-region-text, #shopping-cart-line-item-status.
+
+  Sq ft lines ("Covers x sq.ft", "$x / sq ft") are left out until coverage data exists.
+
+  Accepts:
+  - section: {Object} the main cart section
+
+  Usage:
+  {% render 'cart-page-figma', section: section %}
+{% endcomment %}
+{%- liquid
+  assign qty_max = section.settings.figma_quantity_max | default: 10
+-%}
+{%- capture trust_items -%}
+  <li>
+    <img src="{{ 'icon-cart-return.svg' | asset_url }}" alt="" width="32" height="32" loading="lazy">
+    <span>{{ section.settings.figma_trust_1 | default: '30-Day return' | escape | replace: '-', '&#8209;' }}</span>
+  </li>
+  <li>
+    <img src="{{ 'icon-cart-damage.svg' | asset_url }}" alt="" width="32" height="32" loading="lazy">
+    <span>{{ section.settings.figma_trust_2 | default: 'Damage protection' | escape | replace: '-', '&#8209;' }}</span>
+  </li>
+  <li>
+    <img src="{{ 'icon-cart-warranty.svg' | asset_url }}" alt="" width="32" height="32" loading="lazy">
+    <span>{{ section.settings.figma_trust_3 | default: '1-year warranty' | escape | replace: '-', '&#8209;' }}</span>
+  </li>
+{%- endcapture -%}
+{%- capture payment_row -%}
+  {%- if shop.enabled_payment_types.size > 0 -%}
+    {%- liquid
+      # Figma order first (Visa, Mastercard, Apple Pay), then the rest of the store's methods
+      assign payment_types = ''
+      assign preferred_types = 'visa,master,apple_pay' | split: ','
+      for type in preferred_types
+        if shop.enabled_payment_types contains type
+          assign payment_types = payment_types | append: type | append: ','
+        endif
+      endfor
+      for type in shop.enabled_payment_types
+        unless preferred_types contains type
+          assign payment_types = payment_types | append: type | append: ','
+        endunless
+      endfor
+      assign payment_types = payment_types | split: ','
+      assign payment_shown = 3
+      assign payment_more = payment_types.size | minus: payment_shown
+    -%}
+    <div class="cart-figma__payment">
+      <span>{{ 'sections.cart.figma_payment_method' | t }}</span>
+      <span class="cart-figma__payment-icons">
+        {%- for type in payment_types limit: payment_shown -%}
+          {{ type | payment_type_svg_tag: class: 'cart-figma__payment-icon' }}
+        {%- endfor -%}
+        {%- if payment_more > 0 -%}
+          <span class="cart-figma__payment-more">+{{ payment_more }}</span>
+        {%- endif -%}
+      </span>
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+<div class="cart-figma section-{{ section.id }}{% if cart == empty %} cart-figma--empty{% endif %}">
+  <div class="cart-figma__layout">
+    <cart-items class="cart-figma__main{% if cart == empty %} is-empty{% endif %}" data-source="{{ section.id }}">
+      {%- comment -%} Kept for cart.js (free-shipping bar is not part of the design) {%- endcomment -%}
+      <div id="main-cart-shipping" data-id="{{ section.id }}" hidden>
+        <div class="js-contents-shipping"></div>
+      </div>
+
+      <form action="{{ routes.cart_url }}" class="cart__contents" method="post" id="cart" data-source="{{ section.id }}">
+        <div id="main-cart-items" data-id="{{ section.id }}">
+          <div class="js-contents">
+            {%- if cart == empty -%}
+              {%- comment -%} Figma empty cart 6:1862 (same on desktop and mobile) {%- endcomment -%}
+              <div class="cart-figma__empty">
+                <img class="cart-figma__empty-icon" src="{{ 'icon-cart-empty.svg' | asset_url }}" alt="" width="80" height="80">
+                <h1 class="cart-figma__empty-title">{{ 'sections.cart.figma_empty_title' | t }}</h1>
+                <a href="{{ routes.all_products_collection_url }}" class="cart-figma__empty-button">
+                  {{- 'general.continue_shopping' | t -}}
+                </a>
+              </div>
+            {%- else -%}
+              <h1 class="cart-figma__title">
+                {{- 'sections.cart.figma_title' | t: count: cart.item_count -}}
+              </h1>
+              <div class="cart-items cart-figma__items">
+                {%- for item in cart.items -%}
+                  {%- liquid
+                    assign line = item.index | plus: 1
+                    assign is_sample = false
+                    for option_value in item.variant.options
+                      assign option_handle = option_value | strip | downcase
+                      if option_handle == 'sample'
+                        assign is_sample = true
+                      endif
+                    endfor
+
+                    # Product photo: same rule as the collection cards (2nd image = product photo)
+                    assign item_images = item.product.media | where: 'media_type', 'image'
+                    assign item_photo = item_images[1] | default: item.image
+                    if item.image != blank and item.variant.featured_media != blank
+                      assign item_photo = item.variant.featured_media
+                    endif
+
+                    assign unit_compare = item.variant.compare_at_price | default: 0
+                    assign on_sale = false
+                    if unit_compare > item.original_price
+                      assign on_sale = true
+                    endif
+                    if item.final_line_price < item.original_line_price
+                      assign on_sale = true
+                    endif
+                    assign badge_percent = 0
+                    if unit_compare > item.original_price
+                      assign badge_percent = unit_compare | minus: item.original_price | times: 100 | divided_by: unit_compare
+                    endif
+                  -%}
+                  <div class="cart-item cart-figma__item" id="CartItem-{{ line }}" data-variant-id="{{ item.variant.id }}">
+                    <a href="{{ item.url }}" class="cart-figma__media" tabindex="-1" aria-hidden="true">
+                      {%- if item_photo != blank -%}
+                        {{
+                          item_photo
+                          | image_url: width: 480
+                          | image_tag:
+                            class: 'cart-figma__image',
+                            loading: 'lazy',
+                            widths: '160, 240, 320, 480',
+                            sizes: '160px',
+                            alt: ''
+                        }}
+                      {%- else -%}
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg cart-figma__image' }}
+                      {%- endif -%}
+                      {%- if badge_percent > 0 and is_sample == false -%}
+                        <span class="cart-figma__badge">-{{ badge_percent }}%</span>
+                      {%- endif -%}
+                    </a>
+
+                    <div class="cart-figma__info">
+                      <div class="cart-figma__details">
+                        <a href="{{ item.url }}" class="cart-figma__name">{{ item.product.title | escape }}</a>
+                        {%- unless item.product.has_only_default_variant -%}
+                          {%- comment -%} "Sheets: 12", "Size: …"; the Sample value is already in the QTY label {%- endcomment -%}
+                          {%- for option in item.options_with_values -%}
+                            {%- assign option_handle = option.value | strip | downcase -%}
+                            {%- unless option_handle == 'sample' -%}
+                              <p class="cart-figma__meta">{{ option.name | escape }}: {{ option.value | escape }}</p>
+                            {%- endunless -%}
+                          {%- endfor -%}
+                        {%- endunless -%}
+                        {%- for property in item.properties -%}
+                          {%- assign property_first_char = property.first | slice: 0 -%}
+                          {%- if property.last != blank and property_first_char != '_' -%}
+                            <p class="cart-figma__meta">{{ property.first }}: {{ property.last }}</p>
+                          {%- endif -%}
+                        {%- endfor -%}
+                        <p class="cart-item__error cart-figma__error" id="Line-item-error-{{ line }}" role="alert">
+                          <span class="cart-item__error-text"></span>
+                        </p>
+                      </div>
+
+                      <div class="cart-figma__quantity">
+                        <label class="cart-figma__quantity-label" for="Quantity-{{ line }}">
+                          <span class="cart-figma__qty-short">{{ 'sections.cart.figma_qty' | t }}</span>
+                          <span class="cart-figma__qty-long">{{ 'sections.cart.figma_qty_long' | t }}</span>
+                        </label>
+                        <div class="cart-figma__select" data-cart-qty>
+                          <select
+                            class="quantity__input cart-figma__select-input"
+                            id="Quantity-{{ line }}"
+                            name="updates[]"
+                            data-index="{{ line }}"
+                            aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                          >
+                            {%- assign option_max = qty_max | at_least: item.quantity -%}
+                            {%- for n in (1..option_max) -%}
+                              <option value="{{ n }}"{% if n == item.quantity %} selected{% endif %}>
+                                {%- if is_sample -%}
+                                  {{ 'sections.cart.figma_unit_sample' | t: count: n }}
+                                {%- else -%}
+                                  {{ 'sections.cart.figma_unit_box' | t: count: n }}
+                                {%- endif -%}
+                              </option>
+                            {%- endfor -%}
+                          </select>
+                          {%- comment -%} Custom list (Figma 7:2251); JS sets the select above and fires "change" {%- endcomment -%}
+                          <button
+                            type="button"
+                            class="cart-figma__select-button"
+                            aria-haspopup="listbox"
+                            aria-expanded="false"
+                            aria-controls="CartQtyList-{{ line }}"
+                            aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                            data-cart-qty-toggle
+                          >
+                            <span class="cart-figma__select-value">
+                              {%- if is_sample -%}
+                                {{ 'sections.cart.figma_unit_sample' | t: count: item.quantity }}
+                              {%- else -%}
+                                {{ 'sections.cart.figma_unit_box' | t: count: item.quantity }}
+                              {%- endif -%}
+                            </span>
+                          </button>
+                          <img class="cart-figma__select-caret" src="{{ 'icon-cart-caret-down.svg' | asset_url }}" alt="" width="20" height="20">
+                          <ul class="cart-figma__qty-list list-unstyled" id="CartQtyList-{{ line }}" role="listbox" hidden>
+                            {%- for n in (1..option_max) -%}
+                              <li
+                                class="cart-figma__qty-option"
+                                role="option"
+                                tabindex="-1"
+                                data-value="{{ n }}"
+                                aria-selected="{% if n == item.quantity %}true{% else %}false{% endif %}"
+                              >
+                                <span>
+                                  {%- if is_sample -%}
+                                    {{ 'sections.cart.figma_unit_sample' | t: count: n }}
+                                  {%- else -%}
+                                    {{ 'sections.cart.figma_unit_box' | t: count: n }}
+                                  {%- endif -%}
+                                </span>
+                                {%- comment -%} Right column ("5.38 sq.ft") waits for coverage data {%- endcomment -%}
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="cart-figma__side">
+                      <div class="cart-figma__prices">
+                        <p class="cart-figma__line-price{% if on_sale %} cart-figma__line-price--sale{% endif %}">
+                          {{- item.final_line_price | money -}}
+                        </p>
+                        {%- liquid
+                          if is_sample
+                            assign unit_word = 'sections.cart.figma_unit_sample_short' | t
+                          else
+                            assign unit_word = 'sections.cart.figma_unit_box_short' | t
+                          endif
+                          if unit_compare > item.final_price
+                            assign unit_money = unit_compare | money
+                          else
+                            assign unit_money = item.final_price | money
+                          endif
+                        -%}
+                        <p class="cart-figma__unit-price{% if unit_compare > item.final_price %} cart-figma__unit-price--compare{% endif %}">
+                          {{- 'sections.cart.figma_per_unit' | t: price: unit_money, unit: unit_word -}}
+                        </p>
+                      </div>
+                      <cart-remove-button id="Remove-{{ line }}" data-index="{{ line }}" class="cart-figma__remove">
+                        <a
+                          href="{{ item.url_to_remove }}"
+                          class="cart-figma__remove-link"
+                          aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
+                        >
+                          <img src="{{ 'icon-cart-trash.svg' | asset_url }}" alt="" width="32" height="32">
+                        </a>
+                      </cart-remove-button>
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+              <ul class="cart-figma__trust cart-figma__trust--main list-unstyled" role="list">
+                {{- trust_items -}}
+              </ul>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <p class="visually-hidden" id="cart-live-region-text" aria-live="polite" role="status"></p>
+        <p class="visually-hidden" id="shopping-cart-line-item-status" aria-live="polite" aria-hidden="true" role="status">
+          {{ 'accessibility.loading' | t }}
+        </p>
+      </form>
+    </cart-items>
+
+    <aside class="cart-figma__summary{% if cart == empty %} is-empty{% endif %}" id="main-cart-footer" data-id="{{ section.id }}">
+      <div class="js-contents-totals">
+        {%- if cart != empty -%}
+          {%- liquid
+            assign before_savings = 0
+            for item in cart.items
+              assign unit_before = item.original_price
+              if item.variant.compare_at_price > unit_before
+                assign unit_before = item.variant.compare_at_price
+              endif
+              assign line_before = unit_before | times: item.quantity
+              assign before_savings = before_savings | plus: line_before
+            endfor
+            assign savings = before_savings | minus: cart.total_price
+          -%}
+          <h2 class="cart-figma__summary-title">{{ 'sections.cart.title2' | t }}</h2>
+
+          <div class="cart-figma__rows">
+            <div class="cart-figma__row">
+              <span>{{ 'sections.cart.figma_before_savings' | t }}</span>
+              <span>{{ before_savings | money }}</span>
+            </div>
+            {%- if savings > 0 -%}
+              <div class="cart-figma__row cart-figma__row--savings">
+                <span>{{ 'sections.cart.figma_you_save' | t }}</span>
+                <span>&minus; {{ savings | money }}</span>
+              </div>
+            {%- endif -%}
+            {%- for discount in cart.cart_level_discount_applications -%}
+              <div class="cart-figma__row cart-figma__row--savings cart-figma__row--discount">
+                <span>{{ discount.title | escape }}</span>
+                <span>&minus; {{ discount.total_allocated_amount | money }}</span>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <hr class="cart-figma__divider">
+
+          <div class="cart-figma__subtotal">
+            <div class="cart-figma__row cart-figma__row--subtotal">
+              <span>{{ 'sections.cart.subtotal' | t }}</span>
+              <span class="cart-figma__subtotal-value">{{ cart.total_price | money }}</span>
+            </div>
+            <p class="cart-figma__tax-note">
+              {%- if shop.shipping_policy.body != blank -%}
+                {{ 'sections.cart.figma_tax_note_html' | t: link: shop.shipping_policy.url }}
+              {%- else -%}
+                {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
+              {%- endif -%}
+            </p>
+          </div>
+
+          <hr class="cart-figma__divider">
+
+          <ul class="cart-figma__trust cart-figma__trust--summary list-unstyled" role="list">
+            {{- trust_items -}}
+          </ul>
+
+          {%- comment -%} Seel "Worry-Free Purchase" app embed places its widget here when active {%- endcomment -%}
+          <div class="cart-figma__protection" data-cart-protection></div>
+
+          {{ payment_row }}
+        {%- endif -%}
+      </div>
+
+      {%- if cart != empty -%}
+        <div class="cart-figma__ctas">
+          <noscript>
+            <button type="submit" class="cart-figma__button cart-figma__button--outline" form="cart">
+              {{- 'sections.cart.update' | t -}}
+            </button>
+          </noscript>
+          <button type="submit" class="cart__checkout-button cart-figma__button cart-figma__button--primary" name="checkout" form="cart">
+            {{- 'sections.cart.checkout' | t -}}
+          </button>
+        </div>
+      {%- endif -%}
+      <div class="cart-errors" id="cart-errors"></div>
+    </aside>
+  </div>
+
+  {%- if cart != empty -%}
+    <div class="cart-figma__sticky" data-cart-sticky>
+      <div class="cart-figma__sticky-info">
+        <div class="cart-figma__protection" data-cart-protection-sticky></div>
+        {{ payment_row }}
+      </div>
+      <div class="cart-figma__sticky-ctas">
+        <button type="submit" class="cart__checkout-button cart-figma__button cart-figma__button--primary" name="checkout" form="cart">
+          {{- 'sections.cart.figma_go_to_checkout' | t -}}
+        </button>
+        {%- if additional_checkout_buttons -%}
+          <div class="cart-figma__express additional-checkout-buttons">
+            {{ content_for_additional_checkout_buttons }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>

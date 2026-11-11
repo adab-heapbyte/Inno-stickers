@@ -1,0 +1,1017 @@
+/* ==========================================================================
+   Cart page - "Figma" style (Figma Cart desktop 5:1361)
+   Desktop: 1600 content (side padding 160 @1920), items 970 | gap 80 | summary 550.
+   Fonts: Poppins (theme body/heading family). Colours from the Figma tokens.
+   ========================================================================== */
+.cart-figma {
+  --cart-neutral-900: 15, 15, 15;     /* #0F0F0F */
+  --cart-neutral-800: 24, 24, 27;     /* #18181B */
+  --cart-neutral-700: 33, 34, 38;     /* #212226 */
+  --cart-neutral-600: 60, 64, 79;     /* #3C404F */
+  --cart-neutral-500: 127, 133, 159;  /* #7F859F */
+  --cart-neutral-200: 226, 228, 233;  /* #E2E4E9 */
+  --cart-neutral-100: 244, 244, 244;  /* #F4F4F4 */
+  --cart-burgundy: 128, 0, 32;        /* #800020 */
+  --cart-primary: 42, 100, 137;       /* #2A6489 */
+
+  padding: 1.2rem 1.6rem 6rem;
+  font-family: var(--font-body-family);
+  color: rgb(var(--cart-neutral-900));
+}
+
+.cart-figma *,
+.cart-figma *::before,
+.cart-figma *::after {
+  box-sizing: border-box;
+}
+
+.cart-figma p,
+.cart-figma h1,
+.cart-figma h2 {
+  margin: 0;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.cart-figma__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.cart-figma__main,
+.cart-figma cart-items.cart-figma__main {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0; /* theme cart-items: 24px right padding (desktop), bottom border + padding (mobile) */
+  border: 0;
+}
+
+/* ---------- Title */
+.cart-figma__title,
+.cart-figma__summary-title {
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-800));
+}
+
+/* ---------- Items */
+.cart-figma__items {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.4rem;
+}
+
+.cart-figma__item {
+  display: grid;
+  grid-template-columns: 12rem minmax(0, 1fr) auto;
+  gap: 1.2rem;
+  align-items: stretch;
+  padding: 0;
+  border: 0;
+  box-shadow: none; /* theme .cart-item draws an inset bottom line */
+  overflow: visible; /* theme .cart-item clips; the quantity list opens over the next row */
+}
+
+.cart-figma__item + .cart-figma__item {
+  margin-top: 2.4rem;
+  padding-top: 2.4rem;
+  border-top: 0.1rem solid rgb(var(--cart-neutral-200));
+}
+
+.cart-figma__item.is-loading,
+.cart-figma .cart-items.is-loading {
+  opacity: 0.6;
+}
+
+/* Picture: grey box, product photo inset with a soft shadow */
+.cart-figma__media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 208 / 278;
+  overflow: hidden;
+  border: 0.0534rem solid rgb(var(--cart-neutral-100));
+  border-radius: 0.2136rem;
+  background-color: rgb(var(--cart-neutral-100));
+}
+
+.cart-figma__image {
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 0.1rem);
+  display: block;
+  width: 77.4%; /* 160 / 206.9 (inside the 0.5px border) */
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  box-shadow:
+    0 2.7774rem 0.7478rem 0 rgba(0, 0, 0, 0),
+    0 1.7626rem 0.6944rem 0 rgba(0, 0, 0, 0.03),
+    0 0.1068rem 0.2671rem 0 rgba(0, 0, 0, 0.19);
+}
+
+.cart-figma__badge {
+  position: absolute;
+  top: 1.147rem;
+  left: 1.147rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.2rem;
+  background-color: rgb(var(--cart-burgundy));
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(255, 255, 255);
+}
+
+/* Middle column: title on top, QTY at the bottom */
+.cart-figma__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.6rem;
+  min-width: 0;
+}
+
+.cart-figma__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cart-figma__name {
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-900));
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.cart-figma__name:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+.cart-figma__meta {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-500));
+}
+
+.cart-figma__error:empty,
+.cart-figma__error .cart-item__error-text:empty {
+  display: none;
+}
+
+.cart-figma__error {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-burgundy));
+}
+
+.cart-figma__quantity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cart-figma__quantity-label {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-900));
+}
+
+.cart-figma__select {
+  position: relative;
+  width: fit-content;
+  min-width: 14rem; /* Figma 140; grows for "10 samples" */
+  max-width: 100%;
+}
+
+.cart-figma .cart-figma__select-input {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0.8rem 4rem 0.8rem 1.2rem;
+  border: 0.1rem solid rgb(var(--cart-neutral-200));
+  border-radius: 0;
+  background: rgb(255, 255, 255);
+  font-family: var(--font-body-family);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-800));
+  text-align: left;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.cart-figma .cart-figma__select-input:focus-visible {
+  outline: 0.2rem solid rgb(var(--cart-primary));
+  outline-offset: 0.1rem;
+}
+
+.cart-figma__select-caret {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  width: 2rem;
+  height: 2rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Right column: prices on top, trash at the bottom */
+.cart-figma__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.6rem;
+}
+
+.cart-figma__prices {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  white-space: nowrap;
+}
+
+.cart-figma__line-price {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-900));
+}
+
+.cart-figma__line-price--sale {
+  color: rgb(var(--cart-burgundy));
+}
+
+.cart-figma__unit-price {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-500));
+}
+
+.cart-figma__unit-price--compare {
+  text-decoration: line-through;
+}
+
+.cart-figma__remove {
+  display: block;
+}
+
+.cart-figma__remove-link {
+  display: block;
+  width: 3.2rem;
+  height: 3.2rem;
+  opacity: 1;
+  transition: opacity var(--duration-default, 0.2s);
+}
+
+.cart-figma__remove-link:hover {
+  opacity: 0.7;
+}
+
+.cart-figma__remove-link img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Empty cart (Figma 6:1862, same on desktop and mobile) */
+/* theme component-cart.css hides .cart__contents inside .is-empty; the empty state lives in it here */
+.cart-figma .is-empty .cart__contents {
+  display: block;
+}
+
+.cart-figma__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  min-height: 50rem;
+  text-align: center;
+}
+
+.cart-figma__empty-icon {
+  display: block;
+  width: 8rem;
+  height: 8rem;
+  margin-bottom: -1.6rem; /* icon -> title is 24px inside the 40px stack gap */
+}
+
+.cart-figma .cart-figma__empty-title {
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 4rem;
+  line-height: 1.2;
+  color: rgb(var(--cart-neutral-900));
+}
+
+.cart-figma__empty-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 20rem;
+  max-width: 100%;
+  padding: 1.2rem;
+  border: 0.1rem solid rgb(var(--cart-primary));
+  border-radius: 0.2rem;
+  background-color: transparent;
+  font-family: var(--font-body-family);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-primary));
+  text-decoration: none;
+  transition: background-color var(--duration-default, 0.2s);
+}
+
+.cart-figma__empty-button:hover {
+  background-color: rgba(var(--cart-primary), 0.06);
+}
+
+.cart-figma--empty .cart-figma__summary {
+  display: none;
+}
+
+/* ---------- Order Summary */
+.cart-figma__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2.4rem;
+  border-radius: 0.4rem;
+  background-color: rgb(var(--cart-neutral-100));
+}
+
+/* reset theme #main-cart-footer (width cap, left border and padding) */
+.cart-figma #main-cart-footer {
+  width: auto;
+  padding: 2.4rem;
+  border-left: 0;
+}
+
+.cart-figma #main-cart-footer.is-empty,
+.cart-figma__summary.is-empty {
+  display: none;
+}
+
+.cart-figma__summary .js-contents-totals {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.cart-figma__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.cart-figma__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2.4rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-900));
+}
+
+.cart-figma__row > span:first-child {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cart-figma__row > span:last-child {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.cart-figma__row--savings {
+  color: rgb(var(--cart-burgundy));
+}
+
+.cart-figma__divider {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 0.1rem solid rgb(var(--cart-neutral-200));
+  background: none;
+}
+
+.cart-figma__subtotal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.cart-figma__row--subtotal {
+  align-items: center;
+}
+
+.cart-figma__subtotal-value {
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.5;
+}
+
+.cart-figma__tax-note {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-500));
+}
+
+.cart-figma__tax-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+/* Trust icons */
+.cart-figma__trust {
+  display: flex;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+}
+
+.cart-figma__trust li {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  text-align: center;
+  color: rgb(var(--cart-neutral-600));
+}
+
+.cart-figma__trust img {
+  display: block;
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+/* Shipping protection (Seel) slot: collapses while the app adds nothing */
+.cart-figma__protection:empty {
+  display: none;
+}
+
+/* Payment methods */
+.cart-figma__payment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: 1.2rem;
+  border-radius: 0.4rem;
+  background-color: rgba(84, 51, 235, 0.08);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-800));
+}
+
+.cart-figma__payment-icons {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: stretch;
+  gap: 0.4rem;
+}
+
+.cart-figma__payment-icon {
+  display: block;
+  width: 3.5rem;
+  height: 2.4rem;
+}
+
+.cart-figma__payment-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  border: 0.1rem solid rgb(var(--cart-neutral-100));
+  border-radius: 0.4rem;
+  background-color: rgb(255, 255, 255);
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-700));
+}
+
+/* Buttons */
+.cart-figma__ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.cart-figma__summary.is-empty .cart-figma__ctas {
+  display: none;
+}
+
+.cart-figma__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 100%;
+  min-height: 4.8rem;
+  margin: 0;
+  padding: 0.8rem 2.4rem;
+  overflow: hidden;
+  border: 0.1rem solid rgb(var(--cart-primary));
+  border-radius: 0.4rem;
+  font-family: var(--font-body-family);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--duration-default, 0.2s), color var(--duration-default, 0.2s);
+}
+
+.cart-figma__button--primary {
+  background-color: rgb(var(--cart-primary));
+  color: rgb(255, 255, 255);
+}
+
+.cart-figma__button--primary:hover {
+  background-color: rgba(var(--cart-primary), 0.9);
+}
+
+.cart-figma__button--outline {
+  background-color: transparent;
+  color: rgb(var(--cart-primary));
+}
+
+.cart-figma__button--outline:hover {
+  background-color: rgba(var(--cart-primary), 0.06);
+}
+
+.cart-figma .cart-errors:empty {
+  display: none;
+}
+
+/* ---------- Desktop */
+@media screen and (min-width: 990px) {
+  .cart-figma {
+    padding: 0 max(2.4rem, 8.33vw) 12rem;
+  }
+
+
+  .cart-figma__title,
+  .cart-figma__summary-title,
+  .cart-figma__subtotal-value {
+    font-size: 2.8rem;
+  }
+
+  .cart-figma__items {
+    margin-top: 4rem;
+  }
+
+  .cart-figma__item {
+    grid-template-columns: 20.8rem minmax(0, 1fr) auto;
+    gap: 2rem;
+  }
+
+  /* 990-1199: summary stacks under the items, full width */
+  .cart-figma__layout {
+    gap: 4rem;
+  }
+
+  .cart-figma__item + .cart-figma__item {
+    margin-top: 4rem;
+    padding-top: 4rem;
+  }
+
+  .cart-figma__media {
+    width: 100%;
+    aspect-ratio: 208 / 278;
+  }
+
+  .cart-figma__name,
+  .cart-figma__line-price,
+  .cart-figma__row {
+    font-size: 1.8rem;
+  }
+
+  .cart-figma__meta,
+  .cart-figma__unit-price,
+  .cart-figma__tax-note {
+    font-size: 1.6rem;
+  }
+
+  .cart-figma__trust li {
+    font-size: 1.4rem;
+  }
+
+  .cart-figma__summary,
+  .cart-figma #main-cart-footer {
+    width: 100%;
+    padding: 4rem; /* theme component-cart.css sets #main-cart-footer padding-left */
+  }
+}
+
+/* 1200+: two columns (Figma @1920: items 970 | 80 | summary 550, picture 208 x 278) */
+@media screen and (min-width: 1200px) {
+  .cart-figma__layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: clamp(4rem, 4.2vw, 8rem);
+  }
+
+  .cart-figma__item {
+    grid-template-columns: clamp(14rem, 10.95vw, 20.8rem) minmax(0, 1fr) auto;
+  }
+
+  .cart-figma__summary,
+  .cart-figma #main-cart-footer {
+    flex: 0 0 clamp(40rem, 28.9vw, 55rem);
+    width: clamp(40rem, 28.9vw, 55rem);
+  }
+}
+
+/* ==========================================================================
+   Quantity list (Figma 7:2251) - custom listbox over the native select
+   ========================================================================== */
+.js .cart-figma .cart-figma__select-input {
+  position: absolute;
+  inset: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.no-js .cart-figma__select-button,
+.no-js .cart-figma__qty-list {
+  display: none;
+}
+
+.cart-figma__select-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0.8rem 4rem 0.8rem 1.2rem;
+  border: 0.1rem solid rgb(var(--cart-neutral-200));
+  border-radius: 0;
+  background: rgb(255, 255, 255);
+  font-family: var(--font-body-family);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+  color: rgb(var(--cart-neutral-800));
+  cursor: pointer;
+}
+
+.cart-figma__select-button:focus-visible {
+  outline: 0.2rem solid rgb(var(--cart-primary));
+  outline-offset: 0.1rem;
+}
+
+.cart-figma__select-value {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cart-figma__select-caret {
+  transition: transform var(--duration-default, 0.2s);
+}
+
+.cart-figma__select.is-open .cart-figma__select-caret {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.cart-figma__qty-list {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  width: 22.4rem;
+  max-height: 24rem;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  border-radius: 0.4rem;
+  background: rgb(255, 255, 255);
+  box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.08);
+  list-style: none;
+}
+
+.cart-figma__qty-list[hidden] {
+  display: none;
+}
+
+.cart-figma__qty-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  height: 4.8rem;
+  padding: 0 1.6rem;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--cart-neutral-900));
+  cursor: pointer;
+}
+
+.cart-figma__qty-option:hover,
+.cart-figma__qty-option:focus {
+  outline: 0;
+  background-color: rgb(var(--cart-neutral-100));
+}
+
+.cart-figma__qty-option[aria-selected='true'] {
+  font-weight: 700;
+}
+
+/* Label: "QTY" on desktop, "QUANTITY" on mobile */
+.cart-figma__qty-long {
+  display: none;
+}
+
+/* Trust icons: in the summary on desktop, under the items on mobile */
+.cart-figma__trust--main {
+  display: none;
+}
+
+/* Sticky checkout bar: mobile only */
+.cart-figma__sticky {
+  display: none;
+}
+
+/* ==========================================================================
+   Mobile (Figma Cart mobile 7:2572, sticky 7:2424, 393 wide, 16px gutters)
+   ========================================================================== */
+@media screen and (max-width: 989px) {
+  /* no breadcrumb on the mobile cart */
+  .template-cart .breadcrumbs-wrapper {
+    display: none;
+  }
+
+  .cart-figma {
+    padding: 1.2rem 1.6rem 2.4rem;
+  }
+
+  .cart-figma__layout {
+    gap: 2.4rem;
+  }
+
+  .cart-figma__title {
+    font-size: 1.6rem;
+  }
+
+  .cart-figma__items {
+    margin-top: 1.2rem;
+  }
+
+  /* Item: picture 3:4 (height of the text column), text, prices */
+  .cart-figma__item {
+    grid-template-columns: 9.6rem minmax(0, 1fr) auto;
+    column-gap: 1.2rem;
+  }
+
+  .cart-figma__media {
+    width: 9.6rem;
+    aspect-ratio: 3 / 4;
+    align-self: stretch;
+  }
+
+  .cart-figma__image {
+    width: 60.6%; /* 58.22 / 96 */
+    left: 50%;
+  }
+
+  .cart-figma__badge {
+    top: 0.347rem;
+    left: 0.347rem;
+    font-size: 1rem;
+  }
+
+  .cart-figma__info {
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+  .cart-figma__name {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 1.4rem;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .cart-figma__meta,
+  .cart-figma__error {
+    font-size: 1.2rem;
+  }
+
+  .cart-figma__quantity-label {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+  }
+
+  .cart-figma__qty-short {
+    display: none;
+  }
+
+  .cart-figma__qty-long {
+    display: inline;
+  }
+
+  .cart-figma__select {
+    min-width: 10rem; /* Figma 100 */
+  }
+
+  .cart-figma__select-button,
+  .cart-figma .cart-figma__select-input {
+    padding: 0.5rem 3rem 0.5rem 0.8rem; /* 30px tall, as Figma (border inside) */
+    font-size: 1.2rem;
+  }
+
+  .cart-figma__select-caret {
+    right: 0.8rem;
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .cart-figma__side {
+    margin-left: 1.2rem; /* 24px between text and prices */
+  }
+
+  .cart-figma__line-price {
+    font-size: 1.4rem;
+  }
+
+  .cart-figma__unit-price {
+    font-size: 1.2rem;
+  }
+
+  .cart-figma__remove-link {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  /* Trust icons under the items, after a divider */
+  .cart-figma__trust--main {
+    display: flex;
+    margin-top: 2.4rem;
+    padding-top: 2.4rem;
+    border-top: 0.1rem solid rgb(var(--cart-neutral-200));
+  }
+
+  .cart-figma__trust--summary {
+    display: none;
+  }
+
+  .cart-figma__trust li {
+    gap: 0.4rem;
+    font-size: 1.4rem;
+  }
+
+  .cart-figma__trust span {
+    width: min-content; /* "30-Day / return" on two lines */
+  }
+
+  .cart-figma__trust img {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  /* Order Summary */
+  .cart-figma__summary,
+  .cart-figma #main-cart-footer {
+    gap: 1.6rem;
+    padding: 1.6rem;
+  }
+
+  .cart-figma__summary .js-contents-totals {
+    gap: 1.2rem;
+  }
+
+  .cart-figma__summary-title {
+    margin-bottom: 0.4rem;
+    font-size: 1.6rem;
+  }
+
+  .cart-figma__rows,
+  .cart-figma__subtotal {
+    gap: 0.4rem;
+  }
+
+  .cart-figma__row {
+    font-size: 1.4rem;
+  }
+
+  .cart-figma__subtotal-value {
+    font-size: 1.6rem;
+  }
+
+  .cart-figma__tax-note {
+    font-size: 1.2rem;
+  }
+
+  .cart-figma__subtotal + .cart-figma__divider {
+    display: none;
+  }
+
+  .cart-figma__summary .cart-figma__protection:not(:empty),
+  .cart-figma__summary .cart-figma__payment {
+    margin-top: 0.4rem;
+  }
+
+  .cart-figma__summary .cart-figma__protection:not(:empty) + .cart-figma__payment {
+    margin-top: -0.4rem; /* 8px between the protection box and payment row */
+  }
+
+  .cart-figma__payment {
+    font-size: 1.2rem;
+  }
+
+  /* Sticky checkout bar (shown by cart-figma.js while the summary button is below the screen) */
+  .cart-figma__sticky {
+    position: fixed;
+    z-index: 20;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    padding: 1.2rem 1.6rem calc(2.4rem + env(safe-area-inset-bottom, 0px));
+    border-top: 0.1rem solid rgb(var(--cart-neutral-100));
+    background: rgb(255, 255, 255);
+    box-shadow: 0 0 0.6rem rgba(0, 0, 0, 0.08);
+    transform: translateY(100%);
+    visibility: hidden;
+    transition: transform var(--duration-default, 0.2s), visibility 0s linear var(--duration-default, 0.2s);
+  }
+
+  .cart-figma__sticky.is-visible {
+    transform: none;
+    visibility: visible;
+    transition: transform var(--duration-default, 0.2s), visibility 0s;
+  }
+
+  .cart-figma__sticky-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .cart-figma__sticky-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .cart-figma__sticky .cart-figma__protection:empty {
+    display: none;
+  }
+
+  /* Express checkout (Apple Pay, PayPal...) rendered by Shopify */
+  .cart-figma__express {
+    --shopify-accelerated-checkout-button-block-size: 48px;
+    --shopify-accelerated-checkout-button-border-radius: 4px;
+    --shopify-accelerated-checkout-row-gap: 12px;
+    --shopify-accelerated-checkout-inline-alignment: stretch;
+    margin: 0;
+  }
+
+  .cart-figma--empty .cart-figma__sticky {
+    display: none;
+  }
+
+}

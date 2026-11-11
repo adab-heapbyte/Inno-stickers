@@ -21,11 +21,23 @@
           "settings": {}
         }
       },
-      "block_order": ["subtotal", "buttons"],
+      "block_order": [
+        "subtotal",
+        "buttons"
+      ],
       "settings": {
-        "show_cart_note": false
+        "figma_trust_3": "1-year warranty",
+        "figma_trust_2": "Damage protection",
+        "figma_trust_1": "30-Day return",
+        "figma_quantity_max": 10,
+        "cart_style": "figma",
+        "show_cart_note": false,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
       }
     }
   },
-  "order": ["cart-items"]
+  "order": [
+    "cart-items"
+  ]
 }

@@ -430,6 +430,29 @@
     "cart": {
       "title": "Shopping Cart",
       "title2": "Order Summary",
+      "figma_title": {
+        "one": "Cart ({{ count }} item)",
+        "other": "Cart ({{ count }} items)"
+      },
+      "figma_qty": "QTY",
+      "figma_qty_long": "Quantity",
+      "figma_go_to_checkout": "Go to checkout",
+      "figma_empty_title": "Your shopping cart is empty",
+      "figma_unit_box": {
+        "one": "{{ count }} box",
+        "other": "{{ count }} boxes"
+      },
+      "figma_unit_sample": {
+        "one": "{{ count }} sample",
+        "other": "{{ count }} samples"
+      },
+      "figma_unit_box_short": "box",
+      "figma_unit_sample_short": "sample",
+      "figma_per_unit": "{{ price }} / {{ unit }}",
+      "figma_before_savings": "Items before savings",
+      "figma_you_save": "You save",
+      "figma_tax_note_html": "Taxes and <a href=\"{{ link }}\">shipping</a> calculated at checkout.",
+      "figma_payment_method": "Payment method",
       "caption": "Cart items",
       "remove_title": "Remove {{ title }}",
       "shipping": "Shipping",

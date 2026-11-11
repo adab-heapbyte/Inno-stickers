@@ -4715,6 +4715,28 @@
     "main-cart-items": {
       "name": "Items",
       "settings": {
+        "cart_style": {
+          "label": "Style",
+          "info": "Figma: cart items left, order summary right.",
+          "options__1": {
+            "label": "Default"
+          },
+          "options__2": {
+            "label": "Figma"
+          }
+        },
+        "figma_quantity_max": {
+          "label": "Quantity dropdown maximum"
+        },
+        "figma_trust_1": {
+          "label": "Trust text 1"
+        },
+        "figma_trust_2": {
+          "label": "Trust text 2"
+        },
+        "figma_trust_3": {
+          "label": "Trust text 3"
+        },
         "image_fit": {
           "label": "Image fit",
           "options__1": {
