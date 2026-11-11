@@ -495,8 +495,16 @@ section:first-child .section--has-overlay.slideshow--layout_4 .slideshow__info, 
    Mobile  - Figma "hero · 393" (3:582): 393 x 640 -> 64rem.
    Desktop - Figma "hero" (1:1270): 1920 x 663 -> 34.53vw, never below 52rem.
    ========================================================================== */
+/* Mobile: follow the phone's screen height so ~220px of the next section
+   shows below the hero; never shorter than 440px (content fits) and never
+   taller than Figma's 640px. */
 .slideshow--banner {
-  min-height: 64rem;
+  min-height: 53rem;
+  min-height: clamp(
+    44rem,
+    calc(100svh - var(--announcement-height, 0px) - var(--header-height, 0px) - 22rem),
+    64rem
+  );
 }
 @media screen and (min-width: 750px) {
   .slideshow--banner {
