@@ -130,13 +130,53 @@
           if app_blocks.size > 0
             assign has_visualizer = true
           endif
+
+          # HomeVisioner's block reads the product from data-product-* on its root.
+          # The home page has no product, so fill them from "Visualizer product".
+          capture visualizer_html
+            for block in app_blocks
+              render block
+            endfor
+          endcapture
+          assign vp = section.settings.visualizer_product
+          if has_visualizer and vp != blank
+            assign vp_variant = vp.selected_or_first_available_variant
+            assign vp_image_1 = ''
+            assign vp_image_2 = ''
+            if vp.images[0] != blank
+              assign vp_image_1 = vp.images[0] | image_url: width: 1500 | prepend: 'https:'
+            endif
+            if vp.images[1] != blank
+              assign vp_image_2 = vp.images[1] | image_url: width: 1500 | prepend: 'https:'
+            endif
+            assign vp_title = vp.title | escape
+            assign vp_type = vp.type | escape
+            assign vp_description = vp.description | strip_html | strip_newlines | truncate: 300 | escape
+
+            assign attr_new = 'data-product-id="' | append: vp.id | append: '"'
+            assign visualizer_html = visualizer_html | replace: 'data-product-id=""', attr_new
+            assign attr_new = 'data-product-handle="' | append: vp.handle | append: '"'
+            assign visualizer_html = visualizer_html | replace: 'data-product-handle=""', attr_new
+            assign attr_new = 'data-product-variant-id="' | append: vp_variant.id | append: '"'
+            assign visualizer_html = visualizer_html | replace: 'data-product-variant-id=""', attr_new
+            assign attr_new = 'data-initial-variant-id="' | append: vp_variant.id | append: '"'
+            assign visualizer_html = visualizer_html | replace: 'data-initial-variant-id=""', attr_new
+            assign attr_new = 'data-product-type="' | append: vp_type | append: '"'
+            assign visualizer_html = visualizer_html | replace: 'data-product-type=""', attr_new
+            assign attr_new = 'data-product-title="' | append: vp_title | append: '"'
+            assign visualizer_html = visualizer_html | replace: 'data-product-title=""', attr_new
+            assign attr_new = 'data-product-description="' | append: vp_description | append: '"'
+            assign visualizer_html = visualizer_html | replace: 'data-product-description=""', attr_new
+            assign attr_new = 'data-product-image-url="' | append: vp_image_1 | append: '"'
+            assign visualizer_html = visualizer_html | replace: 'data-product-image-url=""', attr_new
+            assign attr_new = 'data-product-image-url2="' | append: vp_image_2 | append: '"'
+            assign visualizer_html = visualizer_html | replace: 'data-product-image-url2=""', attr_new
+          endif
         -%}
 
         {%- if has_visualizer and section.settings.use_own_button == false -%}
           <div class="room-inspiration__app room-inspiration__app--visible">
-            {%- for block in app_blocks -%}
-              {% render block %}
-            {%- endfor -%}
+            {{ visualizer_html }}
           </div>
         {%- elsif section.settings.banner_button_label != blank -%}
           {%- if has_visualizer -%}
@@ -176,9 +216,7 @@
 
           {%- if has_visualizer -%}
             <div class="room-inspiration__app room-inspiration__app--hidden" data-visualizer-app aria-hidden="true">
-              {%- for block in app_blocks -%}
-                {% render block %}
-              {%- endfor -%}
+              {{ visualizer_html }}
             </div>
           {%- endif -%}
         {%- endif -%}

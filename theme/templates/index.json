@@ -427,6 +427,24 @@
     "room_inspiration_ugc": {
       "type": "room-inspiration",
       "blocks": {
+        "homevisioner_room_visualizer_homevisioner_pdp_QcCJrw": {
+          "type": "shopify://apps/homevisioner-room-visualizer/blocks/homevisioner-pdp/019dbbee-91cd-7cbd-9bb1-71a1071451dd",
+          "settings": {
+            "override_app_button_settings": false,
+            "widget_button_color": "",
+            "cta_style_mode": "default",
+            "button_text": "",
+            "button_font_source": "app",
+            "button_shape": "rounded",
+            "widget_size": "inherit",
+            "match_add_to_cart": true,
+            "match_reference": "add_to_cart",
+            "button_width_percent": 100,
+            "button_align": "left",
+            "product_image_index": 1,
+            "product_image_index_2": 2
+          }
+        },
         "story_george": {
           "type": "story",
           "settings": {
@@ -475,6 +493,7 @@
         }
       },
       "block_order": [
+        "homevisioner_room_visualizer_homevisioner_pdp_QcCJrw",
         "story_george",
         "story_jessica",
         "story_3",
@@ -482,24 +501,24 @@
         "story_5"
       ],
       "settings": {
-        "articles_order": "oldest",
         "color_scheme": "background-1",
         "background_color": "#f4f6f8",
         "heading": "Real homes. Real inspiration.",
         "heading_tag": "h2",
         "description": "Explore customer projects and take a closer look at the finishes and details that make each space feel personal.",
+        "source": "blog",
+        "blog": "room-inspiration",
+        "articles_count": 3,
+        "articles_order": "oldest",
         "show_banner": true,
         "banner_title": "Picture it in your space.",
         "banner_text": "Explore how a finish could look in your own room.",
         "banner_button_label": "See it in your space",
         "banner_button_link": "shopify://collections/1-hexagon-mosaic-tile",
-        "visualizer_product": "",
+        "visualizer_product": "natural-oak-wood-slat-acoustic-panels-decorative-wall-paneling",
         "use_own_button": true,
         "margin_top": "l",
-        "margin_bottom": "l",
-        "source": "blog",
-        "blog": "room-inspiration",
-        "articles_count": 3
+        "margin_bottom": "l"
       }
     },
     "newsletter_G8QjCT": {
@@ -1021,6 +1040,7 @@
       ],
       "disabled": true,
       "settings": {
+        "section_style": "default",
         "aspect_ratio": "full",
         "heading": "Quick Answers",
         "heading_size": "h1",
