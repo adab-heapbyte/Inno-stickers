@@ -256,6 +256,28 @@
   border-left: 0.1rem solid rgba(var(--kit-navy), 0.05);
 }
 
+/* Mobile (Figma 11:1237): 16px gap, divider, 16px gap between features.
+   Labels stay on one line; a long label (Echo-reduction) keeps its full
+   width and the others share the rest equally. */
+@media screen and (max-width: 989px) {
+  .sample-kit__features {
+    gap: 1.6rem;
+  }
+
+  .sample-kit__feature {
+    min-width: max-content;
+    padding: 0;
+  }
+
+  .sample-kit__feature + .sample-kit__feature {
+    padding-left: 1.6rem;
+  }
+
+  .sample-kit__feature-label {
+    white-space: nowrap;
+  }
+}
+
 .sample-kit__feature-icon {
   display: block;
   width: 2rem;
