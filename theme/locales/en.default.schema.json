@@ -2057,6 +2057,34 @@
     "room-inspiration": {
       "name": "Room inspiration",
       "settings": {
+        "header_stories": {
+          "content": "Stories"
+        },
+        "source": {
+          "label": "Stories source",
+          "info": "Blog: each post becomes a story (featured image, title, excerpt). Customer name and avatar come from the post's Customer name / Customer avatar fields (the name line is hidden when empty). Manual blocks are used if the blog has no posts.",
+          "options__1": {
+            "label": "Manual blocks"
+          },
+          "options__2": {
+            "label": "Blog posts"
+          }
+        },
+        "blog": {
+          "label": "Blog"
+        },
+        "articles_count": {
+          "label": "Number of stories"
+        },
+        "articles_order": {
+          "label": "Order",
+          "options__1": {
+            "label": "Newest first"
+          },
+          "options__2": {
+            "label": "Oldest first"
+          }
+        },
         "color_scheme": {
           "label": "Color scheme"
         },

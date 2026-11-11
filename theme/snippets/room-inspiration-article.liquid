@@ -1,0 +1,31 @@
+{% comment %}
+  Room inspiration story card built from a blog post.
+  Customer name / avatar come from the article metafields
+  custom.customer_name and custom.customer_avatar (hidden when empty).
+
+  Accepts:
+  - article: {Object}
+
+  Usage:
+  {% render 'room-inspiration-article', article: article %}
+{% endcomment %}
+{%- liquid
+  assign story_avatar = article.metafields.custom.customer_avatar.value
+  if story_avatar.media_type != blank and story_avatar.media_type != 'image'
+    assign story_avatar = story_avatar.preview_image
+  endif
+  assign story_name = article.metafields.custom.customer_name.value
+  if article.excerpt != blank
+    assign story_text = article.excerpt | strip_html | strip | truncatewords: 30
+  else
+    assign story_text = article.content | strip_html | strip | truncatewords: 30
+  endif
+-%}
+{% render 'room-inspiration-card',
+  image: article.image,
+  avatar: story_avatar,
+  name: story_name,
+  title: article.title,
+  text: story_text,
+  url: article.url
+%}

@@ -482,6 +482,7 @@
         "story_5"
       ],
       "settings": {
+        "articles_order": "oldest",
         "color_scheme": "background-1",
         "background_color": "#f4f6f8",
         "heading": "Real homes. Real inspiration.",
@@ -495,7 +496,10 @@
         "visualizer_product": "",
         "use_own_button": true,
         "margin_top": "l",
-        "margin_bottom": "l"
+        "margin_bottom": "l",
+        "source": "blog",
+        "blog": "room-inspiration",
+        "articles_count": 3
       }
     },
     "newsletter_G8QjCT": {

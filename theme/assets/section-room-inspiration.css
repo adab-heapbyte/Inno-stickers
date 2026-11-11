@@ -187,6 +187,18 @@
   color: rgb(var(--ri-text));
 }
 
+/* Blog source: the title links to the post */
+.room-inspiration__title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.room-inspiration__title-link:hover,
+.room-inspiration__title-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
 .room-inspiration__text {
   font-family: var(--font-body-family);
   font-weight: 400;

@@ -1,0 +1,75 @@
+{% comment %}
+  One Room inspiration story card (used for manual blocks and blog posts).
+
+  Accepts:
+  - image: {Object} room photo (image or media image)
+  - avatar: {Object} customer avatar (image or media image)
+  - name: {String} owner line, e.g. "George's home"
+  - title: {String}
+  - text: {String} short text (inline HTML allowed)
+  - url: {String} optional link for the title (blog post)
+  - attributes: {String} optional block attributes for the theme editor
+
+  Usage:
+  {% render 'room-inspiration-card', image: block.settings.image, title: block.settings.title %}
+{% endcomment %}
+<li class="room-inspiration__item swiper-slide" {{ attributes }}>
+  <div class="room-inspiration__media{% if image != blank %} room-inspiration__media--has-image{% endif %}">
+    {%- if image != blank -%}
+      {{
+        image
+        | image_url: width: 1600
+        | image_tag:
+          class: 'room-inspiration__image',
+          loading: 'lazy',
+          sizes: '(min-width: 990px) calc((100vw - 16.66vw - 4.8rem) / 3), 300px',
+          widths: '300, 450, 600, 900, 1034, 1200, 1600',
+          alt: image.alt
+      }}
+      <button
+        type="button"
+        class="room-inspiration__expand"
+        data-full="{{ image | image_url: width: 2400 }}"
+        data-alt="{{ image.alt | default: title | escape }}"
+        aria-label="{{ 'sections.room_inspiration.expand' | t }}: {{ title | escape }}"
+        aria-haspopup="dialog"
+      >
+        <img src="{{ 'icon-arrows-out.svg' | asset_url }}" alt="" width="20" height="20" loading="lazy">
+      </button>
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg room-inspiration__image' }}
+    {%- endif -%}
+  </div>
+
+  <div class="room-inspiration__content">
+    {%- if name != blank -%}
+      <p class="room-inspiration__owner">
+        {%- if avatar != blank -%}
+          {%- comment -%}
+            Always a large square (144px, centre crop) for the 24px circle, so it
+            stays sharp at any pixel density. Size comes from CSS.
+          {%- endcomment -%}
+          <img
+            class="room-inspiration__avatar"
+            src="{{ avatar | image_url: width: 144, height: 144, crop: 'center' }}"
+            alt=""
+            loading="lazy"
+          >
+        {%- endif -%}
+        <span>{{ name | escape }}</span>
+      </p>
+    {%- endif -%}
+    {%- if title != blank -%}
+      <h3 class="room-inspiration__title">
+        {%- if url != blank -%}
+          <a class="room-inspiration__title-link" href="{{ url }}">{{ title | escape }}</a>
+        {%- else -%}
+          {{- title | escape -}}
+        {%- endif -%}
+      </h3>
+    {%- endif -%}
+    {%- if text != blank -%}
+      <p class="room-inspiration__text">{{ text }}</p>
+    {%- endif -%}
+  </div>
+</li>

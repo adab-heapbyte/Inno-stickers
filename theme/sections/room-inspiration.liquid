@@ -12,6 +12,15 @@
   assign story_blocks = section.blocks | where: 'type', 'story'
   assign app_blocks = section.blocks | where: 'type', '@app'
   assign story_count = story_blocks.size
+
+  # Source "blog": stories come from the selected blog's posts. Falls back to
+  # the manual blocks when no blog is selected or it has no posts.
+  assign use_blog = false
+  assign blog_limit = section.settings.articles_count | default: 6
+  if section.settings.source == 'blog' and section.settings.blog != blank and section.settings.blog.articles_count > 0
+    assign use_blog = true
+    assign story_count = section.settings.blog.articles_count | at_most: blog_limit
+  endif
   assign total_label = story_count
   if story_count < 10
     assign total_label = '0' | append: story_count
@@ -37,62 +46,30 @@
       <room-inspiration-slider class="room-inspiration__gallery" data-total="{{ story_count }}">
         <div class="room-inspiration__slider swiper">
           <ul class="room-inspiration__list swiper-wrapper list-unstyled" role="list">
-            {%- for block in story_blocks -%}
-              <li class="room-inspiration__item swiper-slide" {{ block.shopify_attributes }}>
-                <div class="room-inspiration__media{% if block.settings.image != blank %} room-inspiration__media--has-image{% endif %}">
-                  {%- if block.settings.image != blank -%}
-                    {{
-                      block.settings.image
-                      | image_url: width: 1600
-                      | image_tag:
-                        class: 'room-inspiration__image',
-                        loading: 'lazy',
-                        sizes: '(min-width: 990px) calc((100vw - 16.66vw - 4.8rem) / 3), 300px',
-                        widths: '300, 450, 600, 900, 1034, 1200, 1600',
-                        alt: block.settings.image.alt
-                    }}
-                    <button
-                      type="button"
-                      class="room-inspiration__expand"
-                      data-full="{{ block.settings.image | image_url: width: 2400 }}"
-                      data-alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
-                      aria-label="{{ 'sections.room_inspiration.expand' | t }}: {{ block.settings.title | escape }}"
-                      aria-haspopup="dialog"
-                    >
-                      <img src="{{ 'icon-arrows-out.svg' | asset_url }}" alt="" width="20" height="20" loading="lazy">
-                    </button>
-                  {%- else -%}
-                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg room-inspiration__image' }}
-                  {%- endif -%}
-                </div>
-
-                <div class="room-inspiration__content">
-                  {%- if block.settings.name != blank -%}
-                    <p class="room-inspiration__owner">
-                      {%- if block.settings.avatar != blank -%}
-                        {{
-                          block.settings.avatar
-                          | image_url: width: 96
-                          | image_tag:
-                            class: 'room-inspiration__avatar',
-                            loading: 'lazy',
-                            width: 24,
-                            height: 24,
-                            alt: ''
-                        }}
-                      {%- endif -%}
-                      <span>{{ block.settings.name | escape }}</span>
-                    </p>
-                  {%- endif -%}
-                  {%- if block.settings.title != blank -%}
-                    <h3 class="room-inspiration__title">{{ block.settings.title | escape }}</h3>
-                  {%- endif -%}
-                  {%- if block.settings.text != blank -%}
-                    <p class="room-inspiration__text">{{ block.settings.text }}</p>
-                  {%- endif -%}
-                </div>
-              </li>
-            {%- endfor -%}
+            {%- if use_blog -%}
+              {%- if section.settings.articles_order == 'oldest' -%}
+                {%- comment -%} Blogs list newest first; take the oldest posts in publish order {%- endcomment -%}
+                {%- assign blog_offset = section.settings.blog.articles_count | minus: blog_limit | at_least: 0 -%}
+                {%- for article in section.settings.blog.articles reversed offset: blog_offset limit: blog_limit -%}
+                  {% render 'room-inspiration-article', article: article %}
+                {%- endfor -%}
+              {%- else -%}
+                {%- for article in section.settings.blog.articles limit: blog_limit -%}
+                  {% render 'room-inspiration-article', article: article %}
+                {%- endfor -%}
+              {%- endif -%}
+            {%- else -%}
+              {%- for block in story_blocks -%}
+                {% render 'room-inspiration-card',
+                  image: block.settings.image,
+                  avatar: block.settings.avatar,
+                  name: block.settings.name,
+                  title: block.settings.title,
+                  text: block.settings.text,
+                  attributes: block.shopify_attributes
+                %}
+              {%- endfor -%}
+            {%- endif -%}
           </ul>
         </div>
 
@@ -123,7 +100,7 @@
             {{
               section.settings.banner_icon
               | image_url: width: 112
-              | image_tag: class: 'room-inspiration__banner-icon', loading: 'lazy', width: 56, height: 56, alt: ''
+              | image_tag: class: 'room-inspiration__banner-icon', loading: 'lazy', width: 56, height: 56, widths: '56, 112', sizes: '56px', alt: ''
             }}
           {%- else -%}
             <img
@@ -255,6 +232,45 @@
       "id": "description",
       "default": "Explore customer projects and take a closer look at the finishes and details that make each space feel personal.",
       "label": "t:sections.room-inspiration.settings.description.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.room-inspiration.settings.header_stories.content"
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "t:sections.room-inspiration.settings.source.label",
+      "info": "t:sections.room-inspiration.settings.source.info",
+      "options": [
+        { "value": "blocks", "label": "t:sections.room-inspiration.settings.source.options__1.label" },
+        { "value": "blog", "label": "t:sections.room-inspiration.settings.source.options__2.label" }
+      ],
+      "default": "blocks"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "t:sections.room-inspiration.settings.blog.label"
+    },
+    {
+      "type": "range",
+      "id": "articles_count",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6,
+      "label": "t:sections.room-inspiration.settings.articles_count.label"
+    },
+    {
+      "type": "select",
+      "id": "articles_order",
+      "label": "t:sections.room-inspiration.settings.articles_order.label",
+      "options": [
+        { "value": "newest", "label": "t:sections.room-inspiration.settings.articles_order.options__1.label" },
+        { "value": "oldest", "label": "t:sections.room-inspiration.settings.articles_order.options__2.label" }
+      ],
+      "default": "newest"
     },
     {
       "type": "header",
