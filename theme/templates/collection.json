@@ -13,10 +13,10 @@
       "type": "main-collection-banner",
       "settings": {
         "banner_style": "editorial",
-        "show_collection_image": true,
-        "margin_bottom": "no-indent",
         "show_description": true,
-        "margin_top": "no-indent"
+        "show_collection_image": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
       }
     },
     "product-grid": {
@@ -26,6 +26,7 @@
         "price_suffix": "sq. ft.",
         "show_rating": true,
         "card_button_label": "Add Sample",
+        "products_per_page": 32,
         "grid_space": "standard",
         "enable_row_count_control": false,
         "products_to_show_row": 6,
@@ -49,20 +50,90 @@
         "columns_mobile": "2",
         "show_collection_description": false,
         "description_products": "",
-        "margin_bottom": "m",
         "margin_top": "no-indent",
-        "products_per_page": 32
+        "margin_bottom": "m"
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "faq_item_1": {
+          "type": "accordion",
+          "settings": {
+            "default_open": true,
+            "question": "How does your online returns policy work?",
+            "subheading_tag": "h3",
+            "answer": "<p>We offer hassle-free returns within 30 days of purchase. Items must be in their original condition with tags attached. Please visit our Returns page for more details and to initiate a return.</p>"
+          }
+        },
+        "faq_item_2": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Which countries do you deliver to?",
+            "subheading_tag": "h3",
+            "answer": "<p>We offer hassle-free returns within 30 days of purchase. Items must be in their original condition with tags attached. Please visit our Returns page for more details and to initiate a return.</p>"
+          }
+        },
+        "faq_item_3": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Is it possible to buy a physical gift card?",
+            "subheading_tag": "h3",
+            "answer": "<p>We offer hassle-free returns within 30 days of purchase. Items must be in their original condition with tags attached. Please visit our Returns page for more details and to initiate a return.</p>"
+          }
+        },
+        "faq_item_4": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "How can I collect my order in-store?",
+            "subheading_tag": "h3",
+            "answer": "<p>We offer hassle-free returns within 30 days of purchase. Items must be in their original condition with tags attached. Please visit our Returns page for more details and to initiate a return.</p>"
+          }
+        },
+        "faq_item_5": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Which countries accept Afterpay?",
+            "subheading_tag": "h3",
+            "answer": "<p>We offer hassle-free returns within 30 days of purchase. Items must be in their original condition with tags attached. Please visit our Returns page for more details and to initiate a return.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_1",
+        "faq_item_2",
+        "faq_item_3",
+        "faq_item_4",
+        "faq_item_5"
+      ],
+      "settings": {
+        "section_style": "faq",
+        "aspect_ratio": "medium",
+        "heading": "FAQs",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "enable_animation": false,
+        "slideshow_speed": 4,
+        "button_label": "View Customer Care",
+        "button_link": "shopify://pages/contact",
+        "button_style": "simple",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
       }
     },
     "page_4a7F3K": {
       "type": "page",
+      "disabled": true,
       "name": "t:sections.page.presets.name",
       "settings": {
         "page": "about-us",
         "margin_top": "no-indent",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "about_us_aAF4Yz": {
       "type": "about-us",
@@ -97,6 +168,7 @@
         "image_DciqiX",
         "about_us_description_6wLPfh"
       ],
+      "disabled": true,
       "name": "t:sections.about-us.name",
       "settings": {
         "subheading": "",
@@ -110,8 +182,7 @@
         "sticky": false,
         "margin_top": "xs",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "banner_with_popup_gXN6wa": {
       "type": "banner-with-popup",
@@ -140,6 +211,7 @@
         "image_7CWxYg",
         "image_pHaMWb"
       ],
+      "disabled": true,
       "name": "t:sections.banner-with-popup.name",
       "settings": {
         "aspect_ratio": "full",
@@ -163,8 +235,7 @@
         "popup_button_style": "tertiary",
         "margin_top": "no-indent",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "compare_TbKf6N": {
       "type": "compare",
@@ -301,6 +372,7 @@
         "column_LKbexQ",
         "column_GDrAh4"
       ],
+      "disabled": true,
       "name": "t:sections.brands.name",
       "settings": {
         "subheading": "Here can be a short introduction to the brands you carry",
@@ -312,11 +384,11 @@
         "heading_size": "h2",
         "margin_top": "no-indent",
         "margin_bottom": "no-indent"
-      },
-      "disabled": true
+      }
     },
     "product_carousel_Ghknnk": {
       "type": "product-carousel",
+      "disabled": true,
       "name": "t:sections.product-carousel.name",
       "settings": {
         "collection": "{{ collection }}",
@@ -339,8 +411,7 @@
         "overlay_opacity": 0.3,
         "margin_top": "no-indent",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "categories_list_GD4rcc": {
       "type": "categories-list",
@@ -398,6 +469,7 @@
         "collection_item_Rz8Nj3",
         "collection_item_PXtidy"
       ],
+      "disabled": true,
       "name": "t:sections.categories-list.presets.name",
       "settings": {
         "subheading": "",
@@ -414,11 +486,11 @@
         "collections_to_show": 3,
         "margin_top": "m",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "countdown_fWWgpQ": {
       "type": "countdown",
+      "disabled": true,
       "name": "t:sections.countdown.presets.name",
       "settings": {
         "color_scheme": "",
@@ -451,8 +523,7 @@
         "button_style2": "tertiary",
         "margin_top": "no-indent",
         "margin_bottom": "no-indent"
-      },
-      "disabled": true
+      }
     },
     "featured_products_tjqQQf": {
       "type": "featured-products",
@@ -500,6 +571,7 @@
         "product_slide_Wx8mT7",
         "product_slide_RzG7ME"
       ],
+      "disabled": true,
       "name": "t:sections.featured-products.name",
       "settings": {
         "color_scheme": "",
@@ -518,8 +590,7 @@
         "show_collection": false,
         "margin_top": "no-indent",
         "margin_bottom": "no-indent"
-      },
-      "disabled": true
+      }
     },
     "media_banner_jFXrLH": {
       "type": "media-banner",
@@ -605,6 +676,7 @@
         "media_slide_3kBkgN",
         "media_slide_zYJ3rV"
       ],
+      "disabled": true,
       "name": "t:sections.media-banner.name",
       "settings": {
         "header_overlay": true,
@@ -616,13 +688,14 @@
         "aspect_ratio_mobile": "full",
         "margin_top": "no-indent",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "popular_products_7NQakQ": {
       "type": "popular-products",
+      "disabled": true,
       "name": "t:sections.popular-products.presets.name",
       "settings": {
+        "card_style": "classic",
         "subheading": "Here can be a short introduction to the most popular products",
         "heading": "Announce your bestsellers here",
         "heading_tag": "h2",
@@ -641,14 +714,16 @@
         "show_size_count": false,
         "show_collection": false,
         "show_desc": false,
+        "price_suffix": "",
+        "show_rating": false,
+        "card_button_label": "",
         "columns_mobile": "1",
         "button_label": "See All",
         "button_link": "",
         "button_style": "simple",
         "margin_top": "no-indent",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "product_markers_MN7aH3": {
       "type": "product-markers",
@@ -668,6 +743,7 @@
       "block_order": [
         "product_markers_item_xQntCQ"
       ],
+      "disabled": true,
       "name": "t:sections.product_markers.name",
       "settings": {
         "image": "shopify://shop_images/PSFT-WDC-12-10.jpg",
@@ -682,8 +758,7 @@
         "button_style": "tertiary",
         "margin_top": "no-indent",
         "margin_bottom": "no-indent"
-      },
-      "disabled": true
+      }
     },
     "product_popup_jnP4pr": {
       "type": "product-popup",
@@ -707,13 +782,13 @@
       "block_order": [
         "item_7dfEwW"
       ],
+      "disabled": true,
       "name": "t:sections.product-popup.name",
       "settings": {
         "aspect_ratio": "full",
         "margin_top": "no-indent",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "product_slider_GXJEeT": {
       "type": "product-slider",
@@ -725,6 +800,7 @@
             "image": "shopify://shop_images/PSFT-WDH-12-9.jpg",
             "color_scheme": "background-2",
             "overlay_opacity": 0.1,
+            "title": "",
             "description": "Highlight products, promos, or seasonal picks to engage visitors."
           }
         },
@@ -735,6 +811,7 @@
             "image": "shopify://shop_images/MZMLG_2.jpg",
             "color_scheme": "",
             "overlay_opacity": 0.1,
+            "title": "",
             "description": "Highlight products, promos, or seasonal picks to engage visitors."
           }
         },
@@ -745,6 +822,7 @@
             "image": "shopify://shop_images/PSFT-WDH-12-10.jpg",
             "color_scheme": "",
             "overlay_opacity": 0.1,
+            "title": "",
             "description": "Highlight products, promos, or seasonal picks to engage visitors."
           }
         },
@@ -754,6 +832,7 @@
             "product": "",
             "color_scheme": "background-2",
             "overlay_opacity": 0.1,
+            "title": "",
             "description": "Highlight products, promos, or seasonal picks to engage visitors."
           }
         }
@@ -764,8 +843,10 @@
         "product_slide_pN9RG4",
         "product_slide_FL34QV"
       ],
+      "disabled": true,
       "name": "t:sections.product-slider.presets.name",
       "settings": {
+        "card_style": "classic",
         "image_size": "1/1",
         "subheading": "Use this space to highlight different categories, bestsellers, or new arrivals",
         "heading": "Your product grid title",
@@ -791,13 +872,15 @@
         "show_size_count": false,
         "show_collection": false,
         "show_desc": false,
+        "price_suffix": "",
+        "show_rating": false,
         "margin_top": "no-indent",
         "margin_bottom": "no-indent"
-      },
-      "disabled": true
+      }
     },
     "products_grid_KktaBH": {
       "type": "products-grid",
+      "disabled": true,
       "name": "t:sections.products-grid.name",
       "settings": {
         "subheading": "",
@@ -823,11 +906,11 @@
         "button_style": "simple",
         "margin_top": "m",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "recently_viewed_N3DqmU": {
       "type": "recently-viewed",
+      "disabled": true,
       "name": "t:sections.recently-viewed.presets.name",
       "settings": {
         "products_limit": 12,
@@ -850,8 +933,7 @@
         "button_style": "simple",
         "margin_top": "m",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "steps_MhRNDp": {
       "type": "steps",
@@ -892,6 +974,7 @@
         "steps_item_eUBdcR",
         "steps_item_biqXFk"
       ],
+      "disabled": true,
       "name": "t:sections.steps.name",
       "settings": {
         "image_ratio": "portrait",
@@ -899,8 +982,7 @@
         "sticky": false,
         "margin_top": "no-indent",
         "margin_bottom": "no-indent"
-      },
-      "disabled": true
+      }
     },
     "video_banner_fMmAAN": {
       "type": "video-banner",
@@ -1118,75 +1200,6 @@
         "padding_bottom": "no-indent",
         "margin_top": "no-indent",
         "margin_bottom": "no-indent"
-      }
-    },
-    "faq": {
-      "type": "collapsible-content",
-      "blocks": {
-        "faq_item_1": {
-          "type": "accordion",
-          "settings": {
-            "default_open": true,
-            "question": "How does your online returns policy work?",
-            "subheading_tag": "h3",
-            "answer": "<p>We offer hassle-free returns within 30 days of purchase. Items must be in their original condition with tags attached. Please visit our Returns page for more details and to initiate a return.</p>"
-          }
-        },
-        "faq_item_2": {
-          "type": "accordion",
-          "settings": {
-            "default_open": false,
-            "question": "Which countries do you deliver to?",
-            "subheading_tag": "h3",
-            "answer": ""
-          }
-        },
-        "faq_item_3": {
-          "type": "accordion",
-          "settings": {
-            "default_open": false,
-            "question": "Is it possible to buy a physical gift card?",
-            "subheading_tag": "h3",
-            "answer": ""
-          }
-        },
-        "faq_item_4": {
-          "type": "accordion",
-          "settings": {
-            "default_open": false,
-            "question": "How can I collect my order in-store?",
-            "subheading_tag": "h3",
-            "answer": ""
-          }
-        },
-        "faq_item_5": {
-          "type": "accordion",
-          "settings": {
-            "default_open": false,
-            "question": "Which countries accept Afterpay?",
-            "subheading_tag": "h3",
-            "answer": ""
-          }
-        }
-      },
-      "block_order": [
-        "faq_item_1",
-        "faq_item_2",
-        "faq_item_3",
-        "faq_item_4",
-        "faq_item_5"
-      ],
-      "settings": {
-        "section_style": "faq",
-        "heading": "FAQs",
-        "heading_size": "h2",
-        "heading_tag": "h2",
-        "enable_animation": false,
-        "button_label": "View Customer Care",
-        "button_link": "shopify://pages/contact",
-        "button_style": "simple",
-        "margin_bottom": "no-indent",
-        "margin_top": "no-indent"
       }
     }
   },
