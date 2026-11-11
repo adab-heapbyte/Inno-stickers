@@ -12,6 +12,7 @@
   	- show_rating: {Boolean} Show the reviews.rating metafield next to the price. Default: false (optional)
   	- card_button_label: {String} Always show an add to cart button with this label (disabled when sold out). Default: blank (optional)
   	- sale_badge_format: {String} "percent_off" renders the sale badge as "-20%". Default: blank, theme setting (optional)
+  	- room_view_media: {Boolean} Render product + room photos for the collection Products / Room toggle. Default: false (optional)
   	Usage:
   {% render 'product-card', show_vendor: section.settings.show_vendor %}
 {% endcomment %}
@@ -78,7 +79,8 @@
         media_fit: media_fit,
         columns_mobile: columns_mobile,
         show_slide: show_slide,
-        sale_badge_format: sale_badge_format
+        sale_badge_format: sale_badge_format,
+        room_view_media: room_view_media
       %}
     </div>
   </div>

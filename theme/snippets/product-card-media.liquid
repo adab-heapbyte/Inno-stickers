@@ -10,6 +10,8 @@
   @param {number} [columns_mobile] - Number of columns on mobile. Default: 2
   @param {boolean} [show_slide] - Whether the media slider is allowed on this card. Default: true
   @param {string} [sale_badge_format] - "percent_off" renders the sale badge as "-20%". Default: theme setting
+  @param {boolean} [room_view_media] - Collection "Products / Room" toggle: renders the product photo (2nd image,
+    inset) and the room photo (1st image, full bleed); CSS shows one or the other. Default: false
 
   @example
   {% render 'product-card-media', product_card_product: product %}
@@ -29,7 +31,46 @@
     assign render_slide = false
   endif
 -%}
-{% if settings.on_hover == 'slider' and render_slide %}
+{%- liquid
+  # Room view: the store's first image is the room scene, the second the product photo.
+  # Products without a second image use the first one for both.
+  assign room_media = nil
+  assign product_photo = nil
+  if room_view_media
+    assign card_images = product_card_product.media | where: 'media_type', 'image'
+    assign room_media = card_images[0]
+    assign product_photo = card_images[1] | default: card_images[0]
+  endif
+-%}
+{% if room_view_media and room_media != nil %}
+  <div class="media media--transparent media--{{ media_size }} card-room-media">
+    {{
+      product_photo
+      | image_url: width: 1200
+      | image_tag:
+        loading: 'lazy',
+        class: 'motion-reduce card-room-media__product',
+        widths: '300, 450, 600, 800, 1000, 1200',
+        sizes: '(min-width: 990px) calc((100vw - 2 * 8.33vw - 12rem) / 4 * 0.82), 34vw',
+        alt: product_photo.alt | default: product_card_product.title
+    }}
+    {{
+      room_media
+      | image_url: width: 1600
+      | image_tag:
+        loading: 'lazy',
+        class: 'motion-reduce card-room-media__room',
+        widths: '360, 533, 720, 940, 1200, 1600',
+        sizes: '(min-width: 990px) calc((100vw - 2 * 8.33vw - 12rem) / 4), 50vw',
+        alt: room_media.alt | default: product_card_product.title
+    }}
+    <a
+      href="{{ product_card_product.url | default: '#' }}"
+      class="link link--overlay card-wrapper__link--overlay"
+      aria-label="{{ 'accessibility.product_link' | t }}"
+    ></a>
+  </div>
+{% elsif settings.on_hover == 'slider' and render_slide %}
   <div
     class="media media--transparent media--{{ media_size }} media--hover-effect"
     {%- if media_size == 'landscape' -%}

@@ -117,9 +117,13 @@
             {% if enable_filtering == false %} facets__sort-wrapper_no-filter {% endif %} facets__sort-wrapper_vertical
           "
         >
-          <div class="facets__product-count" role="status">
+          <div class="facets__product-count{% if section.settings.card_style == 'catalog' %} js-filter{% endif %}" role="status"{% if section.settings.card_style == 'catalog' %} data-index="catalog-count"{% endif %}>
             <p class="facets__product-count-text secondary_text">
-              {{ 'products.facets.items' | t }}: {{ results.all_products_count }}
+              {%- if section.settings.card_style == 'catalog' -%}
+                {{ 'products.facets.catalog_product_count' | t: count: results.products_count }}
+              {%- else -%}
+                {{ 'products.facets.items' | t }}: {{ results.all_products_count }}
+              {%- endif -%}
             </p>
           </div>
           {% if enable_per_row_button and enable_row_count_control == false %}
@@ -154,7 +158,11 @@
           {% endif %}
           {% if enable_filtering %}
             <button type="button" class="button--unstyled facets__button-show secondary_text no-js-hidden focus-inset {% if filter_type == 'sidebar' %} facets__button-show--sidebar{% endif %}">
-              {% render 'icon-filter' %}
+              {%- if section.settings.card_style == 'catalog' -%}
+                <img class="facets__toolbar-icon" src="{{ 'icon-toolbar-funnel.svg' | asset_url }}" alt="" width="20" height="20">
+              {%- else -%}
+                {% render 'icon-filter' %}
+              {%- endif -%}
               <span class="label-hide">{{ 'products.facets.filter_button' | t }}</span>
               <span class="label-show hidden">{{ 'products.facets.filter_button' | t }}</span>
               <span id="ProductCountDesktop">({{ res_count }})</span>
@@ -165,6 +173,20 @@
               <label class="facets-sorting__label secondary_text" for="SortBy">
                 {{- 'products.facets.sort_by_label' | t -}}
               </label>
+              {%- if section.settings.card_style == 'catalog' -%}
+                <div class="facet-filters__field facets-sorting__field">
+                  <button
+                    type="button"
+                    class="facets-sorting__button"
+                    data-sort-sheet-open
+                    aria-haspopup="dialog"
+                    aria-controls="CatalogSortSheet-{{ section.id }}"
+                  >
+                    {{- 'products.facets.sort_button' | t -}}
+                    <img class="facets__toolbar-icon" src="{{ 'icon-toolbar-caret-down.svg' | asset_url }}" alt="" width="20" height="20">
+                  </button>
+                </div>
+              {%- else -%}
               <div class="facet-filters__field facets-sorting__field">
                 <div class="select field">
                   {%- assign sort_by = results.sort_by | default: results.default_sort_by -%}
@@ -188,6 +210,7 @@
                   {% render 'icon-caret' %}
                 </div>
               </div>
+              {%- endif -%}
               <noscript>
                 <button type="submit" class="button button--small focus-inset">
                   {{ 'products.facets.sort_button' | t }}
@@ -195,8 +218,60 @@
               </noscript>
             </div>
           {%- endif -%}
+          {%- if section.settings.card_style == 'catalog' and section.settings.enable_room_toggle -%}
+            <collection-room-toggle class="facets__room-toggle">
+              <span class="facets__room-toggle-label facets__room-toggle-label--products">{{ 'products.facets.view_products' | t }}</span>
+              <button
+                type="button"
+                class="facets__room-toggle-switch"
+                role="switch"
+                aria-checked="false"
+                aria-label="{{ 'products.facets.view_room' | t }}"
+              >
+                <span class="facets__room-toggle-knob"></span>
+              </button>
+              <span class="facets__room-toggle-label facets__room-toggle-label--room">{{ 'products.facets.view_room' | t }}</span>
+            </collection-room-toggle>
+          {%- endif -%}
         </div>
       </div>
+
+      {%- if enable_sorting and section.settings.card_style == 'catalog' -%}
+        {%- liquid
+          assign sort_by = results.sort_by | default: results.default_sort_by
+          assign catalog_sorts = 'best-selling,price-descending,price-ascending,created-descending,title-ascending' | split: ','
+        -%}
+        <div class="catalog-sort-sheet" id="CatalogSortSheet-{{ section.id }}" data-sort-sheet hidden>
+          <div class="catalog-sort-sheet__overlay" data-sort-sheet-close></div>
+          <div class="catalog-sort-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="CatalogSortSheetTitle-{{ section.id }}">
+            <div class="catalog-sheet__header">
+              <p class="catalog-sheet__title" id="CatalogSortSheetTitle-{{ section.id }}">{{ 'products.facets.sort_sheet_title' | t }}</p>
+              <button type="button" class="catalog-sheet__close" data-sort-sheet-close aria-label="{{ 'accessibility.close' | t }}">
+                <img src="{{ 'icon-sheet-close.svg' | asset_url }}" alt="" width="20" height="20">
+              </button>
+            </div>
+            <ul class="catalog-sort-sheet__list list-unstyled" role="radiogroup" aria-labelledby="CatalogSortSheetTitle-{{ section.id }}">
+              {%- for sort_value in catalog_sorts -%}
+                {%- assign sort_label_key = 'products.facets.sort_' | append: sort_value | replace: '-', '_' -%}
+                <li>
+                  <input
+                    type="radio"
+                    class="catalog-sort-sheet__input visually-hidden"
+                    name="sort_by"
+                    value="{{ sort_value }}"
+                    id="CatalogSort-{{ section.id }}-{{ forloop.index }}"
+                    {% if sort_by == sort_value %}checked{% endif %}
+                  >
+                  <label class="catalog-sort-sheet__option" for="CatalogSort-{{ section.id }}-{{ forloop.index }}">
+                    <span class="catalog-sort-sheet__radio" aria-hidden="true"></span>
+                    {{ sort_label_key | t }}
+                  </label>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        </div>
+      {%- endif -%}
 
       {% if enable_filtering %}
         {% assign countFilters = results.filters | size %}
@@ -208,6 +283,21 @@
               {% if filter_type == "horizontal" %} facets__wrapper--horizontal{% endif %}
             "
           >
+            {%- if section.settings.card_style == 'catalog' -%}
+              <div class="catalog-sheet__header">
+                <p class="catalog-sheet__title">{{ 'products.facets.filter_button' | t }}</p>
+                <span id="ProductCount" class="visually-hidden">({{ res_count }})</span>
+                <button
+                  type="button"
+                  class="catalog-sheet__close facets-modal__close"
+                  data-filter-sheet-close
+                  aria-label="{{ 'accessibility.close' | t }}"
+                >
+                  <img src="{{ 'icon-sheet-close.svg' | asset_url }}" alt="" width="20" height="20">
+                </button>
+              </div>
+              {% render 'facets-filters-catalog', results: results, results_url: results_url, section_id: section.id %}
+            {%- else -%}
             <div class="facets-modal__header">
               <div class="facets-modal__heading h3">
                 {{ 'products.facets.filter_button' | t }}
@@ -231,6 +321,7 @@
               image_filter_ratio: image_filter_ratio,
               image_filter_fit: image_filter_fit
             %}
+            {%- endif -%}
           </div>
         </div>
       {% endif %}

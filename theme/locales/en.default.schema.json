@@ -4807,6 +4807,41 @@
           "label": "Show product rating",
           "info": "Catalog style. Uses the reviews app rating (reviews.rating metafield); hidden when a product has none."
         },
+        "header_sample_card": {
+          "content": "Sample set card"
+        },
+        "enable_sample_card": {
+          "label": "Show sample set card",
+          "info": "Catalog style. Shown on page 1 when no filter is active."
+        },
+        "sample_card_product": {
+          "label": "Sample kit product"
+        },
+        "sample_card_collections": {
+          "label": "Show on collections",
+          "info": "Leave empty to show on every collection."
+        },
+        "sample_card_image": {
+          "label": "Image",
+          "info": "Optional. Default: the three wood slat panels."
+        },
+        "sample_card_title": {
+          "label": "Title"
+        },
+        "sample_card_text": {
+          "label": "Text"
+        },
+        "sample_card_button": {
+          "label": "Button label"
+        },
+        "sample_card_position": {
+          "label": "Show after product",
+          "info": "Desktop position. On mobile it is shown full width after the last full row before it."
+        },
+        "enable_room_toggle": {
+          "label": "Show Products / Room toggle",
+          "info": "Catalog style. Switches the cards between the product photo (2nd image) and the room photo (1st image)."
+        },
         "card_button_label": {
           "label": "Sample button label",
           "info": "Catalog style. Adds the product's Sample variant to the cart; hidden when there is no sample, disabled when it is sold out."

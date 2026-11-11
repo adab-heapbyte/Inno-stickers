@@ -1,0 +1,329 @@
+{% comment %}
+  Filter sheet content for the collection "Catalog" style (Figma PLP "Filter - Bottom sheet").
+
+  - The product tag filter (filter.p.tag) is split into the Figma groups by tag
+    name: Color (colour swatches), Shape / Pattern (image tiles), Room, Material /
+    Look and Application (checkbox lists). Tags that fit no group go to "More".
+  - Colour tiles use Shopify's own swatches: the store's Color entries
+    (Content > Metaobjects > Color, type shopify--color-pattern). A colour tag is
+    matched to the entry with the same base colour (Shopify taxonomy value) or the
+    same name; the entry's image is used first, then its hex colour. Colours with
+    no Shopify swatch fall back to the theme tile (assets/swatch-*.png).
+  - Other Shopify filters (e.g. Search & Discovery metafield filters) are shown as
+    checkbox lists, or swatches when their presentation is "swatch".
+  - Availability and price are not part of the design and are not shown.
+  - Every group is a `.js-filter`, so facets.js refreshes counts after each change.
+
+  Accepts:
+  - results: {Object} collection or search
+  - results_url: {String} URL without filters (Clear all)
+  - section_id: {String}
+
+  Usage:
+  {% render 'facets-filters-catalog', results: collection, results_url: results_url, section_id: section.id %}
+{% endcomment %}
+{%- liquid
+  assign group_keys = 'color,shape,room,material,application,more' | split: ','
+  assign color_tags = 'beige,black,blue,brown,charcoal,gary,gray,grey,gold,green,multicolor,natural-oak,orange,red,silver,walnut,white' | split: ','
+  assign shape_tags = '3d-tile,arabesque,art-deco,chevron,diamond,fish-scale,flowers,herrigbone,herringbone,hexagon,interlocking,leaf,mosaic,patterned,pebble,picket,round,square,stacked,subway,waterjet' | split: ','
+  assign room_tags = 'kitchen,bathroom,living-room,bedroom,dining-room,laundry-room,office,outdoor,entryway' | split: ','
+  assign material_tags = 'cement-looks,glass,handmade-looks,light-luxury,marble-looks,mcm,metal,natural-stone,pet,porcelain,porcelain-looks,recycled-glass,rustic,solid-color,stone-composite,stone-looks,vinyl' | split: ','
+  assign application_tags = 'trims,stair-nosing,backsplash,wall,floor,shower' | split: ','
+  assign hidden_tags = 'best-seller' | split: ','
+  assign swatch_files = 'beige,black,blue,brown,charcoal,gold,gray,green,multicolor,natural-oak,orange,red,walnut,white' | split: ','
+  assign tag_filter = results.filters | where: 'param_name', 'filter.p.tag' | first
+  assign list_limit = 3
+-%}
+
+<div class="catalog-sheet__body">
+  {%- for group_key in group_keys -%}
+    {%- liquid
+      assign group_label_key = 'products.facets.group_' | append: group_key
+      assign group_count = 0
+      if tag_filter
+        for value in tag_filter.values
+          assign tag_handle = value.value | handle
+          if hidden_tags contains tag_handle
+            continue
+          endif
+          assign value_group = 'more'
+          if color_tags contains tag_handle
+            assign value_group = 'color'
+          elsif shape_tags contains tag_handle
+            assign value_group = 'shape'
+          elsif room_tags contains tag_handle
+            assign value_group = 'room'
+          elsif material_tags contains tag_handle
+            assign value_group = 'material'
+          elsif application_tags contains tag_handle
+            assign value_group = 'application'
+          endif
+          if value_group == group_key
+            assign group_count = group_count | plus: 1
+          endif
+        endfor
+      endif
+      assign group_open = false
+      if group_key == 'color' or group_key == 'shape' or group_key == 'room'
+        assign group_open = true
+      endif
+    -%}
+    {%- if group_count > 0 -%}
+      <details
+        class="catalog-sheet__group js-filter catalog-sheet__group--{{ group_key }}"
+        data-index="tag-{{ group_key }}"
+        {% if group_open %}
+          open
+        {% endif %}
+      >
+        <summary class="catalog-sheet__summary">
+          <span>{{ group_label_key | t }}</span>
+          <img class="catalog-sheet__caret" src="{{ 'icon-sheet-caret-up.svg' | asset_url }}" alt="" width="20" height="20">
+        </summary>
+        {%- if group_key == 'color' or group_key == 'shape' -%}
+          <ul class="catalog-sheet__swatches list-unstyled" role="list">
+        {%- else -%}
+          <ul class="catalog-sheet__checks list-unstyled" role="list">
+        {%- endif -%}
+          {%- assign shown = 0 -%}
+          {%- for value in tag_filter.values -%}
+            {%- liquid
+              assign tag_handle = value.value | handle
+              if hidden_tags contains tag_handle
+                continue
+              endif
+              assign value_group = 'more'
+              if color_tags contains tag_handle
+                assign value_group = 'color'
+              elsif shape_tags contains tag_handle
+                assign value_group = 'shape'
+              elsif room_tags contains tag_handle
+                assign value_group = 'room'
+              elsif material_tags contains tag_handle
+                assign value_group = 'material'
+              elsif application_tags contains tag_handle
+                assign value_group = 'application'
+              endif
+              if value_group != group_key
+                continue
+              endif
+              assign shown = shown | plus: 1
+              assign input_id = 'CatalogFilter-' | append: section_id | append: '-' | append: group_key | append: '-' | append: forloop.index
+              assign is_disabled = false
+              if value.count == 0 and value.active == false
+                assign is_disabled = true
+              endif
+              assign value_label = value.label | capitalize
+            -%}
+            {%- if group_key == 'color' or group_key == 'shape' -%}
+              {%- liquid
+                assign tile_image = nil
+                assign tile_file = blank
+                assign tile_color = blank
+                if group_key == 'color'
+                  assign swatch_name = tag_handle | replace: 'gary', 'gray' | replace: 'grey', 'gray'
+                  # Shopify Color entries: match on base colour (standard taxonomy value id) or name
+                  for color_entry in metaobjects['shopify--color-pattern'].values
+                    capture entry_base_raw
+                      echo color_entry.color_taxonomy_reference
+                    endcapture
+                    assign entry_base_id = entry_base_raw | split: 'TaxonomyValue/' | last | split: '"' | first | strip
+                    case entry_base_id
+                      when '1'
+                        assign entry_base = 'black'
+                      when '2'
+                        assign entry_base = 'blue'
+                      when '3'
+                        assign entry_base = 'white'
+                      when '4'
+                        assign entry_base = 'gold'
+                      when '5'
+                        assign entry_base = 'silver'
+                      when '6'
+                        assign entry_base = 'beige'
+                      when '7'
+                        assign entry_base = 'brown'
+                      when '8'
+                        assign entry_base = 'gray'
+                      when '9'
+                        assign entry_base = 'green'
+                      when '10'
+                        assign entry_base = 'orange'
+                      when '11'
+                        assign entry_base = 'pink'
+                      when '12'
+                        assign entry_base = 'purple'
+                      when '13'
+                        assign entry_base = 'red'
+                      when '14'
+                        assign entry_base = 'yellow'
+                      when '15'
+                        assign entry_base = 'navy'
+                      else
+                        assign entry_base = ''
+                    endcase
+                    assign entry_name = color_entry.label.value | handle
+                    if entry_base == swatch_name or entry_name == swatch_name
+                      if color_entry.image.value != blank and tile_image == nil
+                        assign tile_image = color_entry.image.value
+                      endif
+                      if color_entry.color.value != blank and tile_color == blank
+                        assign tile_color = color_entry.color.value
+                      endif
+                    endif
+                  endfor
+                  if tile_image == nil and tile_color == blank and swatch_files contains swatch_name
+                    assign tile_file = 'swatch-' | append: swatch_name | append: '.png'
+                  endif
+                else
+                  assign shape_handle_1 = 'shape-' | append: tag_handle
+                  assign shape_handle_2 = tag_handle | append: '-tile'
+                  assign shape_collection = collections[shape_handle_1]
+                  if shape_collection == blank or shape_collection.id == blank
+                    assign shape_collection = collections[shape_handle_2]
+                  endif
+                  if shape_collection.image != blank
+                    assign tile_image = shape_collection.image
+                  elsif shape_collection.products.first.featured_media != blank
+                    assign tile_image = shape_collection.products.first.featured_media
+                  endif
+                endif
+              -%}
+              <li class="catalog-sheet__swatch-item">
+                <input
+                  type="checkbox"
+                  class="catalog-sheet__input visually-hidden"
+                  name="{{ value.param_name }}"
+                  value="{{ value.value }}"
+                  id="{{ input_id }}"
+                  {% if value.active %}checked{% endif %}
+                  {% if is_disabled %}disabled{% endif %}
+                >
+                <label
+                  for="{{ input_id }}"
+                  class="catalog-sheet__swatch{% if is_disabled %} catalog-sheet__swatch--disabled{% endif %} catalog-sheet__swatch--{{ tag_handle }}"
+                  title="{{ value_label | escape }} ({{ value.count }})"
+                >
+                  <span class="catalog-sheet__swatch-media"{% if tile_image == nil and tile_color != blank %} style="background-color: {{ tile_color }};"{% endif %}>
+                    {%- if tile_image != blank -%}
+                      {{ tile_image | image_url: width: 132, height: 132, crop: 'center' | image_tag: alt: '', width: 44, height: 44, loading: 'lazy' }}
+                    {%- elsif tile_color != blank -%}
+                    {%- elsif tile_file != blank -%}
+                      <img src="{{ tile_file | asset_url }}" alt="" width="44" height="44" loading="lazy">
+                    {%- elsif tile_image != blank -%}
+                      {{ tile_image | image_url: width: 132, height: 132, crop: 'center' | image_tag: alt: '', width: 44, height: 44, loading: 'lazy' }}
+                    {%- else -%}
+                      <span class="catalog-sheet__swatch-text">{{ value_label | escape }}</span>
+                    {%- endif -%}
+                    <span class="catalog-sheet__swatch-number" aria-hidden="true"></span>
+                  </span>
+                  <span class="visually-hidden">{{ value_label | escape }} ({{ value.count }})</span>
+                </label>
+              </li>
+            {%- else -%}
+              <li class="catalog-sheet__check-item{% if shown > list_limit and value.active == false %} catalog-sheet__check-item--extra{% endif %}">
+                <input
+                  type="checkbox"
+                  class="catalog-sheet__input"
+                  name="{{ value.param_name }}"
+                  value="{{ value.value }}"
+                  id="{{ input_id }}"
+                  {% if value.active %}checked{% endif %}
+                  {% if is_disabled %}disabled{% endif %}
+                >
+                <label for="{{ input_id }}" class="catalog-sheet__check{% if is_disabled %} catalog-sheet__check--disabled{% endif %}">
+                  {{ value_label | escape }} ({{ value.count }})
+                </label>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- if group_key != 'color' and group_key != 'shape' and group_count > list_limit -%}
+          {%- assign more_count = group_count | minus: list_limit -%}
+          <button type="button" class="catalog-sheet__more" data-facet-more>
+            <span class="catalog-sheet__more-label--closed">{{ 'products.facets.show_more_count' | t: count: more_count }}</span>
+            <span class="catalog-sheet__more-label--open">{{ 'products.facets.show_less' | t }}</span>
+          </button>
+        {%- endif -%}
+      </details>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} Other Shopify filters (Search & Discovery), shown in the same style {%- endcomment -%}
+  {%- for filter in results.filters -%}
+    {%- if filter.param_name == 'filter.p.tag' or filter.param_name == 'filter.v.availability' or filter.type == 'price_range' -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- if filter.type == 'list' or filter.type == 'boolean' -%}
+      {%- assign is_swatch = false -%}
+      {%- if filter.presentation == 'swatch' or filter.presentation == 'image' -%}
+        {%- assign is_swatch = true -%}
+      {%- endif -%}
+      <details class="catalog-sheet__group js-filter" data-index="filter-{{ forloop.index }}" open>
+        <summary class="catalog-sheet__summary">
+          <span>{{ filter.label | escape }}</span>
+          <img class="catalog-sheet__caret" src="{{ 'icon-sheet-caret-up.svg' | asset_url }}" alt="" width="20" height="20">
+        </summary>
+        <ul class="{% if is_swatch %}catalog-sheet__swatches{% else %}catalog-sheet__checks{% endif %} list-unstyled" role="list">
+          {%- for value in filter.values -%}
+            {%- liquid
+              assign input_id = 'CatalogFilter-' | append: section_id | append: '-f' | append: forloop.parentloop.index | append: '-' | append: forloop.index
+              assign is_disabled = false
+              if value.count == 0 and value.active == false
+                assign is_disabled = true
+              endif
+            -%}
+            {%- if is_swatch -%}
+              <li class="catalog-sheet__swatch-item">
+                <input type="checkbox" class="catalog-sheet__input visually-hidden" name="{{ value.param_name }}" value="{{ value.value }}" id="{{ input_id }}" {% if value.active %}checked{% endif %} {% if is_disabled %}disabled{% endif %}>
+                <label for="{{ input_id }}" class="catalog-sheet__swatch{% if is_disabled %} catalog-sheet__swatch--disabled{% endif %}" title="{{ value.label | escape }} ({{ value.count }})">
+                  <span class="catalog-sheet__swatch-media"{% if value.swatch.color %} style="background-color: {{ value.swatch.color }};"{% endif %}>
+                    {%- if value.swatch.image -%}
+                      {{ value.swatch.image | image_url: width: 132, height: 132, crop: 'center' | image_tag: alt: '', width: 44, height: 44, loading: 'lazy' }}
+                    {%- elsif value.image -%}
+                      {{ value.image | image_url: width: 132, height: 132, crop: 'center' | image_tag: alt: '', width: 44, height: 44, loading: 'lazy' }}
+                    {%- endif -%}
+                    <span class="catalog-sheet__swatch-number" aria-hidden="true"></span>
+                  </span>
+                  <span class="visually-hidden">{{ value.label | escape }} ({{ value.count }})</span>
+                </label>
+              </li>
+            {%- else -%}
+              <li class="catalog-sheet__check-item{% if forloop.index > list_limit and value.active == false %} catalog-sheet__check-item--extra{% endif %}">
+                <input type="checkbox" class="catalog-sheet__input" name="{{ value.param_name }}" value="{{ value.value }}" id="{{ input_id }}" {% if value.active %}checked{% endif %} {% if is_disabled %}disabled{% endif %}>
+                <label for="{{ input_id }}" class="catalog-sheet__check{% if is_disabled %} catalog-sheet__check--disabled{% endif %}">{{ value.label | escape }} ({{ value.count }})</label>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- if is_swatch == false and filter.values.size > list_limit -%}
+          {%- assign more_count = filter.values.size | minus: list_limit -%}
+          <button type="button" class="catalog-sheet__more" data-facet-more>
+            <span class="catalog-sheet__more-label--closed">{{ 'products.facets.show_more_count' | t: count: more_count }}</span>
+            <span class="catalog-sheet__more-label--open">{{ 'products.facets.show_less' | t }}</span>
+          </button>
+        {%- endif -%}
+      </details>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{%- liquid
+  assign active_count = 0
+  for filter in results.filters
+    assign active_count = active_count | plus: filter.active_values.size
+  endfor
+-%}
+<div class="catalog-sheet__footer js-filter" data-index="catalog-footer">
+  <facet-remove class="catalog-sheet__footer-item">
+    <a
+      href="{{ results_url }}"
+      class="catalog-sheet__button catalog-sheet__button--outline{% if active_count == 0 %} catalog-sheet__button--inactive{% endif %}"
+    >
+      {{- 'products.facets.clear_all' | t -}}
+    </a>
+  </facet-remove>
+  <button type="button" class="catalog-sheet__button catalog-sheet__button--primary catalog-sheet__footer-item" data-filter-sheet-close>
+    {{- 'products.facets.show_results' | t: count: results.products_count -}}
+  </button>
+</div>

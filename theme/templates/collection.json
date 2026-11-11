@@ -22,6 +22,18 @@
     "product-grid": {
       "type": "main-collection-product-grid",
       "settings": {
+        "enable_sample_card": true,
+        "sample_card_product": "acoustic-wood-sample-kit",
+        "sample_card_collections": [
+          "acoustic-wall-paneling",
+          "acoustic-felt",
+          "acoustic-wall-plank"
+        ],
+        "sample_card_title": "Order Sample Set",
+        "sample_card_text": "Wood Slat Acoustic Panels Decorative Wall Paneling",
+        "sample_card_button": "Add Sample",
+        "sample_card_position": 5,
+        "enable_room_toggle": true,
         "card_style": "catalog",
         "price_suffix": "sq. ft.",
         "show_rating": true,
@@ -30,7 +42,7 @@
         "grid_space": "standard",
         "enable_row_count_control": false,
         "products_to_show_row": 6,
-        "enable_per_row_button": true,
+        "enable_per_row_button": false,
         "default_per_row": "small",
         "enable_filtering": true,
         "enable_tag": true,

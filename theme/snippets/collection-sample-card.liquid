@@ -1,0 +1,79 @@
+{% comment %}
+  "Order Sample Set" card inside the collection grid (Figma PLP 9:737 desktop,
+  9:1170 mobile). Adds the sample kit to the cart (cart drawer) with the theme
+  product form, like the card "Add Sample" buttons.
+
+  Accepts:
+  - product: {Object} the sample kit product
+  - section: {Object} the product grid section (for the texts and image)
+  - placement: {String} "desktop", "mobile" or "both" (which breakpoint shows this copy)
+
+  Usage:
+  {% render 'collection-sample-card', product: sample_product, section: section, placement: 'desktop' %}
+{% endcomment %}
+{%- liquid
+  assign kit_variant = product.selected_or_first_available_variant
+  assign form_id = 'sample-set-' | append: section.id | append: '-' | append: placement
+  assign card_title = section.settings.sample_card_title | default: product.title
+-%}
+<li class="collection-sample-card collection-sample-card--{{ placement }}">
+  <div class="collection-sample-card__inner">
+    <div class="collection-sample-card__media">
+      {%- if section.settings.sample_card_image != blank -%}
+        {{
+          section.settings.sample_card_image
+          | image_url: width: 900
+          | image_tag:
+            class: 'collection-sample-card__image',
+            loading: 'lazy',
+            widths: '300, 450, 600, 900',
+            sizes: '(min-width: 990px) 18vw, 32vw',
+            alt: card_title
+        }}
+      {%- else -%}
+        <img
+          class="collection-sample-card__image"
+          src="{{ 'sample-set-panels.jpg' | asset_url }}"
+          alt="{{ card_title | escape }}"
+          width="640"
+          height="1076"
+          loading="lazy"
+        >
+      {%- endif -%}
+    </div>
+
+    <div class="collection-sample-card__content">
+      <div class="collection-sample-card__text">
+        <h3 class="collection-sample-card__title">{{ card_title | escape }}</h3>
+        {%- if section.settings.sample_card_text != blank -%}
+          <p class="collection-sample-card__description">{{ section.settings.sample_card_text | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      <product-form class="collection-sample-card__form" data-source="{{ section.id }}">
+        {%- form 'product', product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+          <input type="hidden" name="id" value="{{ kit_variant.id }}" disabled>
+          <button
+            id="{{ form_id }}-submit"
+            type="submit"
+            name="add"
+            class="collection-sample-card__button"
+            aria-label="{{ section.settings.sample_card_button | default: 'Add Sample' | escape }}: {{ product.title | escape }}"
+            {% if kit_variant.available == false %}
+              disabled
+            {% endif %}
+          >
+            <span>{{ section.settings.sample_card_button | default: 'Add Sample' | escape }}</span>
+            <img class="collection-sample-card__arrow" src="{{ 'icon-arrow-right-white.svg' | asset_url }}" alt="" width="20" height="20" loading="lazy">
+            <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+            <div class="loading-overlay__spinner hidden">
+              <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+              </svg>
+            </div>
+          </button>
+        {%- endform -%}
+      </product-form>
+    </div>
+  </div>
+</li>

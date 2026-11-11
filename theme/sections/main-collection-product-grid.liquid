@@ -68,10 +68,18 @@
     assign card_button_label = section.settings.card_button_label
     assign card_sale_badge_format = 'percent_off'
   endif
+  assign room_toggle = false
+  if card_style == 'catalog' and section.settings.enable_room_toggle
+    assign room_toggle = true
+  endif
 -%}
 {%- if card_style == 'catalog' -%}
   {{ 'section-collection-catalog.css' | asset_url | stylesheet_tag }}
-  {%- if card_button_label != blank -%}
+  {%- if room_toggle -%}
+    <script src="{{ 'collection-room-toggle.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+  <script src="{{ 'collection-filter-sheet.js' | asset_url }}" defer="defer"></script>
+  {%- if card_button_label != blank or section.settings.enable_sample_card -%}
     {{ 'quick-add.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
@@ -92,11 +100,19 @@
     class="
       collection-wrapper
       collection-wrapper--vertical
+      {% if card_style == 'catalog' %} collection-wrapper--catalog {% endif %}
       {%- if collection.all_products_count == 0 -%} collection-wrapper--empty {% endif %}
       {%- if section.settings.enable_filtering == false and section.settings.enable_sorting == false and section.settings.enable_per_row_button == false and section.settings.enable_tag == false -%} collection-wrapper_no-facets {% endif %}
     "
   >
+    {%- assign show_toolbar = false -%}
     {%- if collection.all_products_count > 0 and collection.products_count > 0 -%}
+      {%- assign show_toolbar = true -%}
+    {%- elsif card_style == 'catalog' and collection.all_products_count > 0 -%}
+      {%- comment -%} Catalog style keeps the toolbar when filters give no results (Figma) {%- endcomment -%}
+      {%- assign show_toolbar = true -%}
+    {%- endif -%}
+    {%- if show_toolbar -%}
       {%- if section.settings.enable_filtering
         or section.settings.enable_tag
         or section.settings.enable_sorting
@@ -175,6 +191,20 @@
               </div>
             </div>
 
+            {%- if card_style == 'catalog' and collection.all_products_count > 0 -%}
+              <div class="catalog-empty">
+                <img class="catalog-empty__icon" src="{{ 'icon-empty-search.svg' | asset_url }}" alt="" width="52" height="52">
+                <div class="catalog-empty__text">
+                  <h2 class="catalog-empty__title">{{ 'products.facets.empty_title' | t }}</h2>
+                  <p class="catalog-empty__description">{{ 'products.facets.empty_text' | t }}</p>
+                </div>
+                <facet-remove>
+                  <a href="{{ collection.url }}" class="catalog-sheet__button catalog-sheet__button--outline catalog-empty__button">
+                    {{- 'products.facets.clear_all_filters' | t -}}
+                  </a>
+                </facet-remove>
+              </div>
+            {%- else -%}
             <div class="title-wrapper center title-wrapper-empty">
               <h2 class="title title--primary">
                 {% if collection.all_products_count == 0 %}
@@ -190,6 +220,7 @@
                 {% endif %}
               </h2>
             </div>
+            {%- endif -%}
           </div>
         {%- else -%}
           <div class="collection collection-product {% if section.settings.show_collection_description and collection_description != blank %} section-{{ section.id }}-padding {% endif %} ">
@@ -218,6 +249,41 @@
                 collection-product-list--{{ section.settings.grid_space }}-mobile
               "
             >
+              {%- liquid
+                # "Order Sample Set" card (catalog style): page 1, no active filter,
+                # kit available, and the collection is in the list (empty list = all).
+                assign show_sample_card = false
+                assign sample_product = section.settings.sample_card_product
+                if card_style == 'catalog' and section.settings.enable_sample_card and sample_product != blank and sample_product.available and paginate.current_page == 1
+                  assign show_sample_card = true
+                  for filter in collection.filters
+                    if filter.active_values.size > 0 or filter.min_value.value != nil or filter.max_value.value != nil
+                      assign show_sample_card = false
+                    endif
+                  endfor
+                  if section.settings.sample_card_collections != blank
+                    assign in_list = false
+                    for listed in section.settings.sample_card_collections
+                      if listed.id == collection.id
+                        assign in_list = true
+                      endif
+                    endfor
+                    if in_list == false
+                      assign show_sample_card = false
+                    endif
+                  endif
+                endif
+                # Desktop: after product N (Figma: 6th tile). Mobile (2 columns): full
+                # width after the last complete row before it (Figma: after product 4).
+                assign sample_desktop_after = section.settings.sample_card_position | default: 5
+                assign sample_mobile_after = sample_desktop_after | modulo: 2
+                assign sample_mobile_after = sample_desktop_after | minus: sample_mobile_after
+                if sample_mobile_after < 2
+                  assign sample_mobile_after = 2
+                endif
+                assign sample_rendered_desktop = false
+                assign sample_rendered_mobile = false
+              -%}
               {%- for product in collection.products -%}
                 {% if forloop.index == 1 and section.blocks[0].settings.image != blank %}
                   <li class="collection-product-promo-img media--{{ section.settings.image_ratio }} collection-product-promo-img-1 {% if section.blocks[0].settings.heading != blank or section.blocks[0].settings.description != blank  %} collection-product-promo-img-promo {% endif %}">
@@ -368,10 +434,30 @@
                     price_suffix: card_price_suffix,
                     show_rating: card_show_rating,
                     card_button_label: card_button_label,
-                    sale_badge_format: card_sale_badge_format
+                    sale_badge_format: card_sale_badge_format,
+                    room_view_media: room_toggle
                   %}
                 </li>
+                {%- if show_sample_card -%}
+                  {%- if forloop.index == sample_mobile_after -%}
+                    {% render 'collection-sample-card', product: sample_product, section: section, placement: 'mobile' %}
+                    {%- assign sample_rendered_mobile = true -%}
+                  {%- endif -%}
+                  {%- if forloop.index == sample_desktop_after -%}
+                    {% render 'collection-sample-card', product: sample_product, section: section, placement: 'desktop' %}
+                    {%- assign sample_rendered_desktop = true -%}
+                  {%- endif -%}
+                {%- endif -%}
               {%- endfor -%}
+              {%- if show_sample_card -%}
+                {%- if sample_rendered_desktop == false and sample_rendered_mobile == false -%}
+                  {% render 'collection-sample-card', product: sample_product, section: section, placement: 'both' %}
+                {%- elsif sample_rendered_desktop == false -%}
+                  {% render 'collection-sample-card', product: sample_product, section: section, placement: 'desktop' %}
+                {%- elsif sample_rendered_mobile == false -%}
+                  {% render 'collection-sample-card', product: sample_product, section: section, placement: 'mobile' %}
+                {%- endif -%}
+              {%- endif -%}
             </ul>
 
             {%- if paginate.pages > 1 -%}
@@ -513,10 +599,73 @@
       "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
     },
     {
+      "type": "checkbox",
+      "id": "enable_room_toggle",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.enable_room_toggle.label",
+      "info": "t:sections.main-collection-product-grid.settings.enable_room_toggle.info"
+    },
+    {
       "type": "text",
       "id": "card_button_label",
       "label": "t:sections.main-collection-product-grid.settings.card_button_label.label",
       "info": "t:sections.main-collection-product-grid.settings.card_button_label.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-collection-product-grid.settings.header_sample_card.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sample_card",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.enable_sample_card.label",
+      "info": "t:sections.main-collection-product-grid.settings.enable_sample_card.info"
+    },
+    {
+      "type": "product",
+      "id": "sample_card_product",
+      "label": "t:sections.main-collection-product-grid.settings.sample_card_product.label"
+    },
+    {
+      "type": "collection_list",
+      "id": "sample_card_collections",
+      "label": "t:sections.main-collection-product-grid.settings.sample_card_collections.label",
+      "info": "t:sections.main-collection-product-grid.settings.sample_card_collections.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "sample_card_image",
+      "label": "t:sections.main-collection-product-grid.settings.sample_card_image.label",
+      "info": "t:sections.main-collection-product-grid.settings.sample_card_image.info"
+    },
+    {
+      "type": "text",
+      "id": "sample_card_title",
+      "default": "Order Sample Set",
+      "label": "t:sections.main-collection-product-grid.settings.sample_card_title.label"
+    },
+    {
+      "type": "text",
+      "id": "sample_card_text",
+      "default": "Wood Slat Acoustic Panels Decorative Wall Paneling",
+      "label": "t:sections.main-collection-product-grid.settings.sample_card_text.label"
+    },
+    {
+      "type": "text",
+      "id": "sample_card_button",
+      "default": "Add Sample",
+      "label": "t:sections.main-collection-product-grid.settings.sample_card_button.label"
+    },
+    {
+      "type": "range",
+      "id": "sample_card_position",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 5,
+      "label": "t:sections.main-collection-product-grid.settings.sample_card_position.label",
+      "info": "t:sections.main-collection-product-grid.settings.sample_card_position.info"
     },
     {
       "type": "range",

@@ -282,6 +282,33 @@
       "label": "Media gallery"
     },
     "facets": {
+      "catalog_product_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "group_color": "Color",
+      "group_shape": "Shape / Pattern",
+      "group_room": "Room",
+      "group_material": "Material / Look",
+      "group_application": "Application",
+      "group_more": "More",
+      "show_more_count": "+{{ count }} more",
+      "show_less": "Show less",
+      "show_results": {
+        "one": "Show {{ count }} result",
+        "other": "Show {{ count }} results"
+      },
+      "sort_sheet_title": "Sort by",
+      "sort_best_selling": "Most Popular",
+      "sort_price_descending": "Price: High to Low",
+      "sort_price_ascending": "Price: Low to High",
+      "sort_created_descending": "Newest",
+      "sort_title_ascending": "Name (A-Z)",
+      "empty_title": "No results found",
+      "empty_text": "Try adjusting your filters or removing some of selected options.",
+      "clear_all_filters": "Clear all filters",
+      "view_products": "Products",
+      "view_room": "Room",
       "all": "All",
       "apply": "Apply",
       "clear": "Clear",
