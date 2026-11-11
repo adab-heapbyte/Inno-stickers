@@ -557,6 +557,8 @@ section:first-child .section--has-overlay.slideshow--layout_4 .slideshow__info, 
   line-height: 1.31;
   letter-spacing: 0;
   color: rgb(var(--color-foreground-title));
+  /* Even line lengths, no single word left on the last line */
+  text-wrap: balance;
 }
 
 .slideshow--layout_6 .slideshow__description {
