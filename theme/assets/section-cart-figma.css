@@ -167,8 +167,9 @@
 }
 
 .cart-figma__error:empty,
-.cart-figma__error .cart-item__error-text:empty {
-  display: none;
+.cart-figma__error .cart-item__error-text:empty,
+.cart-figma__error:not(:has(.cart-item__error-text:not(:empty))) {
+  display: none; /* an empty error line added another 4px gap under the variant */
 }
 
 .cart-figma__error {
@@ -839,8 +840,7 @@
   }
 
   .cart-figma__quantity-label {
-    font-size: 1.2rem;
-    text-transform: uppercase;
+    font-size: 1.2rem; /* Figma mobile "Quantity" (sentence case) */
   }
 
   .cart-figma__qty-short {
