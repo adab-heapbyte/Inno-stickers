@@ -384,7 +384,8 @@
 }
 
 /* ---------- Inset product photo (Figma "Picture") ----------
-   Square photo centred in the grey box (no shadow).
+   Square photo centred in the grey box, with the same layered soft drop shadow as the
+   home Best Seller cards (Figma PLP and Home cards are the same component).
    Desktop 300 of 370 (81.08%), mobile 109 of 168.5 (64.69%).
    `translate` is used so the theme hover scale (transform) still composes. */
 .collection-catalog .card__inner .media .swiper-slide.media {
@@ -400,6 +401,7 @@
   aspect-ratio: 1 / 1;
   translate: -50% -50%;
   object-fit: cover;
+  filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.08)) drop-shadow(0 1.9rem 1.1rem rgba(0, 0, 0, 0.05));
 }
 
 @media screen and (min-width: 990px) {
@@ -454,6 +456,14 @@
   width: 100%;
   max-width: none;
   margin: 0;
+}
+
+/* Phones: the theme gives the filter form 24px right padding (sidebar layout), which made
+   the Filter / Sort buttons and the toggle row 23px short of Figma's 361px */
+@media screen and (max-width: 575px) {
+  .collection-wrapper--catalog .facets-container .facets_all {
+    padding-right: 0;
+  }
 }
 
 /* Order: Filter, Sort, count, toggle */
@@ -643,7 +653,7 @@
 }
 
 .collection-room-view .collection-wrapper--catalog .facets__room-toggle-knob {
-  transform: translateX(2rem); /* 48px track - 2 x 2px padding - 20px knob */
+  transform: translateX(2.4rem); /* Figma knob x4 -> x28: 48px track - 2 x 2px inset - 20px knob = 24 */
 }
 
 .collection-wrapper--catalog .facets__room-toggle-switch:focus-visible {
@@ -697,6 +707,7 @@
   translate: none;
   object-fit: cover;
   opacity: 0;
+  filter: none; /* full-bleed room photo: no shadow */
 }
 
 .collection-room-view .collection-catalog .card__inner .card-room-media .card-room-media__room {
@@ -1083,7 +1094,7 @@
 .collection-wrapper--catalog .catalog-sheet__footer-item,
 .collection-wrapper--catalog .catalog-sheet__footer > .catalog-sheet__button {
   display: flex;
-  flex: 1 1 0;
+  flex: 1 1 50%; /* equal halves: with basis 0 the Show button's own padding made it 50px wider */
   min-width: 0;
 }
 
@@ -1096,7 +1107,7 @@
   gap: 0.8rem;
   min-height: 5rem;
   margin: 0;
-  padding: 1.3rem 2.4rem;
+  padding: 1.2rem 2.4rem; /* Figma 13px with the stroke inside: 12 + 1px border = 50px total */
   border: 0.1rem solid rgb(var(--catalog-primary));
   border-radius: 0.4rem;
   font-family: var(--font-heading-family);
@@ -1253,6 +1264,48 @@
 
   .collection-wrapper--catalog .catalog-sort-sheet {
     align-items: stretch;
+  }
+
+  /* Figma desktop Filter drawer (PLP "Filter" frame): 500px wide, title row + 18px to the
+     divider, groups 24px below it, Body 2 (16px) group titles, 24px carets, 56px tiles */
+  .collection-wrapper--catalog .facets__wrapper--vertical {
+    width: 50rem;
+  }
+
+  .collection-wrapper--catalog .catalog-sheet__header {
+    padding-bottom: 1.8rem;
+  }
+
+  .collection-wrapper--catalog .catalog-sheet__close,
+  .collection-wrapper--catalog .catalog-sheet__close img {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .collection-wrapper--catalog .catalog-sheet__body {
+    margin-top: 0;
+  }
+
+  .collection-wrapper--catalog .catalog-sheet__summary,
+  .collection-wrapper--catalog .catalog-sheet__check,
+  .collection-wrapper--catalog .catalog-sheet__more {
+    font-size: 1.6rem;
+  }
+
+  .collection-wrapper--catalog .catalog-sheet__caret {
+    flex-basis: 2.4rem;
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .collection-wrapper--catalog .catalog-sheet__swatch {
+    width: 5.6rem;
+    height: 5.6rem;
+  }
+
+  .collection-wrapper--catalog .catalog-sheet__swatch-media {
+    width: 5.2rem;
+    height: 5.2rem;
   }
 }
 
@@ -1530,4 +1583,225 @@
 /* QA-23: Figma badge = text line + 2px padding (mobile 19px); the theme's 20px minimum made it 20px */
 .collection-catalog .card__badge .badge {
   min-height: 0;
+}
+
+/* ==========================================================================
+   Desktop Sort (Figma PLP "Sort by" 22:5556): 224px dropdown under the Sort
+   button, white, 4px radius, 0 4 32 rgba(0,0,0,.08) shadow, 48px rows
+   (16px padding, Regular 14/1.5), check icon on the chosen option, hover #F4F6F8.
+   ========================================================================== */
+@media screen and (min-width: 990px) {
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown {
+    display: block;
+  }
+
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown[hidden] {
+    display: none;
+  }
+
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown .catalog-sort-sheet__overlay {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown .catalog-sort-sheet__panel {
+    position: fixed;
+    top: var(--sort-dropdown-top, 0);
+    left: var(--sort-dropdown-left, 0);
+    width: 22.4rem;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+    border-radius: 0.4rem;
+    box-shadow: 0 0.4rem 3.2rem rgba(0, 0, 0, 0.08);
+    transform: none;
+    transition: none;
+  }
+
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown .catalog-sheet__header {
+    display: none;
+  }
+
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown .catalog-sort-sheet__list {
+    gap: 0;
+  }
+
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown .catalog-sort-sheet__option {
+    justify-content: space-between;
+    gap: 1.6rem;
+    min-height: 4.8rem; /* fixed 48px row, text centred (21px line) */
+    padding: 0 1.6rem;
+    box-sizing: border-box;
+    transition: background-color var(--duration-default);
+  }
+
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown .catalog-sort-sheet__option:hover {
+    background-color: rgb(244, 246, 248); /* Figma hover row #F4F6F8 */
+  }
+
+  /* the radio becomes the 20px check at the end of the row (chosen option only) */
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown .catalog-sort-sheet__radio {
+    order: 2;
+    flex: 0 0 2rem;
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown .catalog-sort-sheet__input:checked + .catalog-sort-sheet__option .catalog-sort-sheet__radio {
+    border: 0;
+    background: url("icon-sort-check.svg") center / 2rem 2rem no-repeat;
+  }
+
+  .collection-wrapper--catalog .catalog-sort-sheet.is-dropdown .catalog-sort-sheet__input:focus-visible + .catalog-sort-sheet__option {
+    background-color: rgb(244, 246, 248);
+  }
+}
+
+/* ==========================================================================
+   Active filter chips (Figma PLP "Results" 22:5616 desktop, 22:5074 mobile)
+   Mobile: between the Filter / Sort buttons and the count, a sideways-scrolling
+   row of 37px chips (teal border, 14px, 20px x, 4px gap) + "Clear all" (Bold 16 teal).
+   Desktop: own row 12px under the toolbar, 40px chips (#E2E4E9 border, 16px,
+   16px x, 8px gap), 8px apart, "Clear all" Bold 16 #1F3A4D 12px after them.
+   ========================================================================== */
+.collection-wrapper--catalog .catalog-chips {
+  order: 2; /* after Sort (same order, later in the markup), before the count */
+  display: flex;
+  flex: 0 0 100%;
+  align-items: center;
+  gap: 1.2rem;
+  min-width: 0;
+}
+
+.collection-wrapper--catalog .catalog-chips:not(:has(.catalog-chips__list)) {
+  display: none;
+}
+
+.collection-wrapper--catalog .catalog-chips__list {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 0.8rem;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.collection-wrapper--catalog .catalog-chips__list::-webkit-scrollbar {
+  display: none;
+}
+
+.collection-wrapper--catalog .catalog-chips__item {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.collection-wrapper--catalog .catalog-chips__chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.5rem; /* Figma 8 / 16 with the 1px stroke inside: 37px */
+  border: 0.1rem solid rgb(var(--catalog-primary));
+  border-radius: 0.4rem;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(33, 34, 38); /* #212226 */
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.collection-wrapper--catalog .catalog-chips__label {
+  text-transform: capitalize; /* tags like "blue" read "Blue", as in the filter sheet */
+}
+
+.collection-wrapper--catalog .catalog-chips__close {
+  display: block;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.collection-wrapper--catalog .catalog-chips__clear-wrap {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.collection-wrapper--catalog .catalog-chips__clear {
+  display: inline-flex;
+  align-items: center;
+  min-height: 4.8rem;
+  padding: 0 1.6rem;
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--catalog-primary));
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 990px) {
+  .collection-wrapper--catalog .facets__sort-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .collection-wrapper--catalog .catalog-chips {
+    order: 5; /* own row under Filter / Sort / count / toggle */
+    gap: 1.2rem;
+  }
+
+  .collection-wrapper--catalog .catalog-chips__list {
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  .collection-wrapper--catalog .catalog-chips__chip {
+    gap: 0.8rem;
+    padding: 0.7rem 1.5rem; /* 8 / 16 with the stroke inside: 40px */
+    border-color: rgb(226, 228, 233); /* #E2E4E9 */
+    font-size: 1.6rem;
+  }
+
+  .collection-wrapper--catalog .catalog-chips__close {
+    flex-basis: 1.6rem;
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .collection-wrapper--catalog .catalog-chips__clear {
+    min-height: 0;
+    padding: 0;
+    color: rgb(31, 58, 77); /* #1F3A4D */
+  }
+}
+
+/* Desktop no results (Figma PLP "Empty" 22:5674): a 300px block where the grid starts,
+   content centred, 24px between icon / text / button, 8px title -> text, text Body 2 (16px) */
+@media screen and (min-width: 990px) {
+  .collection-wrapper--catalog .catalog-empty {
+    box-sizing: border-box;
+    min-height: 30rem;
+    gap: 2.4rem;
+    padding: 0;
+  }
+
+  .collection-wrapper--catalog .catalog-empty__text {
+    gap: 0.8rem;
+  }
+
+  .collection-wrapper--catalog .catalog-empty__description {
+    max-width: none;
+    font-size: 1.6rem;
+  }
 }

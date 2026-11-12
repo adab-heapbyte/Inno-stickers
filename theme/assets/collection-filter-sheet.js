@@ -28,10 +28,30 @@
     });
   };
 
+  // Desktop (Figma PLP "Sort by"): a 224px dropdown under the Sort button, no page lock.
+  // Mobile keeps the bottom sheet.
+  const desktopQuery = window.matchMedia('(min-width: 990px)');
+
+  const placeSortDropdown = (sheet) => {
+    const button = document.querySelector(`[data-sort-sheet-open][aria-controls="${sheet.id}"]`);
+    if (!button) return;
+    const rect = button.getBoundingClientRect();
+    sheet.style.setProperty('--sort-dropdown-top', `${Math.round(rect.bottom + 11)}px`); // Figma: 11px below the button
+    sheet.style.setProperty('--sort-dropdown-left', `${Math.round(rect.left - 1)}px`);
+  };
+
   const openSortSheet = (sheet) => {
     if (!sheet) return;
+    const isDropdown = desktopQuery.matches;
+    sheet.classList.toggle('is-dropdown', isDropdown);
+    if (isDropdown) placeSortDropdown(sheet);
     sheet.hidden = false;
     requestAnimationFrame(() => sheet.classList.add('is-open'));
+    document.querySelector(`[data-sort-sheet-open][aria-controls="${sheet.id}"]`)?.setAttribute('aria-expanded', 'true');
+    if (isDropdown) {
+      (sheet.querySelector('input:checked') || sheet.querySelector('input'))?.focus({ preventScroll: true, focusVisible: false });
+      return;
+    }
     // same page state the theme uses for the filter drawer (lifts the section above the header)
     body.classList.add('overflow-hidden', 'filter-open');
     (sheet.querySelector('input:checked') || sheet.querySelector('input'))?.focus({ preventScroll: true, focusVisible: false });
@@ -40,6 +60,11 @@
   const closeSortSheet = (sheet) => {
     if (!sheet || sheet.hidden) return;
     sheet.classList.remove('is-open');
+    document.querySelector(`[data-sort-sheet-open][aria-controls="${sheet.id}"]`)?.setAttribute('aria-expanded', 'false');
+    if (sheet.classList.contains('is-dropdown')) {
+      sheet.hidden = true;
+      return;
+    }
     body.classList.remove('overflow-hidden');
     setTimeout(() => {
       sheet.hidden = true;
@@ -82,6 +107,11 @@
     if (!event.target.matches('.catalog-sort-sheet__input')) return;
     setTimeout(() => closeSortSheet(event.target.closest('[data-sort-sheet]')), 150);
   });
+
+  // The dropdown is placed under the button: close it when the page scrolls or resizes
+  const closeDropdowns = () => document.querySelectorAll('[data-sort-sheet].is-dropdown.is-open').forEach(closeSortSheet);
+  window.addEventListener('scroll', closeDropdowns, { passive: true });
+  window.addEventListener('resize', closeDropdowns);
 
   document.addEventListener('keyup', (event) => {
     if (event.code !== 'Escape') return;

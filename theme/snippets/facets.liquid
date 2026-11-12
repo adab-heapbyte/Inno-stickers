@@ -233,6 +233,59 @@
               <span class="facets__room-toggle-label facets__room-toggle-label--room">{{ 'products.facets.view_room' | t }}</span>
             </collection-room-toggle>
           {%- endif -%}
+          {%- if section.settings.card_style == 'catalog' and enable_filtering -%}
+            {%- comment -%}
+              Active filter chips (Figma PLP "Results"): desktop = own row under the toolbar,
+              mobile = scrolling row between the buttons and the count. ".active-facets-desktop"
+              is re-rendered by facets.js after every filter change; <facet-remove> removes one.
+            {%- endcomment -%}
+            <div class="catalog-chips active-facets-desktop">
+              {%- liquid
+                assign has_active_filters = false
+                for filter in results.filters
+                  if filter.active_values.size > 0
+                    assign has_active_filters = true
+                  endif
+                  if filter.type == 'price_range' and filter.min_value.value != nil or filter.type == 'price_range' and filter.max_value.value != nil
+                    assign has_active_filters = true
+                  endif
+                endfor
+              -%}
+              {%- if has_active_filters -%}
+                <div class="catalog-chips__list">
+                  {%- for filter in results.filters -%}
+                    {%- for value in filter.active_values -%}
+                      <facet-remove class="catalog-chips__item">
+                        <a href="{{ value.url_to_remove }}" class="catalog-chips__chip">
+                          <span class="catalog-chips__label">{{ value.label | escape }}</span>
+                          <img class="catalog-chips__close" src="{{ 'icon-chip-close.svg' | asset_url }}" alt="" width="16" height="16">
+                          <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
+                        </a>
+                      </facet-remove>
+                    {%- endfor -%}
+                    {%- if filter.type == 'price_range' -%}
+                      {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+                        <facet-remove class="catalog-chips__item">
+                          <a href="{{ filter.url_to_remove }}" class="catalog-chips__chip">
+                            <span class="catalog-chips__label">
+                              {%- if filter.min_value.value -%}{{ filter.min_value.value | money }}{%- else -%}{{ 0 | money }}{%- endif -%}
+                              -
+                              {%- if filter.max_value.value -%}{{ filter.max_value.value | money }}{%- else -%}{{ filter.range_max | money }}{%- endif -%}
+                            </span>
+                            <img class="catalog-chips__close" src="{{ 'icon-chip-close.svg' | asset_url }}" alt="" width="16" height="16">
+                            <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
+                          </a>
+                        </facet-remove>
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+                <facet-remove class="catalog-chips__clear-wrap">
+                  <a href="{{ results_url }}" class="catalog-chips__clear">{{ 'products.facets.clear_all' | t }}</a>
+                </facet-remove>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
         </div>
       </div>
 

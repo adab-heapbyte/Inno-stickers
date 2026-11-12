@@ -346,6 +346,14 @@
 
   /* The theme's 50px + 10px logo wrapper and 62px icon column made the bar 79px:
      let the bar's own 67px decide (logo 40px, icons 24px, cart 21px fit inside) */
+  /* Other pages render the logo as a bare link (theme 24px padding, 50px min-height),
+     which made the mobile header 105px instead of 67px outside the home page */
+  .header--style-minimal .header__heading-link {
+    min-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
   .header--style-minimal .header__heading {
     min-height: 0;
     padding: 0;
