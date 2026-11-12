@@ -1,0 +1,739 @@
+{% comment %}
+  Product page - "Figma" style of the main product section (Figma PDP desktop 20:1719 / 9:1855).
+  Gallery (thumbnails + 3:4 main image) and the info column:
+  title, rating, short text, price per box / sq ft, highlights, pairs well with,
+  color (linked products), option cards, quantity, sample + add to cart,
+  Shop Pay installments, delivery estimate, trust icons.
+
+  Data (existing Shopify fields only):
+  - Rating: reviews.rating / reviews.rating_count (Judge.me)
+  - Color tiles: product + "Related products" (shopify--discovery--product_recommendation.related_products)
+  - Color name: shopify.color-pattern (category metafield)
+  - Coverage per box: variant unit price measurement (sq ft); else read from the size
+    option ("47.2 in. x 23.6 in. (4-Pack)" = width x height x pieces)
+
+  Accepts:
+  - section: {Object} the main product section
+
+  Usage:
+  {% render 'product-page-figma', section: section %}
+{% endcomment %}
+{%- liquid
+  assign s = section.settings
+  assign form_id = 'PdpFigmaForm-' | append: section.id
+  assign sample_form_id = 'PdpFigmaSampleForm-' | append: section.id
+  assign terms_form_id = 'PdpFigmaTermsForm-' | append: section.id
+
+  # ---------- sample option (option whose value is "Sample")
+  assign sample_index = -1
+  for option in product.options_with_values
+    for value in option.values
+      assign value_handle = value | strip | downcase
+      if value_handle == 'sample'
+        assign sample_index = forloop.parentloop.index0
+      endif
+    endfor
+  endfor
+
+  # ---------- current variant (never the sample one)
+  assign current_variant = product.selected_or_first_available_variant
+  if sample_index > -1
+    assign current_value = current_variant.options[sample_index] | strip | downcase
+    if current_value == 'sample'
+      for v in product.variants
+        assign v_value = v.options[sample_index] | strip | downcase
+        if v_value != 'sample' and v.available
+          assign current_variant = v
+          break
+        endif
+      endfor
+      assign current_value = current_variant.options[sample_index] | strip | downcase
+      if current_value == 'sample'
+        for v in product.variants
+          assign v_value = v.options[sample_index] | strip | downcase
+          if v_value != 'sample'
+            assign current_variant = v
+            break
+          endif
+        endfor
+      endif
+    endif
+  endif
+
+  # ---------- installation method (badge on the main image)
+  assign install_index = -1
+  for option in product.options_with_values
+    assign option_handle = option.name | handleize
+    if option_handle contains 'installation'
+      assign install_index = forloop.index0
+    endif
+  endfor
+
+  assign unit_word = s.figma_unit_word | default: 'box'
+  assign unit_word_plural = s.figma_unit_word_plural | default: 'boxes'
+
+  # ---------- images (Figma gallery shows images only)
+  assign gallery_images = product.media | where: 'media_type', 'image'
+  # Figma: photos fill the 3:4 frame; "contain" shows square photos whole
+  assign square_fit = s.figma_gallery_square_fit | default: 'cover'
+
+  # ---------- rating (Judge.me metafields)
+  assign rating_value = product.metafields.reviews.rating.value.rating | default: 0
+  assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+
+  # ---------- linked colors
+  # "Related products" when filled. Otherwise found by name: products in the same
+  # collections whose title has the same ending after the first 1-2 words (the color):
+  # "Natural Oak | Wood Slat Acoustic Panels..." = "Walnut | Wood Slat Acoustic Panels..."
+  assign related = product.metafields['shopify--discovery--product_recommendation'].related_products.value
+  assign tile_index = s.figma_color_tile_image | default: 3 | minus: 1
+  assign color_products = '' | split: ''
+  assign color_name = ''
+  assign title_base = ''
+  if related != blank
+    assign color_products = color_products | concat: related
+  else
+    assign title_words = product.title | split: ' '
+    for prefix_words in (1..2)
+      if color_products.size > 0
+        break
+      endif
+      assign candidate_base = ''
+      for word in title_words
+        if forloop.index > prefix_words
+          assign candidate_base = candidate_base | append: ' ' | append: word
+        endif
+      endfor
+      assign candidate_base = candidate_base | strip
+      assign base_size = candidate_base | size
+      # only long family names ("Wood Slat Acoustic Panels Decorative Wall Paneling", 7+ words);
+      # short endings like "Peel and Stick Floor Tile" are shared by different patterns
+      assign base_words = title_words.size | minus: prefix_words
+      if base_words < 7
+        continue
+      endif
+      assign found_handles = product.handle | append: ','
+      for coll in product.collections limit: 5
+        for p in coll.products limit: 50
+          if found_handles contains p.handle
+            continue
+          endif
+          assign p_title_size = p.title | size
+          if p_title_size <= base_size
+            continue
+          endif
+          assign p_offset = p_title_size | minus: base_size
+          assign p_end = p.title | slice: p_offset, base_size
+          assign p_before = p.title | slice: 0, p_offset
+          assign p_before_last = p_before | slice: -1
+          if p_end == candidate_base and p_before_last == ' '
+            assign p_match = coll.products | where: 'handle', p.handle
+            assign color_products = color_products | concat: p_match
+            assign found_handles = found_handles | append: p.handle | append: ','
+          endif
+        endfor
+      endfor
+      if color_products.size > 0
+        assign title_base = candidate_base
+        assign color_name = product.title | remove: candidate_base | strip
+      endif
+    endfor
+  endif
+  assign color_products = color_products | slice: 0, 7
+
+  # ---------- short text: first paragraph of the description
+  assign short_text = product.description | split: '</p>' | first | strip_html | strip | truncate: s.figma_short_text_length
+-%}
+
+<div class="pdp-figma section-{{ section.id }}" data-section="{{ section.id }}">
+  <pdp-figma
+    class="pdp-figma__layout"
+    data-section="{{ section.id }}"
+    data-product-url="{{ product.url }}"
+    data-sample-index="{{ sample_index }}"
+    data-install-index="{{ install_index }}"
+    data-unit="{{ unit_word | escape }}"
+    data-unit-plural="{{ unit_word_plural | escape }}"
+    data-delivery-min="{{ s.figma_delivery_min }}"
+    data-delivery-max="{{ s.figma_delivery_max }}"
+  >
+    {%- comment -%} ===================== Gallery ===================== {%- endcomment -%}
+    <div class="pdp-figma__gallery" data-pdp-gallery>
+      {%- if gallery_images.size > 1 -%}
+        <ul class="pdp-figma__thumbs list-unstyled" role="list" data-pdp-thumbs>
+          {%- for media in gallery_images -%}
+            <li>
+              <button
+                type="button"
+                class="pdp-figma__thumb{% if square_fit == 'contain' and media.aspect_ratio > 0.9 %} pdp-figma__thumb--contain{% endif %}"
+                data-pdp-thumb="{{ forloop.index0 }}"
+                data-media-id="{{ media.id }}"
+                aria-label="{{ 'products.product.media.open_media' | t: index: forloop.index }}"
+                {% if forloop.first %}
+                  aria-current="true"
+                {% endif %}
+              >
+                {{
+                  media
+                  | image_url: width: 300
+                  | image_tag: loading: 'lazy', widths: '100, 200, 300', sizes: '100px', alt: '', class: 'pdp-figma__thumb-image'
+                }}
+              </button>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <div class="pdp-figma__stage">
+        <ul class="pdp-figma__slides list-unstyled" role="list" data-pdp-slides>
+          {%- for media in gallery_images -%}
+            <li
+              class="pdp-figma__slide{% if square_fit == 'contain' and media.aspect_ratio > 0.9 %} pdp-figma__slide--contain{% endif %}"
+              data-pdp-slide="{{ forloop.index0 }}"
+              data-media-id="{{ media.id }}"
+              {% unless forloop.first %}
+                hidden
+              {% endunless %}
+            >
+              {%- liquid
+                assign media_loading = 'lazy'
+                if forloop.first
+                  assign media_loading = 'eager'
+                endif
+              -%}
+              {{
+                media
+                | image_url: width: 1600
+                | image_tag:
+                  loading: media_loading,
+                  widths: '600, 800, 1000, 1200, 1600',
+                  sizes: '(min-width: 1200px) 40vw, (min-width: 990px) 50vw, 100vw',
+                  alt: media.alt,
+                  class: 'pdp-figma__slide-image'
+              }}
+            </li>
+          {%- else -%}
+            <li class="pdp-figma__slide">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg pdp-figma__slide-image' }}
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if install_index > -1 -%}
+          <span class="pdp-figma__badge" data-pdp-install-badge>{{ current_variant.options[install_index] }}</span>
+        {%- endif -%}
+
+        {%- if gallery_images.size > 1 -%}
+          <button type="button" class="pdp-figma__arrow pdp-figma__arrow--prev" data-pdp-prev aria-label="{{ 'product-carousel.previous' | t }}">
+            {% render 'pdp-figma-icon', icon: 'caret-left' %}
+          </button>
+          <button type="button" class="pdp-figma__arrow pdp-figma__arrow--next" data-pdp-next aria-label="{{ 'product-carousel.next' | t }}">
+            {% render 'pdp-figma-icon', icon: 'caret-right' %}
+          </button>
+          <p class="pdp-figma__counter" aria-hidden="true">
+            <span data-pdp-counter>1</span>/{{ gallery_images.size }}
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} ===================== Info column ===================== {%- endcomment -%}
+    <div class="pdp-figma__info">
+      <div class="pdp-figma__group pdp-figma__group--intro">
+        <h1 class="pdp-figma__title">{{ product.title | escape }}</h1>
+
+        {%- if rating_count > 0 -%}
+          {%- assign rating_rounded = rating_value | round -%}
+          <a href="#PdpFigmaReviews" class="pdp-figma__rating">
+            <span class="pdp-figma__stars" aria-hidden="true">
+              {%- for i in (1..5) -%}
+                <span class="pdp-figma__star{% if i > rating_rounded %} pdp-figma__star--off{% endif %}">
+                  {%- render 'pdp-figma-icon', icon: 'star' -%}
+                </span>
+              {%- endfor -%}
+            </span>
+            <span class="pdp-figma__rating-value">{{ rating_value | round: 1 }}</span>
+            <span class="pdp-figma__rating-count">
+              (
+              {{- 'products.product.figma_reviews_count' | t: count: rating_count -}}
+              )
+            </span>
+          </a>
+        {%- endif -%}
+
+        {%- if s.figma_show_short_text and short_text != blank -%}
+          <p class="pdp-figma__short">{{ short_text }}</p>
+        {%- endif -%}
+
+        <div class="pdp-figma__price" data-pdp-price>
+          {%- comment -%} Filled by pdp-figma.js; server render for first paint {%- endcomment -%}
+          {% render 'pdp-figma-price', variant: current_variant, unit_word: unit_word %}
+        </div>
+
+        {%- liquid
+          assign show_highlights = false
+          if s.figma_highlight_1 != blank or s.figma_highlight_2 != blank
+            assign product_text = product.type | append: ' ' | append: product.title | downcase
+            for option in product.options_with_values
+              for value in option.values
+                assign product_text = product_text | append: ' ' | append: value
+              endfor
+            endfor
+            assign product_text = product_text | downcase
+            if product_text contains 'peel'
+              assign show_highlights = true
+            endif
+          endif
+        -%}
+        {%- if show_highlights -%}
+          <ul class="pdp-figma__highlights list-unstyled" role="list">
+            {%- if s.figma_highlight_1 != blank -%}
+              <li>{% render 'pdp-figma-icon', icon: 'hand' %}<span>{{ s.figma_highlight_1 | escape }}</span></li>
+            {%- endif -%}
+            {%- if s.figma_highlight_2 != blank -%}
+              <li>{% render 'pdp-figma-icon', icon: 'feather' %}<span>{{ s.figma_highlight_2 | escape }}</span></li>
+            {%- endif -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if s.figma_pairs_text != blank -%}
+          <p class="pdp-figma__pairs">
+            <strong>{{ 'products.product.figma_pairs_label' | t }}</strong>
+            {{ s.figma_pairs_text | escape }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ---------- Color (linked products) {%- endcomment -%}
+      {%- if color_products.size > 0 -%}
+        {%- assign color_count = color_products.size | plus: 1 -%}
+        <div class="pdp-figma__group pdp-figma__option">
+          <div class="pdp-figma__option-head">
+            <p class="pdp-figma__label">
+              <strong>{{ 'products.product.figma_color' | t }}:</strong>
+              {{ color_name | default: product.title | escape }}
+            </p>
+            <span class="pdp-figma__option-meta">{{ 'products.product.figma_colors_count' | t: count: color_count }}</span>
+          </div>
+          <ul class="pdp-figma__colors list-unstyled" role="list">
+            <li>
+              {%- assign tile_photos = product.media | where: 'media_type', 'image' -%}
+              {%- assign tile_media = tile_photos[tile_index] | default: product.featured_media -%}
+              <span class="pdp-figma__color is-selected" aria-current="true" title="{{ color_name | default: product.title | escape }}">
+                {%- if tile_media -%}
+                  {{ tile_media | image_url: width: 120, height: 120, crop: 'center' | image_tag: loading: 'lazy', alt: '' }}
+                {%- endif -%}
+              </span>
+            </li>
+            {%- for color_product in color_products -%}
+              {%- liquid
+                assign other_photos = color_product.media | where: 'media_type', 'image'
+                assign other_tile = other_photos[tile_index] | default: color_product.featured_media
+                assign other_name = ''
+                if title_base != blank
+                  assign other_name = color_product.title | remove: title_base | strip
+                endif
+                assign other_name = other_name | default: color_product.title
+              -%}
+              <li>
+                <a href="{{ color_product.url }}" class="pdp-figma__color" title="{{ other_name | escape }}">
+                  {%- if other_tile -%}
+                    {{ other_tile | image_url: width: 120, height: 120, crop: 'center' | image_tag: loading: 'lazy', alt: other_name }}
+                  {%- else -%}
+                    <span class="visually-hidden">{{ other_name | escape }}</span>
+                  {%- endif -%}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} ---------- Option cards (Sample hidden; it has its own button) {%- endcomment -%}
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          {%- liquid
+            assign option_index = forloop.index0
+            assign shown_values = 0
+            for value in option.values
+              assign value_handle = value | strip | downcase
+              if value_handle != 'sample'
+                assign shown_values = shown_values | plus: 1
+              endif
+            endfor
+            assign option_handle = option.name | handleize
+          -%}
+          <div
+            class="pdp-figma__group pdp-figma__option{% if shown_values < 2 %} pdp-figma__option--single{% endif %}"
+            data-pdp-option="{{ option_index }}"
+          >
+            <p class="pdp-figma__label">
+              <strong>{{ option.name | escape }}:</strong>
+              <span data-pdp-option-value>{{ current_variant.options[option_index] | escape }}</span>
+            </p>
+            <div class="pdp-figma__cards" role="radiogroup" aria-label="{{ option.name | escape }}">
+              {%- for value in option.values -%}
+                {%- liquid
+                  assign value_handle = value | strip | downcase
+                  if value_handle == 'sample'
+                    continue
+                  endif
+                  assign value_main = value | split: ' (' | first
+                  assign value_sub = ''
+                  if value contains ' ('
+                    assign value_sub = value | split: ' (' | last | prepend: '('
+                  endif
+
+                  assign card_icon = ''
+                  if option_handle contains 'installation'
+                    if value_handle contains 'peel'
+                      assign card_icon = 'peel'
+                    elsif value_handle contains 'glue'
+                      assign card_icon = 'glue'
+                    endif
+                  elsif value contains ' x '
+                    assign dim_w = value | split: ' x ' | first | remove: 'in.' | remove: '"' | remove: 'in' | strip | plus: 0
+                    assign dim_h = value | split: ' x ' | last | split: ' ' | first | remove: '"' | strip | plus: 0
+                    assign card_icon = 'size-square'
+                    if dim_h > 0
+                      assign dim_ratio = dim_w | times: 1.0 | divided_by: dim_h
+                      if dim_ratio > 1.3 or dim_ratio < 0.77
+                        assign card_icon = 'size-rect'
+                      endif
+                    endif
+                  endif
+                  assign is_selected = false
+                  if current_variant.options[option_index] == value
+                    assign is_selected = true
+                  endif
+                -%}
+                <label class="pdp-figma__card{% if is_selected %} is-selected{% endif %}" data-pdp-card>
+                  <input
+                    type="radio"
+                    class="visually-hidden"
+                    name="PdpFigmaOption-{{ section.id }}-{{ option_index }}"
+                    value="{{ value | escape }}"
+                    data-pdp-option-input="{{ option_index }}"
+                    {% if is_selected %}
+                      checked
+                    {% endif %}
+                  >
+                  {%- if card_icon != blank -%}
+                    {% render 'pdp-figma-icon', icon: card_icon, class: 'pdp-figma__card-icon' %}
+                  {%- endif -%}
+                  <span class="pdp-figma__card-main">{{ value_main | escape }}</span>
+                  {%- if value_sub != blank -%}
+                    <span class="pdp-figma__card-sub">{{ value_sub | escape }}</span>
+                  {%- endif -%}
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endunless -%}
+
+      {%- comment -%} ---------- Quantity {%- endcomment -%}
+      <div class="pdp-figma__group pdp-figma__quantity-group">
+        <div class="pdp-figma__quantity-head">
+          <label class="pdp-figma__label" for="PdpFigmaQty-{{ section.id }}">
+            <strong>{{ 'products.product.quantity.label' | t }}</strong>
+          </label>
+          <p class="pdp-figma__stock" data-pdp-stock></p>
+        </div>
+        <div class="pdp-figma__qty">
+          <button type="button" class="pdp-figma__qty-button" data-pdp-qty="-1" aria-label="{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}">
+            {% render 'pdp-figma-icon', icon: 'minus' %}
+          </button>
+          <span class="pdp-figma__qty-value">
+            <input
+              class="pdp-figma__qty-input"
+              type="number"
+              id="PdpFigmaQty-{{ section.id }}"
+              name="quantity"
+              value="1"
+              min="1"
+              step="1"
+              inputmode="numeric"
+              form="{{ form_id }}"
+              data-pdp-qty-input
+            >
+            <span class="pdp-figma__qty-unit" data-pdp-qty-unit>{{ unit_word | escape }}</span>
+          </span>
+          <button type="button" class="pdp-figma__qty-button" data-pdp-qty="1" aria-label="{{ 'products.product.quantity.increase' | t: product: product.title | escape }}">
+            {% render 'pdp-figma-icon', icon: 'plus' %}
+          </button>
+        </div>
+        <p class="pdp-figma__coverage" data-pdp-coverage hidden>
+          {% render 'pdp-figma-icon', icon: 'coverage' %}
+          <span data-pdp-coverage-text></span>
+        </p>
+        <p class="pdp-figma__help" data-pdp-help hidden>
+          {% render 'pdp-figma-icon', icon: 'question' %}
+          <button type="button" class="pdp-figma__help-link" data-pdp-calculator-open>
+            {{- 'products.product.figma_help_choose' | t -}}
+          </button>
+        </p>
+      </div>
+
+      {%- comment -%} ---------- Buttons: sample + add to cart (theme product-form) {%- endcomment -%}
+      <div class="pdp-figma__buy">
+        <div class="pdp-figma__buttons">
+          {%- if sample_index > -1 -%}
+            <product-form class="pdp-figma__sample-form" data-pdp-sample-form>
+              {%- form 'product', product, id: sample_form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                <input type="hidden" name="id" value="" data-pdp-sample-id disabled>
+                <button type="submit" name="add" class="pdp-figma__button pdp-figma__button--outline" data-pdp-sample-button>
+                  <span data-pdp-sample-label>{{ 'products.product.figma_add_sample' | t }}</span>
+                  <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                  <div class="loading-overlay__spinner hidden">{% render 'icon-loading' %}</div>
+                </button>
+              {%- endform -%}
+            </product-form>
+          {%- endif -%}
+
+          <product-form class="pdp-figma__cart-form" data-hide-errors="false" data-section-id="{{ section.id }}">
+            <div class="product-form__error-message-wrapper" role="alert" hidden>
+              <span class="product-form__error-message"></span>
+            </div>
+            {%- form 'product', product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input type="hidden" name="id" value="{{ current_variant.id }}" data-pdp-variant-id disabled>
+              <button
+                type="submit"
+                name="add"
+                class="pdp-figma__button pdp-figma__button--primary"
+                data-pdp-add
+                {% unless current_variant.available %}
+                  aria-disabled="true"
+                {% endunless %}
+              >
+                <span data-pdp-add-label>{{ 'products.product.figma_add_to_cart' | t }}</span>
+                <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                <div class="loading-overlay__spinner hidden">{% render 'icon-loading' %}</div>
+              </button>
+            {%- endform -%}
+          </product-form>
+        </div>
+
+        <div class="pdp-figma__extras">
+          {%- comment -%} Shop Pay installments (Shopify renders it when available) {%- endcomment -%}
+          {%- form 'product', product, id: terms_form_id, class: 'pdp-figma__terms', novalidate: 'novalidate' -%}
+            <input type="hidden" name="id" value="{{ current_variant.id }}" data-pdp-terms-id>
+            {{ form | payment_terms }}
+          {%- endform -%}
+
+          {%- if s.figma_delivery_max > 0 -%}
+            <p class="pdp-figma__delivery">
+              {% render 'pdp-figma-icon', icon: 'truck' %}
+              <strong>{{ 'products.product.figma_estimate_delivery' | t }}</strong>
+              <span data-pdp-delivery></span>
+            </p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} ---------- Trust icons (same icons as the cart) {%- endcomment -%}
+      <ul class="pdp-figma__trust list-unstyled" role="list">
+        <li>
+          <img src="{{ 'icon-cart-return.svg' | asset_url }}" alt="" width="34" height="34" loading="lazy">
+          <span>{{ s.figma_trust_1 | escape | replace: '-', '&#8209;' }}</span>
+        </li>
+        <li>
+          <img src="{{ 'icon-cart-damage.svg' | asset_url }}" alt="" width="34" height="34" loading="lazy">
+          <span class="pdp-figma__trust-text">
+            {{ s.figma_trust_2 | escape }}
+            {%- if s.figma_trust_2_tooltip != blank -%}
+              <span class="pdp-figma__tip">
+                <button type="button" class="pdp-figma__tip-button" aria-describedby="PdpFigmaTip-{{ section.id }}">
+                  {% render 'pdp-figma-icon', icon: 'question' %}
+                  <span class="visually-hidden">{{ s.figma_trust_2 | escape }}</span>
+                </button>
+                <span class="pdp-figma__tip-bubble" role="tooltip" id="PdpFigmaTip-{{ section.id }}">
+                  {{- s.figma_trust_2_tooltip | escape -}}
+                </span>
+              </span>
+            {%- endif -%}
+          </span>
+        </li>
+        <li>
+          <img src="{{ 'icon-cart-warranty.svg' | asset_url }}" alt="" width="34" height="34" loading="lazy">
+          <span>{{ s.figma_trust_3 | escape | replace: '-', '&#8209;' }}</span>
+        </li>
+      </ul>
+
+      {%- comment -%} App blocks (e.g. HomeVisioner) {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}
+          <div class="pdp-figma__app" {{ block.shopify_attributes }}>{% render block %}</div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Variant data for pdp-figma.js {%- endcomment -%}
+    <script type="application/json" data-pdp-variants>
+      [
+        {%- for v in product.variants -%}
+          {%- liquid
+            # coverage per box (sq ft): snippets/pdp-figma-coverage.liquid
+            capture v_coverage
+              render 'pdp-figma-coverage', variant: v
+            endcapture
+            assign v_coverage = v_coverage | strip | plus: 0
+            assign v_media = v.featured_media.id | default: 0
+            assign v_dims = ''
+            for v_value in v.options
+              if v_value contains ' x '
+                assign v_dims = v_value | split: ' (' | first | strip
+              endif
+            endfor
+          -%}
+          {
+            "id": {{ v.id }},
+            "options": {{ v.options | json }},
+            "available": {{ v.available | json }},
+            "price": {{ v.price | json }},
+            "compare_at_price": {{ v.compare_at_price | default: 0 | json }},
+            "inventory": {% if v.inventory_management == 'shopify' %}{{ v.inventory_quantity | json }}{% else %}null{% endif %},
+            "policy": {{ v.inventory_policy | json }},
+            "media": {{ v_media }},
+            "coverage": {{ v_coverage | round: 2 }},
+            "dims": {{ v_dims | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    </script>
+    {%- comment -%} ===================== Smart calculator (Figma 9:3377 / 9:4160 / 9:4968) ===================== {%- endcomment -%}
+    <div class="pdp-figma pdp-calc" data-pdp-calc hidden>
+      <div class="pdp-calc__overlay" data-pdp-calc-close></div>
+      <div
+        class="pdp-calc__drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="PdpCalcTitle-{{ section.id }}"
+        tabindex="-1"
+      >
+        <div class="pdp-calc__head">
+          <h2 class="pdp-calc__title" id="PdpCalcTitle-{{ section.id }}">{{ 'products.product.figma_calc_title' | t }}</h2>
+          <button type="button" class="pdp-calc__close" data-pdp-calc-close aria-label="{{ 'accessibility.close' | t }}">
+            {% render 'icon-close' %}
+          </button>
+        </div>
+
+        <div class="pdp-calc__body">
+          <p class="pdp-calc__panel" data-pdp-calc-panel></p>
+
+          <div class="pdp-calc__field">
+            <label class="pdp-calc__label" for="PdpCalcWidth-{{ section.id }}">{{ 'products.product.figma_calc_width' | t }}</label>
+            <div class="pdp-calc__input-wrap">
+              <input
+                class="pdp-calc__input"
+                id="PdpCalcWidth-{{ section.id }}"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="any"
+                placeholder="{{ 'products.product.figma_calc_placeholder' | t }}"
+                aria-describedby="PdpCalcWidthError-{{ section.id }}"
+                data-pdp-calc-width
+              >
+              <span class="pdp-calc__unit" aria-hidden="true">{{ 'products.product.figma_calc_unit' | t }}</span>
+            </div>
+            <p class="pdp-calc__error" id="PdpCalcWidthError-{{ section.id }}" data-pdp-calc-error="width" hidden>
+              {{- 'products.product.figma_calc_error' | t -}}
+            </p>
+          </div>
+
+          <div class="pdp-calc__field">
+            <label class="pdp-calc__label" for="PdpCalcHeight-{{ section.id }}">{{ 'products.product.figma_calc_height' | t }}</label>
+            <div class="pdp-calc__input-wrap">
+              <input
+                class="pdp-calc__input"
+                id="PdpCalcHeight-{{ section.id }}"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="any"
+                placeholder="{{ 'products.product.figma_calc_placeholder' | t }}"
+                aria-describedby="PdpCalcHeightError-{{ section.id }}"
+                data-pdp-calc-height
+              >
+              <span class="pdp-calc__unit" aria-hidden="true">{{ 'products.product.figma_calc_unit' | t }}</span>
+            </div>
+            <p class="pdp-calc__error" id="PdpCalcHeightError-{{ section.id }}" data-pdp-calc-error="height" hidden>
+              {{- 'products.product.figma_calc_error' | t -}}
+            </p>
+          </div>
+
+          <p class="pdp-calc__area" data-pdp-calc-area hidden>
+            {% render 'pdp-figma-icon', icon: 'coverage' %}
+            <span>
+              {{- 'products.product.figma_calc_area_label' | t }}
+              <strong data-pdp-calc-area-value></strong>
+              {{ 'products.product.figma_calc_sqft' | t -}}
+            </span>
+          </p>
+
+          <div class="pdp-calc__field">
+            <p class="pdp-calc__label" id="PdpCalcQtyLabel-{{ section.id }}">{{ 'products.product.figma_calc_recommend' | t }}</p>
+            <div class="pdp-figma__qty pdp-calc__qty" role="group" aria-labelledby="PdpCalcQtyLabel-{{ section.id }}">
+              <button type="button" class="pdp-figma__qty-button" data-pdp-calc-step="-1" aria-label="{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}">
+                {% render 'pdp-figma-icon', icon: 'minus' %}
+              </button>
+              <span class="pdp-figma__qty-value">
+                <input class="pdp-figma__qty-input" type="number" min="0" step="1" value="0" inputmode="numeric" aria-labelledby="PdpCalcQtyLabel-{{ section.id }}" data-pdp-calc-qty>
+                <span class="pdp-figma__qty-unit" data-pdp-calc-qty-unit>{{ unit_word | escape }}</span>
+              </span>
+              <button type="button" class="pdp-figma__qty-button" data-pdp-calc-step="1" aria-label="{{ 'products.product.quantity.increase' | t: product: product.title | escape }}">
+                {% render 'pdp-figma-icon', icon: 'plus' %}
+              </button>
+            </div>
+          </div>
+
+          <div class="pdp-calc__field" data-pdp-calc-overage-field hidden>
+            <div class="pdp-calc__label-row">
+              <label class="pdp-calc__label" for="PdpCalcOverage-{{ section.id }}">{{ 'products.product.figma_calc_overage' | t }}</label>
+              <span class="pdp-calc__hint">{{ 'products.product.figma_calc_overage_hint' | t }}</span>
+            </div>
+            <div class="pdp-calc__select">
+              <select class="pdp-calc__select-input" id="PdpCalcOverage-{{ section.id }}" data-pdp-calc-overage>
+                <option value="0">0% · {{ 'products.product.figma_calc_overage_0' | t }}</option>
+                <option value="5">5%</option>
+                <option value="10" selected>10% · {{ 'products.product.figma_calc_overage_10' | t }}</option>
+                <option value="15">15%</option>
+              </select>
+              <span class="pdp-calc__select-value" aria-hidden="true">
+                <span data-pdp-calc-overage-percent>10%</span>
+                <span class="pdp-calc__select-help" data-pdp-calc-overage-help>{{ 'products.product.figma_calc_overage_10' | t }}</span>
+              </span>
+              {% render 'pdp-figma-icon', icon: 'caret-down', class: 'pdp-calc__select-caret' %}
+            </div>
+          </div>
+        </div>
+
+        <div class="pdp-calc__foot">
+          <button type="button" class="pdp-figma__button pdp-figma__button--outline pdp-calc__update" data-pdp-calc-update>
+            {{- 'products.product.figma_calc_update' | t -}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="application/json" data-pdp-strings>
+      {
+        "addToCart": {{ 'products.product.figma_add_to_cart' | t | json }},
+        "addSample": {{ 'products.product.figma_add_sample' | t | json }},
+        "soldOut": {{ 'products.product.sold_out' | t | json }},
+        "unavailable": {{ 'products.product.unavailable' | t | json }},
+        "inStock": {{ 'products.product.figma_in_stock' | t | json }},
+        "inStockCount": {{ 'products.product.figma_in_stock_count' | t: count: '[count]' | json }},
+        "outOfStock": {{ 'products.product.figma_out_of_stock' | t | json }},
+        "coverage": {{ 'products.product.figma_coverage' | t: value: '[value]' | json }},
+        "perUnit": {{ 'products.product.figma_per_unit' | t | json }},
+        "covering": {{ 'products.product.figma_covering' | t: value: '[value]' | json }},
+        "perSqft": {{ 'products.product.figma_per_sqft' | t | json }},
+        "calcPanel": {{ 'products.product.figma_calc_panel' | t: size: '[size]' | json }},
+        "calcOverage0": {{ 'products.product.figma_calc_overage_0' | t | json }},
+        "calcOverage10": {{ 'products.product.figma_calc_overage_10' | t | json }}
+      }
+    </script>
+  </pdp-figma>
+</div>

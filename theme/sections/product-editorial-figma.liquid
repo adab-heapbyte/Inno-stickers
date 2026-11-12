@@ -1,0 +1,190 @@
+{% comment %}
+  Product Editorial (Figma PDP 20:1905).
+  1920: 120 top / bottom, 160 sides. Text column 500 (heading Bold 40/1.2, text 24 below),
+  40 gap, two 3:4 photos 510 x 680 with a 40 gap.
+  Brief: only for the hero products, with their exact finish. One "Product" block per
+  hero product; the section only shows when a block matches the product on the page.
+  Photos: the block's uploaded images, else the product's own photos at the chosen positions.
+{% endcomment %}
+{%- liquid
+  assign editorial_block = nil
+  for block in section.blocks
+    if block.type == 'product' and block.settings.product != blank and block.settings.product.id == product.id
+      assign editorial_block = block
+      break
+    endif
+  endfor
+-%}
+
+{%- if editorial_block -%}
+  {{ 'section-product-editorial-figma.css' | asset_url | stylesheet_tag }}
+  {%- liquid
+    assign b = editorial_block.settings
+    assign heading = b.heading | default: section.settings.heading
+    assign text = b.text | default: section.settings.text
+
+    assign position_1 = b.image_1_position | minus: 1
+    assign position_2 = b.image_2_position | minus: 1
+    # count photos only (a video in the gallery would shift the numbers)
+    assign product_photos = product.media | where: 'media_type', 'image'
+    assign photo_1 = b.image_1 | default: product_photos[position_1]
+    assign photo_2 = b.image_2 | default: product_photos[position_2]
+  -%}
+  <div class="product-editorial-figma section-{{ section.id }}" {{ editorial_block.shopify_attributes }}>
+    <div class="product-editorial-figma__inner">
+      <div class="product-editorial-figma__text">
+        {%- if heading != blank -%}
+          <h2 class="product-editorial-figma__heading">{{ heading | escape }}</h2>
+        {%- endif -%}
+        {%- if text != blank -%}
+          <div class="product-editorial-figma__body">{{ text }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="product-editorial-figma__media">
+        {%- for photo in (1..2) -%}
+          {%- liquid
+            if forloop.index == 1
+              assign current_photo = photo_1
+              assign current_file = b.image_1_file | strip
+            else
+              assign current_photo = photo_2
+              assign current_file = b.image_2_file | strip
+            endif
+            assign uploaded = b.image_1
+            if forloop.index == 2
+              assign uploaded = b.image_2
+            endif
+          -%}
+          <div class="product-editorial-figma__photo">
+            {%- if uploaded == blank and current_file != blank -%}
+              {%- comment -%} Theme image file (assets/), e.g. the Figma editorial photos {%- endcomment -%}
+              <img
+                src="{{ current_file | asset_url }}"
+                alt="{{ product.title | escape }}"
+                class="product-editorial-figma__image"
+                width="1100"
+                height="1473"
+                loading="lazy"
+              >
+            {%- elsif current_photo != blank -%}
+              {{
+                current_photo
+                | image_url: width: 1100
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '360, 550, 750, 1100',
+                  sizes: '(min-width: 990px) 27vw, 50vw',
+                  alt: current_photo.alt | default: product.title,
+                  class: 'product-editorial-figma__image'
+              }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg product-editorial-figma__image' }}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.product-editorial-figma.name",
+  "tag": "section",
+  "class": "section-product-editorial-figma",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:sections.product-editorial-figma.settings.paragraph.content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Product Editorial",
+      "label": "t:sections.product-editorial-figma.settings.heading.label"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "default": "<p>Bring a modern, earthy look to any room with acoustic wood panels. Designed to reduce echo and add natural texture.</p>",
+      "label": "t:sections.product-editorial-figma.settings.text.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "t:sections.product-editorial-figma.blocks.product.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.product-editorial-figma.blocks.product.settings.product.label"
+        },
+        {
+          "type": "range",
+          "id": "image_1_position",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "default": 1,
+          "label": "t:sections.product-editorial-figma.blocks.product.settings.image_1_position.label",
+          "info": "t:sections.product-editorial-figma.blocks.product.settings.image_position.info"
+        },
+        {
+          "type": "range",
+          "id": "image_2_position",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "default": 2,
+          "label": "t:sections.product-editorial-figma.blocks.product.settings.image_2_position.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "t:sections.product-editorial-figma.blocks.product.settings.image_1.label",
+          "info": "t:sections.product-editorial-figma.blocks.product.settings.image_upload.info"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "t:sections.product-editorial-figma.blocks.product.settings.image_2.label"
+        },
+        {
+          "type": "text",
+          "id": "image_1_file",
+          "label": "t:sections.product-editorial-figma.blocks.product.settings.image_1_file.label",
+          "info": "t:sections.product-editorial-figma.blocks.product.settings.image_file.info"
+        },
+        {
+          "type": "text",
+          "id": "image_2_file",
+          "label": "t:sections.product-editorial-figma.blocks.product.settings.image_2_file.label"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.product-editorial-figma.blocks.product.settings.heading.label",
+          "info": "t:sections.product-editorial-figma.blocks.product.settings.override.info"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.product-editorial-figma.blocks.product.settings.text.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product-editorial-figma.presets.name"
+    }
+  ]
+}
+{% endschema %}

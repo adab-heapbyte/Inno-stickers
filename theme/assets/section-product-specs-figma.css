@@ -1,0 +1,260 @@
+/* ==========================================================================
+   Specs & Installation (Figma PDP 20:1843)
+   Grey band (#F4F6F8), 80 top / 80 bottom, heading Bold 32 (48), 40 below.
+   Rows: icon 30 + title Bold 18 + caret 20; 20 above / below each divider.
+   Table: 20 below the title; header #2A6489 45 tall; rows ~46-48; 2 equal columns.
+   ========================================================================== */
+.product-specs-figma {
+  --specs-900: 15, 15, 15;
+  --specs-800: 24, 24, 27;
+  --specs-600: 60, 64, 79;
+  --specs-200: 226, 228, 233;
+  --specs-primary: 42, 100, 137;
+
+  padding: 6.4rem 1.6rem;
+  background: var(--specs-background, #f4f6f8);
+  font-family: var(--font-body-family);
+  color: rgb(var(--specs-900));
+}
+
+.product-specs-figma *,
+.product-specs-figma *::before,
+.product-specs-figma *::after {
+  box-sizing: border-box;
+}
+
+.product-specs-figma__heading {
+  margin: 0 0 2.4rem;
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgb(var(--specs-900));
+}
+
+.product-specs-figma__item + .product-specs-figma__item {
+  margin-top: 1.6rem;
+  padding-top: 1.6rem;
+  border-top: 0.1rem solid rgb(var(--specs-200));
+}
+
+.product-specs-figma__summary {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.product-specs-figma__summary::-webkit-details-marker {
+  display: none;
+}
+
+.product-specs-figma__summary:focus-visible {
+  outline: 0.2rem solid rgb(var(--specs-primary));
+  outline-offset: 0.4rem;
+}
+
+.product-specs-figma .product-specs-figma__icon {
+  flex: 0 0 auto;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.product-specs-figma__title {
+  flex: 1 1 auto;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.product-specs-figma .product-specs-figma__caret {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  transition: transform var(--duration-default, 0.2s);
+}
+
+.product-specs-figma__item[open] .product-specs-figma__caret {
+  transform: rotate(180deg);
+}
+
+.product-specs-figma__content {
+  margin-top: 1.6rem;
+}
+
+/* Table */
+.product-specs-figma__table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 0.1rem solid rgb(var(--specs-200));
+  border-radius: 0.4rem;
+  background: transparent;
+  table-layout: fixed;
+}
+
+.product-specs-figma__table th,
+.product-specs-figma__table td {
+  padding: 1.2rem 1.6rem;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  text-align: left;
+  vertical-align: top;
+}
+
+.product-specs-figma__table thead th {
+  padding-top: 1.05rem;
+  padding-bottom: 1.05rem;
+  background: rgb(var(--specs-primary));
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+}
+
+.product-specs-figma__table tbody th {
+  font-weight: 400;
+  color: rgb(var(--specs-900));
+}
+
+.product-specs-figma__table tbody td {
+  font-weight: 700;
+  color: rgb(var(--specs-900));
+}
+
+.product-specs-figma__table tbody tr + tr th,
+.product-specs-figma__table tbody tr + tr td {
+  border-top: 0.1rem solid rgb(var(--specs-200));
+}
+
+.product-specs-figma__table tbody tr[hidden] {
+  display: none;
+}
+
+/* Figma mobile: label column 160 / value 201 */
+.product-specs-figma__table col.product-specs-figma__col-label {
+  width: 44.3%;
+}
+
+/* Guide text */
+.product-specs-figma__rte {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--specs-600));
+}
+
+.product-specs-figma__rte p,
+.product-specs-figma__rte li {
+  color: inherit;
+}
+
+.product-specs-figma__rte > * {
+  margin: 0;
+}
+
+.product-specs-figma__rte > * + * {
+  margin-top: 2rem; /* Figma: ~20 between the intro and the list / between paragraphs */
+}
+
+/* Installation steps reuse the home "Step cards" styles (section-step-cards.css).
+   Colours as on the home page (Neutral/900 text, Neutral/600 muted). */
+.product-specs-figma__step-cards {
+  --step-text: 15, 15, 15;
+  --step-muted: 60, 64, 79;
+}
+
+/* Figma mobile: progress bar 16 below the cards */
+.product-specs-figma__step-cards .step-cards__slider {
+  gap: 1.6rem;
+}
+
+/* Figma mobile: 16 between the intro and the list, list indent 21 */
+.product-specs-figma .product-specs-figma__rte > * + * {
+  margin-top: 1.6rem;
+}
+
+.product-specs-figma .product-specs-figma__rte ol,
+.product-specs-figma .product-specs-figma__rte ul {
+  padding-left: 2.1rem;
+}
+
+/* Numbered lists in Removal / Care */
+.product-specs-figma__rte ol,
+.product-specs-figma__rte ul {
+  padding-left: 2.4rem;
+}
+
+.product-specs-figma .product-specs-figma__rte li {
+  margin: 0; /* theme .rte li adds 16px above and below */
+}
+
+.product-specs-figma .product-specs-figma__rte li + li {
+  margin-top: 0.2rem;
+}
+
+.product-specs-figma__rte strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+@media screen and (min-width: 990px) {
+  .product-specs-figma {
+    padding: 12rem max(2.4rem, 8.33vw);
+  }
+
+  .product-specs-figma__heading {
+    font-size: 4rem;
+    line-height: 1.2;
+  }
+
+  .product-specs-figma__item + .product-specs-figma__item {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+
+  .product-specs-figma__content {
+    margin-top: 2rem;
+  }
+
+  .product-specs-figma .product-specs-figma__rte > * + * {
+    margin-top: 2rem;
+  }
+
+  .product-specs-figma .product-specs-figma__rte ol,
+  .product-specs-figma .product-specs-figma__rte ul {
+    padding-left: 2.4rem;
+  }
+
+  .product-specs-figma .product-specs-figma__caret {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .product-specs-figma__table col.product-specs-figma__col-label {
+    width: 50%;
+  }
+
+  /* Figma: Removal 16, Care & Maintenance / Limits 18 (block setting) */
+  .product-specs-figma__rte {
+    font-size: var(--guide-text-size, 1.6rem);
+  }
+
+  .product-specs-figma .product-specs-figma__icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .product-specs-figma__title {
+    font-size: 1.8rem;
+  }
+
+  .product-specs-figma__table th,
+  .product-specs-figma__table td {
+    font-size: 1.6rem;
+  }
+
+}

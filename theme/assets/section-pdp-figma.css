@@ -1,0 +1,1598 @@
+/* ==========================================================================
+   Product page - "Figma" style (Figma PDP desktop 20:1719)
+   1920 frame: 160 side padding, 1600 content = gallery 900 | 40 | info 660.
+   Gallery: thumbnails 100 x 133 (gap 8) | 24 | main image 776 x 1034 (3:4).
+   Info groups 24 apart; buy area 32 below; trust icons 32 below.
+   ========================================================================== */
+.pdp-figma {
+  --pdp-900: 15, 15, 15;     /* #0F0F0F */
+  --pdp-800: 24, 24, 27;     /* #18181B */
+  --pdp-700: 33, 34, 38;     /* #212226 */
+  --pdp-600: 60, 64, 79;     /* #3C404F */
+  --pdp-500: 127, 133, 159;  /* #7F859F */
+  --pdp-400: 164, 168, 183;  /* #A4A8B7 */
+  --pdp-200: 226, 228, 233;  /* #E2E4E9 */
+  --pdp-100: 244, 244, 244;  /* #F4F4F4 */
+  --pdp-burgundy: 128, 0, 32;
+  --pdp-primary: 42, 100, 137; /* #2A6489 */
+  --pdp-blue-tint: 187, 209, 223; /* #BBD1DF */
+  --pdp-star: 245, 183, 0;
+  --pdp-green: 18, 183, 106;
+
+  padding: 0 1.6rem 6rem;
+  font-family: var(--font-body-family);
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma *,
+.pdp-figma *::before,
+.pdp-figma *::after {
+  box-sizing: border-box;
+}
+
+.pdp-figma p,
+.pdp-figma h1 {
+  margin: 0;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.pdp-figma .pdp-figma-icon {
+  display: block;
+  flex: 0 0 auto;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.pdp-figma__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.4rem;
+}
+
+/* ---------- Gallery */
+.pdp-figma__gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 2.4rem;
+  min-width: 0;
+}
+
+.pdp-figma__thumbs {
+  display: none;
+}
+
+.pdp-figma__stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.4rem;
+  background: rgb(255, 255, 255);
+  aspect-ratio: 776 / 1034;
+}
+
+.pdp-figma__slides,
+.pdp-figma__slide {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.pdp-figma__slide[hidden] {
+  display: none;
+}
+
+.pdp-figma__slide-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 1:1 catalog photos: whole photo, centred on white (brief: old 1:1 images must still look right) */
+.pdp-figma__slide--contain .pdp-figma__slide-image {
+  object-fit: contain;
+}
+
+.pdp-figma__badge {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  padding: 0.4rem 0.8rem;
+  background: rgb(var(--pdp-blue-tint));
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(255, 255, 255);
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.12);
+  color: rgb(var(--pdp-800));
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.pdp-figma__arrow .pdp-figma-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pdp-figma__arrow--prev {
+  left: 1.6rem;
+}
+
+.pdp-figma__arrow--next {
+  right: 1.6rem;
+}
+
+.pdp-figma__counter {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+  transform: translateX(-50%);
+}
+
+/* ---------- Info column */
+.pdp-figma__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pdp-figma__group + .pdp-figma__group {
+  margin-top: 2.4rem;
+}
+
+.pdp-figma__group--intro {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.pdp-figma__title {
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+  text-decoration: none;
+}
+
+.pdp-figma__stars {
+  display: inline-flex;
+  gap: 0.2rem;
+  color: rgb(var(--pdp-star));
+}
+
+.pdp-figma__star .pdp-figma-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pdp-figma__star--off {
+  color: rgb(var(--pdp-200));
+}
+
+.pdp-figma__rating-count {
+  color: rgb(var(--pdp-500));
+}
+
+.pdp-figma__short {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-600));
+}
+
+.pdp-figma__price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pdp-figma__price-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.8rem;
+}
+
+.pdp-figma__price-current {
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 2.8rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-900));
+}
+
+.pdp-figma__price-current.is-sale {
+  color: rgb(var(--pdp-burgundy));
+}
+
+.pdp-figma__price-compare {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-500));
+}
+
+.pdp-figma__price-compare[hidden],
+.pdp-figma__price-sqft[hidden] {
+  display: none;
+}
+
+.pdp-figma__price-unit,
+.pdp-figma__price-sqft {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 2.4rem;
+  margin: 0;
+  padding: 0;
+}
+
+.pdp-figma__highlights li {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__pairs {
+  padding: 1.2rem 1.6rem;
+  border-radius: 0.4rem;
+  background: rgba(var(--pdp-blue-tint), 0.3);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__pairs strong {
+  font-weight: 700;
+}
+
+/* ---------- Options */
+.pdp-figma__option {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.pdp-figma__option--single {
+  display: none;
+}
+
+.pdp-figma__option-head,
+.pdp-figma__quantity-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+}
+
+.pdp-figma__label {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__label strong {
+  font-weight: 700;
+}
+
+.pdp-figma__option-meta {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-500));
+}
+
+.pdp-figma__colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+}
+
+.pdp-figma__color {
+  display: block;
+  width: 5.6rem;
+  height: 5.6rem;
+  overflow: hidden;
+  border: 0.1rem solid rgb(var(--pdp-200));
+  border-radius: 0.4rem;
+  background: rgb(var(--pdp-100));
+}
+
+.pdp-figma__color img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pdp-figma__color.is-selected {
+  border: 0.2rem solid rgb(var(--pdp-primary));
+  box-shadow: inset 0 0 0 0.2rem rgb(255, 255, 255);
+}
+
+a.pdp-figma__color:hover {
+  border-color: rgb(var(--pdp-500));
+}
+
+.pdp-figma__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.pdp-figma__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  min-height: 9.9rem;
+  padding: 1.6rem;
+  border: 0.1rem solid rgb(var(--pdp-200));
+  border-radius: 0.4rem;
+  background: rgb(255, 255, 255);
+  color: rgb(var(--pdp-400));
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--duration-default, 0.2s), background-color var(--duration-default, 0.2s);
+}
+
+.pdp-figma__card:hover {
+  border-color: rgb(var(--pdp-500));
+}
+
+.pdp-figma__card.is-selected {
+  border-color: rgba(var(--pdp-primary), 0.45);
+  background: rgb(var(--pdp-100));
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__card.is-unavailable {
+  opacity: 0.5;
+}
+
+.pdp-figma__card:has(input:focus-visible) {
+  outline: 0.2rem solid rgb(var(--pdp-primary));
+  outline-offset: 0.2rem;
+}
+
+.pdp-figma__card .pdp-figma__card-icon {
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.2rem;
+}
+
+.pdp-figma__card-main {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.pdp-figma__card-sub {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-400));
+}
+
+/* ---------- Quantity */
+.pdp-figma__quantity-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.pdp-figma__quantity-head .pdp-figma__label {
+  font-size: 1.4rem;
+}
+
+.pdp-figma__stock {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__stock:empty {
+  display: none;
+}
+
+.pdp-figma__stock::before {
+  content: '';
+  flex: 0 0 0.8rem;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: rgb(var(--pdp-green));
+}
+
+.pdp-figma__stock.is-out::before {
+  background: rgb(var(--pdp-400));
+}
+
+.pdp-figma__qty {
+  display: flex;
+  align-items: stretch;
+  width: 32.6rem;
+  max-width: 100%;
+  height: 4.8rem;
+  border: 0.1rem solid rgb(var(--pdp-200));
+  border-radius: 0.4rem;
+  background: rgb(255, 255, 255);
+}
+
+.pdp-figma__qty-button {
+  display: flex;
+  flex: 0 0 4.6rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgb(var(--pdp-800));
+  cursor: pointer;
+}
+
+.pdp-figma__qty-button .pdp-figma-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pdp-figma__qty-value {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-width: 0;
+  margin: 0 0.8rem;
+  border-right: 0.1rem solid rgb(var(--pdp-200));
+  border-left: 0.1rem solid rgb(var(--pdp-200));
+}
+
+.pdp-figma .pdp-figma__qty-input {
+  width: 4ch;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-body-family);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+  text-align: right;
+  -moz-appearance: textfield;
+}
+
+.pdp-figma .pdp-figma__qty-input::-webkit-outer-spin-button,
+.pdp-figma .pdp-figma__qty-input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.pdp-figma .pdp-figma__qty-input:focus {
+  outline: 0;
+}
+
+.pdp-figma__qty:focus-within {
+  border-color: rgb(var(--pdp-primary));
+}
+
+.pdp-figma__qty-unit {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-500));
+}
+
+.pdp-figma__coverage,
+.pdp-figma__help {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__coverage[hidden],
+.pdp-figma__help[hidden] {
+  display: none;
+}
+
+.pdp-figma__help-link {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-body-family);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+  cursor: pointer;
+}
+
+/* ---------- Buttons */
+.pdp-figma__buy {
+  margin-top: 3.2rem;
+}
+
+.pdp-figma__buttons {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.8rem;
+}
+
+.pdp-figma__buttons product-form {
+  display: block;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.pdp-figma__buttons product-form[hidden] {
+  display: none;
+}
+
+.pdp-figma__button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 100%;
+  min-height: 4.8rem;
+  margin: 0;
+  padding: 0.8rem 2.4rem;
+  border: 0.1rem solid rgb(var(--pdp-primary));
+  border-radius: 0.4rem;
+  font-family: var(--font-body-family);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+  transition: background-color var(--duration-default, 0.2s);
+}
+
+.pdp-figma__button--primary {
+  background: rgb(var(--pdp-primary));
+  color: rgb(255, 255, 255);
+}
+
+.pdp-figma__button--primary:hover {
+  background: rgba(var(--pdp-primary), 0.9);
+}
+
+.pdp-figma__button--outline {
+  background: rgb(255, 255, 255);
+  color: rgb(var(--pdp-primary));
+}
+
+.pdp-figma__button--outline:hover {
+  background: rgba(var(--pdp-primary), 0.06);
+}
+
+.pdp-figma__button[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pdp-figma__button .sold-out-message.hidden,
+.pdp-figma__button .loading-overlay__spinner.hidden {
+  display: none;
+}
+
+.pdp-figma__button.loading > span {
+  visibility: hidden;
+}
+
+.pdp-figma__button.loading .loading-overlay__spinner:not(.hidden) {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.pdp-figma__button .spinner {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pdp-figma__button--primary .spinner .path {
+  stroke: rgb(255, 255, 255);
+}
+
+.pdp-figma .product-form__error-message-wrapper:not([hidden]) {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-burgundy));
+}
+
+/* ---------- Installments + delivery */
+.pdp-figma__extras {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+}
+
+.pdp-figma__terms {
+  margin: 0;
+  padding: 1.2rem;
+  border-radius: 0.4rem;
+  background: rgba(84, 51, 235, 0.08);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+/* nothing rendered (Shop Pay Installments not available) */
+.pdp-figma__terms:not(:has(shopify-payment-terms)) {
+  display: none;
+}
+
+.pdp-figma__delivery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+  padding: 1.2rem;
+  border-radius: 0.4rem;
+  background: rgba(var(--pdp-blue-tint), 0.3);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__delivery strong {
+  font-weight: 700;
+}
+
+/* ---------- Trust icons */
+.pdp-figma__trust {
+  display: flex;
+  gap: 0.8rem;
+  margin: 3.2rem 0 0;
+  padding: 0;
+}
+
+.pdp-figma__trust li {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-align: center;
+  color: rgb(var(--pdp-600));
+}
+
+.pdp-figma__trust img {
+  display: block;
+  width: 3.4rem;
+  height: 3.4rem;
+}
+
+.pdp-figma__trust-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pdp-figma__tip {
+  position: relative;
+  display: inline-flex;
+}
+
+.pdp-figma__tip-button {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgb(var(--pdp-burgundy));
+  cursor: help;
+}
+
+.pdp-figma__tip-button .pdp-figma-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pdp-figma__tip-bubble {
+  position: absolute;
+  z-index: 5;
+  bottom: calc(100% + 1rem);
+  left: 50%;
+  width: 27.4rem;
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  background: rgb(var(--pdp-800));
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(255, 255, 255);
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity var(--duration-default, 0.2s);
+}
+
+.pdp-figma__tip-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border: 0.6rem solid transparent;
+  border-top-color: rgb(var(--pdp-800));
+  transform: translateX(-50%);
+}
+
+.pdp-figma__tip:hover .pdp-figma__tip-bubble,
+.pdp-figma__tip-button:focus-visible + .pdp-figma__tip-bubble {
+  opacity: 1;
+  visibility: visible;
+}
+
+.pdp-figma__app {
+  margin-top: 2.4rem;
+}
+
+/* HomeVisioner's app embed inserts its own "See it in your room" button next to
+   the add-to-cart form; it is not part of the Figma PDP, so keep it hidden here. */
+.pdp-figma [id^='homevisioner-root-'] {
+  display: none !important;
+}
+
+/* ---------- Desktop */
+@media screen and (min-width: 990px) {
+  .pdp-figma {
+    padding: 0 max(2.4rem, 8.33vw) 12rem;
+  }
+
+  .pdp-figma__layout {
+    grid-template-columns: minmax(0, 900fr) minmax(0, 660fr);
+    align-items: start;
+    gap: clamp(2.4rem, 2.08vw, 4rem);
+  }
+
+  .pdp-figma__gallery {
+    grid-template-columns: 10rem minmax(0, 1fr);
+  }
+
+  .pdp-figma__gallery:not(:has(.pdp-figma__thumbs)) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pdp-figma__thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    /* as tall as the main image (does not size the row), scrolls when longer */
+    align-self: stretch;
+    height: 100%;
+    contain: size;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .pdp-figma__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pdp-figma__thumb {
+    display: block;
+    width: 10rem;
+    height: 13.3rem;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0.1rem solid rgb(var(--pdp-200));
+    border-radius: 0.4rem;
+    background: rgb(255, 255, 255);
+    cursor: pointer;
+  }
+
+  .pdp-figma__thumb[aria-current='true'] {
+    border: 0.2rem solid rgb(var(--pdp-primary));
+  }
+
+  .pdp-figma__thumb-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pdp-figma__thumb--contain .pdp-figma__thumb-image {
+    object-fit: contain;
+  }
+
+  .pdp-figma__counter {
+    display: none;
+  }
+
+  .pdp-figma__title {
+    font-size: 3.2rem;
+  }
+
+  .pdp-figma__buttons {
+    flex-direction: row;
+  }
+
+  .pdp-figma__trust li {
+    font-size: 1.8rem;
+  }
+}
+
+/* ==========================================================================
+   Smart calculator drawer (Figma 9:3377 start, 9:4160 error, 9:4968 filled)
+   500 wide on desktop, 24 padding, header + divider, 48px fields.
+   ========================================================================== */
+.pdp-figma.pdp-calc {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  padding: 0;
+}
+
+.pdp-calc[hidden] {
+  display: none;
+}
+
+.pdp-calc__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 15, 15, 0.5);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.pdp-calc__drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(50rem, 100%);
+  padding: 0 2.4rem 2.4rem;
+  overflow-y: auto;
+  background: rgb(255, 255, 255);
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  outline: 0;
+}
+
+.pdp-calc.is-open .pdp-calc__overlay {
+  opacity: 1;
+}
+
+.pdp-calc.is-open .pdp-calc__drawer {
+  transform: none;
+}
+
+.pdp-calc__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  padding: 2.2rem 0 1.6rem;
+  border-bottom: 0.1rem solid rgb(var(--pdp-200));
+}
+
+.pdp-calc__title {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-calc__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgb(var(--pdp-800));
+  cursor: pointer;
+}
+
+.pdp-calc__close svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pdp-calc__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 2.4rem;
+}
+
+.pdp-calc.has-result .pdp-calc__body {
+  flex: 1 1 auto;
+}
+
+.pdp-calc__panel {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-500));
+}
+
+.pdp-calc__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.pdp-calc__field[hidden],
+.pdp-calc__area[hidden],
+.pdp-calc__panel[hidden] {
+  display: none;
+}
+
+.pdp-calc__label,
+.pdp-calc__label-row .pdp-calc__label {
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-calc__label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.pdp-calc__hint {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-primary));
+}
+
+.pdp-calc__input-wrap {
+  position: relative;
+}
+
+.pdp-figma .pdp-calc__input {
+  display: block;
+  width: 100%;
+  height: 4.8rem;
+  margin: 0;
+  padding: 0 4rem 0 1.2rem;
+  border: 0.1rem solid rgb(var(--pdp-200));
+  border-radius: 0.4rem;
+  background: rgb(255, 255, 255);
+  font-family: var(--font-body-family);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+  -moz-appearance: textfield;
+}
+
+.pdp-figma .pdp-calc__input::-webkit-outer-spin-button,
+.pdp-figma .pdp-calc__input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.pdp-figma .pdp-calc__input::placeholder {
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-500));
+  opacity: 1;
+}
+
+.pdp-figma .pdp-calc__input:focus {
+  border-color: rgb(var(--pdp-primary));
+  outline: 0;
+}
+
+.pdp-figma .pdp-calc__input.is-invalid {
+  border-color: rgb(217, 45, 32);
+}
+
+.pdp-calc__unit {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-500));
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.pdp-calc__error {
+  margin: -0.4rem 0 0;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: rgb(217, 45, 32);
+}
+
+.pdp-calc__error[hidden] {
+  display: none;
+}
+
+.pdp-calc__area {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-calc__area strong {
+  font-weight: 700;
+}
+
+.pdp-figma .pdp-calc__qty {
+  width: 100%;
+}
+
+.pdp-calc__qty .pdp-figma__qty-input {
+  width: 6ch;
+}
+
+.pdp-calc__select {
+  position: relative;
+}
+
+.pdp-calc__select-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.pdp-calc__select-value {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  height: 4.8rem;
+  padding: 0 4rem 0 1.2rem;
+  border: 0.1rem solid rgb(var(--pdp-primary));
+  border-radius: 0.4rem;
+  background: rgb(var(--pdp-100));
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(var(--pdp-800));
+  pointer-events: none;
+}
+
+.pdp-calc__select:focus-within .pdp-calc__select-value {
+  outline: 0.2rem solid rgb(var(--pdp-primary));
+  outline-offset: 0.1rem;
+}
+
+.pdp-calc__select-help {
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-500));
+}
+
+.pdp-figma .pdp-calc__select-caret {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  width: 2rem;
+  height: 2rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.pdp-calc__foot {
+  padding-top: 2rem;
+}
+
+.pdp-calc__update {
+  width: 100%;
+}
+
+/* ==========================================================================
+   Figma PDP mobile (DcJu… 2:635) - exact values; component details shared with desktop
+   393 frame, 16 gutters. Gallery 361 x 481 (3:4), 20 to the info.
+   Info: title/rating/text/price 8 apart, 16 to highlights, 8 to "pairs";
+   groups 20 apart; buy area 20; trust 20.
+   ========================================================================== */
+.pdp-figma {
+  --pdp-navy: 31, 58, 77; /* Deep Navy #1F3A4D */
+  --pdp-success: 8, 220, 100; /* #08DC64 */
+}
+
+.pdp-figma:not(.pdp-calc) {
+  padding-bottom: 6.4rem;
+}
+
+.pdp-figma__layout {
+  gap: 2rem;
+}
+
+/* intro */
+.pdp-figma__group--intro {
+  gap: 0.8rem;
+}
+
+.pdp-figma__title {
+  font-size: 2rem;
+  color: rgb(var(--pdp-900));
+}
+
+.pdp-figma__rating {
+  gap: 0.4rem;
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-900));
+}
+
+.pdp-figma__star .pdp-figma-icon {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.pdp-figma__short {
+  font-size: 1.4rem;
+}
+
+.pdp-figma__price-main {
+  gap: 0.4rem;
+}
+
+.pdp-figma__price-current {
+  font-size: 2rem;
+}
+
+.pdp-figma__price-compare {
+  font-size: 1.4rem;
+}
+
+.pdp-figma__price-unit {
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-700));
+}
+
+.pdp-figma__price-sqft {
+  font-size: 1.6rem;
+  color: rgb(var(--pdp-700));
+}
+
+.pdp-figma__highlights {
+  gap: 0.8rem 1.6rem;
+  margin-top: 0.8rem; /* 16 from the price */
+}
+
+.pdp-figma__highlights li {
+  gap: 0.4rem;
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-900));
+}
+
+.pdp-figma__highlights .pdp-figma-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pdp-figma__pairs {
+  padding: 1.2rem;
+  font-size: 1.4rem;
+}
+
+/* groups */
+.pdp-figma__group + .pdp-figma__group {
+  margin-top: 2rem;
+}
+
+.pdp-figma__option {
+  gap: 0.8rem;
+}
+
+.pdp-figma__label,
+.pdp-figma__option-meta {
+  font-size: 1.4rem;
+}
+
+/* color tiles: 2px inset, image radius 2; selected = teal border on grey */
+.pdp-figma__color {
+  width: 4.8rem;
+  height: 4.8rem;
+  padding: 0.2rem;
+  border: 0.1rem solid transparent;
+  background: transparent;
+}
+
+.pdp-figma__color img {
+  border-radius: 0.2rem;
+}
+
+.pdp-figma__color.is-selected {
+  border: 0.1rem solid rgb(var(--pdp-primary));
+  background: rgb(var(--pdp-100));
+  box-shadow: none;
+}
+
+a.pdp-figma__color:hover {
+  border-color: rgb(var(--pdp-200));
+}
+
+/* option cards: selected teal on grey; others fade to 50% */
+.pdp-figma__card {
+  gap: 0.4rem;
+  min-height: 0;
+  padding: 0.8rem;
+  color: rgb(var(--pdp-800));
+  opacity: 0.5;
+}
+
+.pdp-figma__card:hover {
+  opacity: 0.8;
+}
+
+.pdp-figma__card.is-selected {
+  border: 0.1rem solid rgb(var(--pdp-primary));
+  padding: 0.8rem;
+  background: rgb(var(--pdp-100));
+  color: rgb(var(--pdp-800));
+  opacity: 1;
+}
+
+.pdp-figma__card.is-unavailable:not(.is-selected) {
+  opacity: 0.3;
+}
+
+.pdp-figma__card .pdp-figma__card-icon {
+  margin-bottom: 0;
+}
+
+.pdp-figma__card-main {
+  font-size: 1.4rem;
+}
+
+.pdp-figma__card-sub {
+  font-size: 1.2rem;
+  color: rgb(var(--pdp-500));
+}
+
+/* quantity */
+.pdp-figma__quantity-group {
+  gap: 0.8rem;
+}
+
+.pdp-figma__quantity-head .pdp-figma__label {
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__stock {
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-900));
+}
+
+.pdp-figma__stock::before {
+  border-radius: 0;
+  background: rgb(var(--pdp-success));
+}
+
+.pdp-figma__qty {
+  width: 100%;
+  overflow: hidden;
+}
+
+.pdp-figma__qty-button {
+  flex: 0 0 4.6rem;
+  border-right: 0.1rem solid rgb(var(--pdp-200));
+}
+
+.pdp-figma__qty-button:last-child {
+  border-right: 0;
+  border-left: 0.1rem solid rgb(var(--pdp-200));
+}
+
+.pdp-figma__qty-value {
+  gap: 1.2rem;
+  margin: 0;
+  border: 0;
+}
+
+.pdp-figma__coverage,
+.pdp-figma__help {
+  gap: 0.4rem;
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-700));
+}
+
+.pdp-figma__coverage .pdp-figma-icon,
+.pdp-figma__help .pdp-figma-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pdp-figma__help {
+  margin-top: 0.4rem; /* 12 from the coverage line */
+}
+
+.pdp-figma__help-link {
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-navy));
+}
+
+/* buttons: add to cart first on mobile; sample = Deep Navy outline */
+.pdp-figma__buy {
+  margin-top: 2rem;
+}
+
+.pdp-figma__button--outline {
+  border-color: rgb(var(--pdp-navy));
+  color: rgb(var(--pdp-navy));
+}
+
+.pdp-figma__button--outline:hover {
+  background: rgba(var(--pdp-navy), 0.06);
+}
+
+/* installments + delivery */
+.pdp-figma__terms {
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-800));
+}
+
+.pdp-figma__delivery {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0 0.8rem;
+  font-size: 1.2rem;
+  color: rgb(var(--pdp-700));
+}
+
+.pdp-figma__delivery .pdp-figma-icon {
+  grid-row: span 2;
+  width: 2rem;
+  height: 2rem;
+}
+
+.pdp-figma__delivery strong {
+  font-size: 1.4rem;
+  color: rgb(var(--pdp-900));
+}
+
+/* trust */
+.pdp-figma__trust {
+  margin-top: 2rem;
+}
+
+.pdp-figma__trust li {
+  gap: 0.4rem;
+  font-size: 1.4rem;
+}
+
+.pdp-figma__trust img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.pdp-figma__trust li > span {
+  width: min-content; /* Figma mobile: "30-Day / return", "Damage / protection" */
+}
+
+.pdp-figma__tip-bubble {
+  width: 20.8rem;
+}
+
+@media screen and (min-width: 990px) {
+  .pdp-figma:not(.pdp-calc) {
+    padding-bottom: 12rem;
+  }
+
+  .pdp-figma__layout {
+    gap: clamp(2.4rem, 2.08vw, 4rem);
+  }
+
+  .pdp-figma__group--intro {
+    gap: 1.2rem;
+  }
+
+  .pdp-figma__title {
+    font-size: 3.2rem;
+  }
+
+  .pdp-figma__rating {
+    gap: 0.8rem;
+    font-size: 1.6rem;
+  }
+
+  .pdp-figma__star .pdp-figma-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .pdp-figma__short,
+  .pdp-figma__price-compare,
+  .pdp-figma__price-unit,
+  .pdp-figma__price-sqft,
+  .pdp-figma__highlights li,
+  .pdp-figma__pairs,
+  .pdp-figma__label,
+  .pdp-figma__option-meta,
+  .pdp-figma__coverage,
+  .pdp-figma__help,
+  .pdp-figma__help-link,
+  .pdp-figma__terms,
+  .pdp-figma__delivery strong {
+    font-size: 1.6rem;
+  }
+
+  .pdp-figma__quantity-head .pdp-figma__label,
+  .pdp-figma__stock {
+    font-size: 1.4rem;
+  }
+
+  .pdp-figma__price-current {
+    font-size: 2.8rem;
+  }
+
+  .pdp-figma__highlights {
+    gap: 0.8rem 2.4rem;
+    margin-top: 0;
+  }
+
+  .pdp-figma__highlights li,
+  .pdp-figma__coverage,
+  .pdp-figma__help {
+    gap: 0.8rem;
+  }
+
+  .pdp-figma__highlights .pdp-figma-icon,
+  .pdp-figma__coverage .pdp-figma-icon,
+  .pdp-figma__help .pdp-figma-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .pdp-figma__pairs {
+    padding: 1.2rem 1.6rem;
+  }
+
+  .pdp-figma__group + .pdp-figma__group {
+    margin-top: 2.4rem;
+  }
+
+  .pdp-figma__option {
+    gap: 1.2rem;
+  }
+
+  .pdp-figma__color {
+    width: 5.6rem;
+    height: 5.6rem;
+  }
+
+  .pdp-figma__card,
+  .pdp-figma__card.is-selected {
+    min-height: 9.9rem;
+    padding: 1.6rem;
+  }
+
+  .pdp-figma__card-main {
+    font-size: 1.6rem;
+  }
+
+  .pdp-figma__card-sub {
+    font-size: 1.4rem;
+  }
+
+  .pdp-figma__quantity-group {
+    gap: 1.2rem;
+  }
+
+  .pdp-figma__qty {
+    width: 32.6rem;
+  }
+
+  .pdp-figma__help {
+    margin-top: 0;
+  }
+
+  .pdp-figma__buy {
+    margin-top: 3.2rem;
+  }
+
+  .pdp-figma__delivery {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem 1.2rem;
+    font-size: 1.6rem;
+  }
+
+  .pdp-figma__delivery .pdp-figma-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .pdp-figma__trust {
+    margin-top: 3.2rem;
+  }
+
+  .pdp-figma__trust li {
+    gap: 0.8rem;
+    font-size: 1.8rem;
+  }
+
+  .pdp-figma__trust img {
+    width: 3.4rem;
+    height: 3.4rem;
+  }
+
+  .pdp-figma__trust li > span {
+    width: auto;
+  }
+
+  .pdp-figma__tip-bubble {
+    width: 27.4rem;
+  }
+}

@@ -1,4 +1,10 @@
 {% comment %}theme-check-disable TemplateLength{% endcomment %}
+{%- if section.settings.pdp_style == 'figma' -%}
+  {{ 'section-pdp-figma.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'pdp-figma.js' | asset_url }}" defer="defer"></script>
+  {% render 'product-page-figma', section: section %}
+{%- else -%}
 {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
 {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
 {{ 'component-badge.css' | asset_url | stylesheet_tag }}
@@ -1605,6 +1611,7 @@
     })();
   </script>
 </section>
+{%- endif -%}
 
 <script>
   (function () {
@@ -2666,6 +2673,127 @@
     }
   ],
   "settings": [
+    {
+      "type": "select",
+      "id": "pdp_style",
+      "options": [
+        { "value": "default", "label": "t:sections.main-product.settings.pdp_style.options__1.label" },
+        { "value": "figma", "label": "t:sections.main-product.settings.pdp_style.options__2.label" }
+      ],
+      "default": "default",
+      "label": "t:sections.main-product.settings.pdp_style.label",
+      "info": "t:sections.main-product.settings.pdp_style.info"
+    },
+    {
+      "type": "select",
+      "id": "figma_gallery_square_fit",
+      "options": [
+        { "value": "cover", "label": "t:sections.main-product.settings.figma_gallery_square_fit.options__1.label" },
+        { "value": "contain", "label": "t:sections.main-product.settings.figma_gallery_square_fit.options__2.label" }
+      ],
+      "default": "cover",
+      "label": "t:sections.main-product.settings.figma_gallery_square_fit.label",
+      "info": "t:sections.main-product.settings.figma_gallery_square_fit.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "figma_show_short_text",
+      "default": true,
+      "label": "t:sections.main-product.settings.figma_show_short_text.label"
+    },
+    {
+      "type": "range",
+      "id": "figma_short_text_length",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "default": 160,
+      "label": "t:sections.main-product.settings.figma_short_text_length.label"
+    },
+    {
+      "type": "text",
+      "id": "figma_unit_word",
+      "default": "box",
+      "label": "t:sections.main-product.settings.figma_unit_word.label"
+    },
+    {
+      "type": "text",
+      "id": "figma_unit_word_plural",
+      "default": "boxes",
+      "label": "t:sections.main-product.settings.figma_unit_word_plural.label"
+    },
+    {
+      "type": "text",
+      "id": "figma_highlight_1",
+      "default": "No tool needed",
+      "label": "t:sections.main-product.settings.figma_highlight_1.label",
+      "info": "t:sections.main-product.settings.figma_highlight_1.info"
+    },
+    {
+      "type": "text",
+      "id": "figma_highlight_2",
+      "default": "Light weight",
+      "label": "t:sections.main-product.settings.figma_highlight_2.label"
+    },
+    {
+      "type": "text",
+      "id": "figma_pairs_text",
+      "default": "intimate interiors, backsplashes, accent layers.",
+      "label": "t:sections.main-product.settings.figma_pairs_text.label"
+    },
+    {
+      "type": "range",
+      "id": "figma_color_tile_image",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.main-product.settings.figma_color_tile_image.label",
+      "info": "t:sections.main-product.settings.figma_color_tile_image.info"
+    },
+    {
+      "type": "range",
+      "id": "figma_delivery_min",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.main-product.settings.figma_delivery_min.label"
+    },
+    {
+      "type": "range",
+      "id": "figma_delivery_max",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 6,
+      "label": "t:sections.main-product.settings.figma_delivery_max.label",
+      "info": "t:sections.main-product.settings.figma_delivery_max.info"
+    },
+    {
+      "type": "text",
+      "id": "figma_trust_1",
+      "default": "30-Day return",
+      "label": "t:sections.main-product.settings.figma_trust_1.label"
+    },
+    {
+      "type": "text",
+      "id": "figma_trust_2",
+      "default": "Damage protection",
+      "label": "t:sections.main-product.settings.figma_trust_2.label"
+    },
+    {
+      "type": "text",
+      "id": "figma_trust_2_tooltip",
+      "default": "Get a full refund if the order doesn't arrive as described, including loss & damage in transit.",
+      "label": "t:sections.main-product.settings.figma_trust_2_tooltip.label"
+    },
+    {
+      "type": "text",
+      "id": "figma_trust_3",
+      "default": "1-year warranty",
+      "label": "t:sections.main-product.settings.figma_trust_3.label"
+    },
     {
       "type": "header",
       "content": "t:sections.main-product.settings.header.content",

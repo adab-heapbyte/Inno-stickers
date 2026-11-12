@@ -1,0 +1,636 @@
+{% comment %}
+  Specs & Installation (Figma PDP 20:1843 "Option 2 - Horizontal Tab").
+  Grey band, heading, accordion rows with icons. The "Specifications" block shows a
+  Property / Value table filled from existing product data:
+  - Dimensions: size option "47.2 in. x 23.6 in." of the selected variant
+  - Material: category metafield shopify.building-board-material
+  - Coverage: snippets/pdp-figma-coverage.liquid (unit price, else size x pack)
+  - Included: pack "(4-Pack)" -> "4 pieces per box"
+  - Extra rows: product metafield "Dimension and Weight" (one "Label: Value" per line)
+  Dimensions / Coverage / Included follow the variant picked on the page (pdp:variant-change).
+  Guide blocks (Installation, Removal, Care, Limits) are shared rich text.
+{% endcomment %}
+{{ 'section-product-specs-figma.css' | asset_url | stylesheet_tag }}
+{{ 'section-step-cards.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'step-cards.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign s = section.settings
+  assign current_variant = product.selected_or_first_available_variant
+
+  # sample variant is not a "box": use the first non-sample variant for the table
+  assign current_title = current_variant.title | downcase
+  if current_title contains 'sample'
+    for v in product.variants
+      assign v_title = v.title | downcase
+      unless v_title contains 'sample'
+        assign current_variant = v
+        break
+      endunless
+    endfor
+  endif
+
+  # material from the category metafield (list of metaobjects with a label)
+  assign material = ''
+  assign material_entries = product.metafields.shopify['building-board-material'].value
+  for entry in material_entries
+    assign entry_label = entry.label.value | append: ''
+    if entry_label != blank
+      if material != blank
+        assign material = material | append: ', '
+      endif
+      assign material = material | append: entry_label
+    endif
+  endfor
+
+  # extra rows from the existing "Dimension and Weight" product field
+  assign extra_rows = ''
+  for mf in product.metafields.custom
+    assign mf_key = mf | first | downcase
+    if mf_key contains 'dimension'
+      assign extra_rows = mf | last
+    endif
+  endfor
+-%}
+
+<div class="product-specs-figma section-{{ section.id }}" style="--specs-background: {{ section.settings.background }};">
+  <div class="product-specs-figma__inner">
+    {%- if s.heading != blank -%}
+      <h2 class="product-specs-figma__heading">{{ s.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="product-specs-figma__list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign block_icon = block.settings.icon | default: 'gear'
+          assign block_open = false
+          if block.settings.open_by_default
+            assign block_open = true
+          endif
+        -%}
+        {%- case block.type -%}
+          {%- when 'specifications' -%}
+            <details class="product-specs-figma__item" {% if block_open %}open{% endif %} {{ block.shopify_attributes }}>
+              <summary class="product-specs-figma__summary">
+                {% render 'pdp-figma-icon', icon: block_icon, class: 'product-specs-figma__icon' %}
+                <span class="product-specs-figma__title">{{ block.settings.title | escape }}</span>
+                {% render 'pdp-figma-icon', icon: 'caret-down', class: 'product-specs-figma__caret' %}
+              </summary>
+              <div class="product-specs-figma__content">
+                <table class="product-specs-figma__table" data-specs-table>
+                  <colgroup>
+                    <col class="product-specs-figma__col-label">
+                    <col>
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col">{{ 'products.product.figma_spec_property' | t }}</th>
+                      <th scope="col">{{ 'products.product.figma_spec_value' | t }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%- comment -%} Dimensions / Coverage / Included: filled per variant (data below) {%- endcomment -%}
+                    <tr data-spec-row="dimensions" hidden>
+                      <th scope="row">{{ 'products.product.figma_spec_dimensions' | t }}</th>
+                      <td data-spec-value></td>
+                    </tr>
+                    {%- if material != blank -%}
+                      <tr>
+                        <th scope="row">{{ 'products.product.figma_spec_material' | t }}</th>
+                        <td>{{ material | escape }}</td>
+                      </tr>
+                    {%- endif -%}
+                    <tr data-spec-row="coverage" hidden>
+                      <th scope="row">{{ 'products.product.figma_spec_coverage' | t }}</th>
+                      <td data-spec-value></td>
+                    </tr>
+                    <tr data-spec-row="included" hidden>
+                      <th scope="row">{{ 'products.product.figma_spec_included' | t }}</th>
+                      <td data-spec-value></td>
+                    </tr>
+                    {%- assign extra_lines = extra_rows | newline_to_br | split: '<br />' -%}
+                    {%- for line in extra_lines -%}
+                      {%- assign line = line | strip -%}
+                      {%- if line contains ':' -%}
+                        {%- assign row_label = line | split: ':' | first | strip -%}
+                        {%- assign row_value = line | remove_first: row_label | remove_first: ':' | strip -%}
+                        {%- if row_label != blank and row_value != blank -%}
+                          <tr>
+                            <th scope="row">{{ row_label | escape }}</th>
+                            <td>{{ row_value | escape }}</td>
+                          </tr>
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+
+          {%- when 'guide' -%}
+            {%- if block.settings.title != blank -%}
+              <details class="product-specs-figma__item" {% if block_open %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="product-specs-figma__summary">
+                  {% render 'pdp-figma-icon', icon: block_icon, class: 'product-specs-figma__icon' %}
+                  <span class="product-specs-figma__title">{{ block.settings.title | escape }}</span>
+                  {% render 'pdp-figma-icon', icon: 'caret-down', class: 'product-specs-figma__caret' %}
+                </summary>
+                <div
+                  class="product-specs-figma__content product-specs-figma__rte rte"
+                  style="--guide-text-size: {{ block.settings.text_size | default: 16 | divided_by: 10.0 }}rem;"
+                >
+                  {{ block.settings.content }}
+                </div>
+              </details>
+            {%- endif -%}
+
+          {%- when 'steps' -%}
+            {%- liquid
+              assign step_count = 0
+              for i in (1..4)
+                assign step_title_key = 'step_' | append: i | append: '_title'
+                if block.settings[step_title_key] != blank
+                  assign step_count = step_count | plus: 1
+                endif
+              endfor
+            -%}
+            {%- if block.settings.title != blank and step_count > 0 -%}
+              <details class="product-specs-figma__item" {% if block_open %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="product-specs-figma__summary">
+                  {% render 'pdp-figma-icon', icon: block_icon, class: 'product-specs-figma__icon' %}
+                  <span class="product-specs-figma__title">{{ block.settings.title | escape }}</span>
+                  {% render 'pdp-figma-icon', icon: 'caret-down', class: 'product-specs-figma__caret' %}
+                </summary>
+                <div class="product-specs-figma__content">
+                  {%- comment -%} Same markup + styles as the home page "Step cards" section (section-step-cards.css) {%- endcomment -%}
+                  <div class="step-cards product-specs-figma__step-cards">
+                    <step-cards-slider class="step-cards__slider">
+                    <ol class="step-cards__list list-unstyled" style="--step-columns: {{ step_count }};" role="list" tabindex="0">
+                      {%- assign step_number = 0 -%}
+                      {%- for i in (1..4) -%}
+                        {%- liquid
+                          assign key_title = 'step_' | append: i | append: '_title'
+                          assign key_text = 'step_' | append: i | append: '_text'
+                          assign key_image = 'step_' | append: i | append: '_image'
+                          assign step_title = block.settings[key_title]
+                          assign step_text = block.settings[key_text]
+                          assign step_image = block.settings[key_image]
+                          if step_title == blank
+                            continue
+                          endif
+                          assign step_number = step_number | plus: 1
+                        -%}
+                        <li class="step-cards__item">
+                          <span class="step-cards__number" aria-hidden="true">
+                            {%- if step_number < 10 -%}0{%- endif -%}
+                            {{- step_number -}}
+                          </span>
+                          <div class="step-cards__media">
+                            {%- if step_image != blank -%}
+                              {{
+                                step_image
+                                | image_url: width: 1600
+                                | image_tag:
+                                  class: 'step-cards__image',
+                                  loading: 'lazy',
+                                  sizes: '(min-width: 990px) calc((100vw - 16.66vw - 4.8rem) / 3), 247px',
+                                  widths: '247, 360, 494, 517, 720, 1034, 1600',
+                                  alt: step_image.alt
+                              }}
+                            {%- else -%}
+                              {{ 'image' | placeholder_svg_tag: 'placeholder-svg step-cards__image' }}
+                            {%- endif -%}
+                          </div>
+                          <div class="step-cards__content">
+                            <h3 class="step-cards__title">{{ step_title | escape }}</h3>
+                            {%- if step_text != blank -%}
+                              <p class="step-cards__text">{{ step_text | escape }}</p>
+                            {%- endif -%}
+                          </div>
+                        </li>
+                      {%- endfor -%}
+                    </ol>
+                    <div class="step-cards__progress" aria-hidden="true">
+                      <span class="step-cards__progress-thumb"></span>
+                    </div>
+                    </step-cards-slider>
+                  </div>
+                </div>
+              </details>
+            {%- endif -%}
+
+          {%- when '@app' -%}
+            {% render block %}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Per variant values for the table (sample variants left out) {%- endcomment -%}
+  <script type="application/json" data-specs-variants>
+    {
+      {%- assign first_entry = true -%}
+      {%- for v in product.variants -%}
+        {%- liquid
+          assign v_title = v.title | downcase
+          if v_title contains 'sample'
+            continue
+          endif
+          capture v_coverage
+            render 'pdp-figma-coverage', variant: v
+          endcapture
+          assign v_coverage = v_coverage | strip | plus: 0
+          assign v_dims = ''
+          assign v_pieces = 0
+          for option_value in v.options
+            if option_value contains ' x '
+              assign v_dims = option_value | split: ' (' | first | strip
+            endif
+            if option_value contains '-Pack' or option_value contains '-pack'
+              assign v_pieces = option_value | split: '(' | last | split: '-' | first | strip | plus: 0
+            endif
+          endfor
+        -%}
+        {%- unless first_entry %},{% endunless -%}
+        "{{ v.id }}": {
+          "dimensions": {{ v_dims | json }},
+          "coverage": {{ v_coverage | round: 2 }},
+          "pieces": {{ v_pieces }}
+        }
+        {%- assign first_entry = false -%}
+      {%- endfor -%}
+    }
+  </script>
+  <script type="application/json" data-specs-strings>
+    {
+      "coverage": {{ 'products.product.figma_spec_coverage_value' | t: value: '[value]' | json }},
+      "included": {{ 'products.product.figma_spec_included_value' | t: count: '[count]' | json }},
+      "includedOne": {{ 'products.product.figma_spec_included_one' | t | json }},
+      "variant": {{ current_variant.id | json }}
+    }
+  </script>
+  <script>
+    (function () {
+      var root = document.currentScript.closest('.product-specs-figma');
+      if (!root) return;
+      var data = {};
+      var strings = {};
+      try {
+        data = JSON.parse(root.querySelector('[data-specs-variants]').textContent);
+        strings = JSON.parse(root.querySelector('[data-specs-strings]').textContent);
+      } catch (e) {
+        return;
+      }
+      function area(value) {
+        var rounded = value >= 10 ? Math.round(value) : Math.round(value * 10) / 10;
+        return rounded.toLocaleString('en-US');
+      }
+      function setRow(name, value) {
+        var row = root.querySelector('[data-spec-row="' + name + '"]');
+        if (!row) return;
+        row.hidden = !value;
+        if (value) row.querySelector('[data-spec-value]').textContent = value;
+      }
+      function render(id) {
+        var v = data[String(id)];
+        if (!v) return;
+        setRow('dimensions', v.dimensions);
+        setRow('coverage', v.coverage ? strings.coverage.replace('[value]', area(v.coverage)) : '');
+        setRow(
+          'included',
+          v.pieces > 1 ? strings.included.replace('[count]', v.pieces) : v.pieces === 1 ? strings.includedOne : ''
+        );
+      }
+      var params = new URLSearchParams(window.location.search);
+      render(data[params.get('variant')] ? params.get('variant') : strings.variant);
+      document.addEventListener('pdp:variant-change', function (event) {
+        if (event.detail && event.detail.variant) render(event.detail.variant.id);
+      });
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.product-specs-figma.name",
+  "tag": "section",
+  "class": "section-product-specs-figma",
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Specs & Installation",
+      "label": "t:sections.product-specs-figma.settings.heading.label"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "default": "#F4F6F8",
+      "label": "t:sections.product-specs-figma.settings.background.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "specifications",
+      "name": "t:sections.product-specs-figma.blocks.specifications.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Specifications",
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.title.label"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            {
+              "value": "ruler",
+              "label": "Ruler"
+            },
+            {
+              "value": "gear",
+              "label": "Gear"
+            },
+            {
+              "value": "trash",
+              "label": "Trash"
+            },
+            {
+              "value": "brush",
+              "label": "Brush"
+            },
+            {
+              "value": "screwdriver",
+              "label": "Screwdriver"
+            },
+            {
+              "value": "warning",
+              "label": "Warning"
+            }
+          ],
+          "default": "ruler",
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.icon.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "default": true,
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.open_by_default.label"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:sections.product-specs-figma.blocks.specifications.settings.paragraph.content"
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "name": "t:sections.product-specs-figma.blocks.steps.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Installation",
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.title.label"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            {
+              "value": "ruler",
+              "label": "Ruler"
+            },
+            {
+              "value": "gear",
+              "label": "Gear"
+            },
+            {
+              "value": "trash",
+              "label": "Trash"
+            },
+            {
+              "value": "brush",
+              "label": "Brush"
+            },
+            {
+              "value": "screwdriver",
+              "label": "Screwdriver"
+            },
+            {
+              "value": "warning",
+              "label": "Warning"
+            }
+          ],
+          "default": "gear",
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.icon.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "default": false,
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.open_by_default.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.product-specs-figma.blocks.steps.settings.step_1.content"
+        },
+        {
+          "type": "image_picker",
+          "id": "step_1_image",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_image.label"
+        },
+        {
+          "type": "text",
+          "id": "step_1_title",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "step_1_text",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_text.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.product-specs-figma.blocks.steps.settings.step_2.content"
+        },
+        {
+          "type": "image_picker",
+          "id": "step_2_image",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_image.label"
+        },
+        {
+          "type": "text",
+          "id": "step_2_title",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "step_2_text",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_text.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.product-specs-figma.blocks.steps.settings.step_3.content"
+        },
+        {
+          "type": "image_picker",
+          "id": "step_3_image",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_image.label"
+        },
+        {
+          "type": "text",
+          "id": "step_3_title",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "step_3_text",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_text.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.product-specs-figma.blocks.steps.settings.step_4.content"
+        },
+        {
+          "type": "image_picker",
+          "id": "step_4_image",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_image.label"
+        },
+        {
+          "type": "text",
+          "id": "step_4_title",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "step_4_text",
+          "label": "t:sections.product-specs-figma.blocks.steps.settings.step_text.label"
+        }
+      ]
+    },
+    {
+      "type": "guide",
+      "name": "t:sections.product-specs-figma.blocks.guide.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Installation",
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.title.label"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            {
+              "value": "ruler",
+              "label": "Ruler"
+            },
+            {
+              "value": "gear",
+              "label": "Gear"
+            },
+            {
+              "value": "trash",
+              "label": "Trash"
+            },
+            {
+              "value": "brush",
+              "label": "Brush"
+            },
+            {
+              "value": "screwdriver",
+              "label": "Screwdriver"
+            },
+            {
+              "value": "warning",
+              "label": "Warning"
+            }
+          ],
+          "default": "gear",
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.icon.label"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.content.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "default": false,
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.open_by_default.label"
+        },
+        {
+          "type": "select",
+          "id": "text_size",
+          "options": [
+            {
+              "value": "16",
+              "label": "16px"
+            },
+            {
+              "value": "18",
+              "label": "18px"
+            }
+          ],
+          "default": "16",
+          "label": "t:sections.product-specs-figma.blocks.guide.settings.text_size.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product-specs-figma.presets.name",
+      "blocks": [
+        {
+          "type": "specifications"
+        },
+        {
+          "type": "steps",
+          "settings": {
+            "title": "Installation",
+            "icon": "gear",
+            "step_1_title": "Prep your wall",
+            "step_2_title": "Measure & trim",
+            "step_3_title": "Peel & press"
+          }
+        },
+        {
+          "type": "guide",
+          "settings": {
+            "title": "Removal",
+            "icon": "trash"
+          }
+        },
+        {
+          "type": "guide",
+          "settings": {
+            "title": "Care & Maintenance",
+            "icon": "brush"
+          }
+        },
+        {
+          "type": "guide",
+          "settings": {
+            "title": "Limits",
+            "icon": "warning"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

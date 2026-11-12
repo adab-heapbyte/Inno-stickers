@@ -1,0 +1,23 @@
+{% comment %}
+  Figma PDP price line: "$99.99 $149.99 /box (covering 31 sq ft)" + "$3.23 /sq ft".
+  The coverage parts are added by pdp-figma.js (they come from the variant data).
+
+  Accepts:
+  - variant: {Object} the selected variant
+  - unit_word: {String} e.g. "box"
+
+  Usage:
+  {% render 'pdp-figma-price', variant: current_variant, unit_word: 'box' %}
+{% endcomment %}
+<p class="pdp-figma__price-main">
+  <span class="pdp-figma__price-current{% if variant.compare_at_price > variant.price %} is-sale{% endif %}" data-pdp-price-current>
+    {{- variant.price | money -}}
+  </span>
+  <s class="pdp-figma__price-compare" data-pdp-price-compare{% unless variant.compare_at_price > variant.price %} hidden{% endunless %}>
+    {{- variant.compare_at_price | money -}}
+  </s>
+  <span class="pdp-figma__price-unit">
+    /{{ unit_word | escape }}<span data-pdp-price-covering></span>
+  </span>
+</p>
+<p class="pdp-figma__price-sqft" data-pdp-price-sqft hidden></p>

@@ -451,7 +451,7 @@
 
     {% sections 'header-group' %}
 
-    {% if settings.show_breadcrumbs and template.name == 'collection' or settings.show_breadcrumbs and template.name == 'cart' %}
+    {% if settings.show_breadcrumbs and template.name == 'collection' or settings.show_breadcrumbs and template.name == 'cart' or settings.show_breadcrumbs and template.name == 'product' %}
       {% render 'breadcrumbs' %}
     {% endif %}
     <main
@@ -473,7 +473,7 @@
       {% endif %}
     </main>
     {%- comment -%} Collection and cart pages show the breadcrumb under the header (Figma); other pages keep it above the footer {%- endcomment -%}
-    {% if settings.show_breadcrumbs and template.name != 'collection' and template.name != 'cart' %}
+    {% if settings.show_breadcrumbs and template.name != 'collection' and template.name != 'cart' and template.name != 'product' %}
       {% render 'breadcrumbs' %}
     {% endif %}
     {% if settings.home_page_slider == false or template.name != 'index' %}

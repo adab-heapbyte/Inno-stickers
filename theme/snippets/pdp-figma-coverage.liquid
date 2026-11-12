@@ -1,0 +1,36 @@
+{%- comment -%}
+  Outputs a variant's coverage per box in sq ft (number, 2 decimals) or 0.
+  1. Shopify unit price measurement in sq ft (Admin: variant > Unit price)
+  2. else the size option "W in. x H in. (N-Pack)" = W x H x N / 144
+
+  Accepts:
+  - variant: {Object}
+
+  Usage:
+  {%- capture coverage -%}{% render 'pdp-figma-coverage', variant: variant %}{%- endcapture -%}
+{%- endcomment -%}
+{%- liquid
+  assign coverage = 0
+  if variant.unit_price_measurement and variant.unit_price_measurement.quantity_value
+    assign measure_unit = variant.unit_price_measurement.quantity_unit | downcase
+    if measure_unit contains 'ft'
+      assign coverage = variant.unit_price_measurement.quantity_value
+    endif
+  endif
+  if coverage == 0
+    for option_value in variant.options
+      if option_value contains ' x ' and option_value contains 'in'
+        assign w = option_value | split: ' x ' | first | remove: 'in.' | remove: '"' | remove: 'in' | strip | plus: 0
+        assign h = option_value | split: ' x ' | last | split: ' ' | first | remove: '"' | strip | plus: 0
+        assign pack = 1
+        if option_value contains '-Pack' or option_value contains '-pack'
+          assign pack = option_value | split: '(' | last | split: '-' | first | strip | plus: 0
+        endif
+        if w > 0 and h > 0 and pack > 0
+          assign coverage = w | times: h | times: pack | divided_by: 144.0
+        endif
+      endif
+    endfor
+  endif
+  echo coverage | round: 2
+-%}

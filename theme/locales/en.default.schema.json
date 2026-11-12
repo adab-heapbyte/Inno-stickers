@@ -5568,6 +5568,71 @@
         "scroll_to_variant_media_mobile": {
           "label": "Scroll to selected variant image",
           "info": "Applies on mobile. When a variant with an image is selected, the page scrolls to that image in the gallery."
+        },
+        "pdp_style": {
+          "label": "Style",
+          "info": "Figma: product page from the design (gallery, option cards, sample button, delivery, trust icons).",
+          "options__1": {
+            "label": "Default"
+          },
+          "options__2": {
+            "label": "Figma"
+          }
+        },
+        "figma_show_short_text": {
+          "label": "Show short text (first paragraph of the description)"
+        },
+        "figma_short_text_length": {
+          "label": "Short text length"
+        },
+        "figma_unit_word": {
+          "label": "Unit word"
+        },
+        "figma_unit_word_plural": {
+          "label": "Unit word (plural)"
+        },
+        "figma_highlight_1": {
+          "label": "Highlight 1",
+          "info": "Highlights show on Peel & Stick products."
+        },
+        "figma_highlight_2": {
+          "label": "Highlight 2"
+        },
+        "figma_pairs_text": {
+          "label": "Pairs well with"
+        },
+        "figma_color_tile_image": {
+          "label": "Color tile image",
+          "info": "Which product image is used for the color tile (colors come from Related products)."
+        },
+        "figma_delivery_min": {
+          "label": "Delivery: from (business days)"
+        },
+        "figma_delivery_max": {
+          "label": "Delivery: to (business days)",
+          "info": "0 hides the delivery estimate."
+        },
+        "figma_trust_1": {
+          "label": "Trust text 1"
+        },
+        "figma_trust_2": {
+          "label": "Trust text 2"
+        },
+        "figma_trust_2_tooltip": {
+          "label": "Trust text 2 tooltip"
+        },
+        "figma_trust_3": {
+          "label": "Trust text 3"
+        },
+        "figma_gallery_square_fit": {
+          "label": "Square photos",
+          "info": "The gallery frame is 3:4 (Figma). Fill trims the sides of square photos; Show whole keeps them complete on white.",
+          "options__1": {
+            "label": "Fill the frame"
+          },
+          "options__2": {
+            "label": "Show whole"
+          }
         }
       }
     },
@@ -7177,6 +7242,139 @@
       },
       "presets": {
         "name": "Banner grid"
+      }
+    },
+    "product-specs-figma": {
+      "name": "Specs & Installation",
+      "settings": {
+        "heading": {
+          "label": "Heading"
+        },
+        "background": {
+          "label": "Background"
+        }
+      },
+      "blocks": {
+        "specifications": {
+          "name": "Specifications table",
+          "settings": {
+            "paragraph": {
+              "content": "Rows come from the product: Dimensions and Included (size option), Material (category field), Coverage (unit price or size). Extra rows: product field \"Dimension and Weight\", one \"Label: Value\" per line."
+            }
+          }
+        },
+        "guide": {
+          "name": "Guide",
+          "settings": {
+            "title": {
+              "label": "Title"
+            },
+            "icon": {
+              "label": "Icon"
+            },
+            "content": {
+              "label": "Content"
+            },
+            "open_by_default": {
+              "label": "Open by default"
+            },
+            "text_size": {
+              "label": "Text size (desktop)"
+            }
+          }
+        },
+        "steps": {
+          "name": "Steps (with images)",
+          "settings": {
+            "step_1": {
+              "content": "Step 1"
+            },
+            "step_2": {
+              "content": "Step 2"
+            },
+            "step_3": {
+              "content": "Step 3"
+            },
+            "step_4": {
+              "content": "Step 4"
+            },
+            "step_image": {
+              "label": "Image"
+            },
+            "step_title": {
+              "label": "Title"
+            },
+            "step_text": {
+              "label": "Text"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Specs & Installation"
+      }
+    },
+    "product-editorial-figma": {
+      "name": "Product editorial",
+      "settings": {
+        "paragraph": {
+          "content": "Only shows on products that have a Product block below (brief: hero products only)."
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        }
+      },
+      "blocks": {
+        "product": {
+          "name": "Product",
+          "settings": {
+            "product": {
+              "label": "Product"
+            },
+            "image_1_position": {
+              "label": "Photo 1: product photo number"
+            },
+            "image_2_position": {
+              "label": "Photo 2: product photo number"
+            },
+            "image_position": {
+              "info": "Uses the product's own photo at this position in its gallery (exact finish)."
+            },
+            "image_1": {
+              "label": "Photo 1 (upload)"
+            },
+            "image_2": {
+              "label": "Photo 2 (upload)"
+            },
+            "image_upload": {
+              "info": "Optional. Replaces the product photo."
+            },
+            "heading": {
+              "label": "Heading"
+            },
+            "text": {
+              "label": "Text"
+            },
+            "override": {
+              "info": "Optional. Replaces the section heading / text for this product."
+            },
+            "image_1_file": {
+              "label": "Photo 1: theme image file"
+            },
+            "image_2_file": {
+              "label": "Photo 2: theme image file"
+            },
+            "image_file": {
+              "info": "Optional. A file in the theme's assets, e.g. editorial-natural-oak-1.jpg. Upload wins over this, this wins over the photo number."
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Product editorial"
       }
     }
   }

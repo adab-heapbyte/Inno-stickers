@@ -113,25 +113,27 @@
         "floated_form"
       ],
       "settings": {
-        "gallery_type": "thumbs_aside_horizontal",
-        "enable_slider_loop": false,
-        "enable_slider_navigation": false,
-        "disable_scrolling": false,
-        "mobile_gallery_type": "synchronize",
-        "mobile_show_next_preview": false,
-        "desktop_alignment": "right",
-        "mobile_alignment": "before",
-        "slider_direction": "vertical",
-        "mobile_sliding_bar_position": "overlay",
-        "image_ratio": "portrait",
-        "image_fit": "cover",
-        "enable_full_screen": false,
-        "enable_video_autoplay": false,
-        "header_overlay": false,
-        "enable_sticky_button": false,
-        "variant_media_display": "show_all",
+        "pdp_style": "figma",
+        "enable_auto_navigation": false,
         "scroll_to_variant_media_mobile": false,
-        "enable_auto_navigation": false
+        "variant_media_display": "show_all",
+        "enable_sticky_button": false,
+        "header_overlay": false,
+        "enable_video_autoplay": false,
+        "enable_full_screen": false,
+        "image_fit": "cover",
+        "image_ratio": "portrait",
+        "mobile_sliding_bar_position": "overlay",
+        "slider_direction": "vertical",
+        "mobile_alignment": "before",
+        "desktop_alignment": "right",
+        "mobile_show_next_preview": false,
+        "mobile_gallery_type": "synchronize",
+        "disable_scrolling": false,
+        "enable_slider_navigation": false,
+        "enable_slider_loop": false,
+        "gallery_type": "thumbs_aside_horizontal",
+        "figma_short_text_length": 120
       }
     },
     "product-slider": {
@@ -201,7 +203,8 @@
         "show_desc": false,
         "margin_top": "m",
         "margin_bottom": "no-indent"
-      }
+      },
+      "disabled": true
     },
     "banner-with-popup": {
       "type": "banner-with-popup",
@@ -239,7 +242,8 @@
         "popup_button_style": "tertiary",
         "margin_top": "no-indent",
         "margin_bottom": "m"
-      }
+      },
+      "disabled": true
     },
     "product-recommendations": {
       "type": "product-recommendations",
@@ -265,10 +269,123 @@
         "margin_top": "no-indent",
         "margin_bottom": "m"
       }
+    },
+    "specs": {
+      "type": "product-specs-figma",
+      "blocks": {
+        "specifications": {
+          "type": "specifications",
+          "settings": {
+            "title": "Specifications",
+            "icon": "ruler",
+            "open_by_default": true
+          }
+        },
+        "installation": {
+          "type": "steps",
+          "settings": {
+            "title": "Installation",
+            "icon": "gear",
+            "open_by_default": false,
+            "step_1_title": "Prep your wall",
+            "step_1_text": "Clean, smooth, dry, primed surface.",
+            "step_2_title": "Measure & trim",
+            "step_2_text": "Plan your layout and trim panels to fit where needed.",
+            "step_3_title": "Peel & press",
+            "step_3_text": "Remove the backing, align your panel and press firmly into place.",
+            "step_1_image": "shopify://shop_images/Group_2.png",
+            "step_2_image": "shopify://shop_images/Group_3.png",
+            "step_3_image": "shopify://shop_images/Group_4.png"
+          }
+        },
+        "removal": {
+          "type": "guide",
+          "settings": {
+            "title": "Removal",
+            "icon": "trash",
+            "open_by_default": false,
+            "content": "<p>Our peel-and-stick products are designed for convenient installation. Before removing them, take care to protect the underlying wall surface.</p><ol><li>Start at an edge. Gently lift one corner of the panel using your fingers.</li><li>Peel slowly. Carefully pull the panel away from the wall, working gradually across the surface.</li><li>Remove any residue. If adhesive remains, use a cleaning method suitable for your wall finish.</li></ol>",
+            "text_size": "16"
+          }
+        },
+        "care": {
+          "type": "guide",
+          "settings": {
+            "title": "Care & Maintenance",
+            "icon": "screwdriver",
+            "open_by_default": false,
+            "content": "<p>Keep your panels looking their best with regular, gentle cleaning.</p><ol><li><strong>Dust regularly:</strong> Use a soft, dry microfiber cloth.</li><li><strong>Clean gently:</strong> Wipe with a slightly damp cloth when needed.</li><li><strong>Avoid harsh chemicals:</strong> Do not use abrasive cleaners, strong solvents, or rough scrubbing tools.</li><li><strong>Dry thoroughly:</strong> Avoid leaving standing water on the surface.</li></ol>",
+            "text_size": "18"
+          }
+        },
+        "limits": {
+          "type": "guide",
+          "settings": {
+            "title": "Limits",
+            "icon": "warning",
+            "open_by_default": false,
+            "content": "<p>For the best results, check that your installation surface and environment are suitable before applying the product.</p><p><strong>Important:</strong> Installation compatibility, water resistance, heat tolerance, and removal limitations vary by product. Always refer to the specific product instructions.</p>",
+            "text_size": "18"
+          }
+        }
+      },
+      "block_order": [
+        "specifications",
+        "installation",
+        "removal",
+        "care",
+        "limits"
+      ],
+      "settings": {
+        "background": "#F4F6F8",
+        "heading": "Specs & Installation"
+      }
+    },
+    "editorial": {
+      "type": "product-editorial-figma",
+      "blocks": {
+        "natural_oak": {
+          "type": "product",
+          "settings": {
+            "product": "natural-oak-wood-slat-acoustic-panels-decorative-wall-paneling",
+            "image_1_position": 8,
+            "image_2_position": 9,
+            "image_1_file": "editorial-natural-oak-1.jpg",
+            "image_2_file": "editorial-natural-oak-2.jpg"
+          }
+        },
+        "walnut": {
+          "type": "product",
+          "settings": {
+            "product": "walnut-wood-slat-acoustic-panels-decorative-wall-paneling",
+            "image_1_position": 7,
+            "image_2_position": 8
+          }
+        },
+        "black_grey": {
+          "type": "product",
+          "settings": {
+            "product": "black-oak-wood-slat-acoustic-panels-decorative-wall-paneling",
+            "image_1_position": 7,
+            "image_2_position": 8
+          }
+        }
+      },
+      "block_order": [
+        "natural_oak",
+        "walnut",
+        "black_grey"
+      ],
+      "settings": {
+        "heading": "Product Editorial",
+        "text": "<p>Bring a modern, earthy look to any room with acoustic wood panels. Designed to reduce echo and add natural texture.</p>"
+      }
     }
   },
   "order": [
     "main",
+    "specs",
+    "editorial",
     "product-slider",
     "banner-with-popup",
     "product-recommendations"
