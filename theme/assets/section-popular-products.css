@@ -526,7 +526,7 @@
 }
 
 /* ---------- Inset product photo (Figma "Picture") ----------
-   Square photo centred in the grey box (no shadow).
+   Square photo centred in the grey box, with the layered soft drop shadow (QA-10).
    Desktop 300 of 370 (81.08%), mobile 109 of 168.5 (64.69%).
    `translate` is used so the theme hover scale (transform) still composes. */
 .popular-products--catalog .card__inner .media .swiper-slide.media {
@@ -542,6 +542,8 @@
   aspect-ratio: 1 / 1;
   translate: -50% -50%;
   object-fit: cover;
+  /* QA-10: Figma design note 5 - layered soft drop shadow */
+  filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.08)) drop-shadow(0 1.9rem 1.1rem rgba(0, 0, 0, 0.05));
 }
 
 @media screen and (min-width: 990px) {
@@ -560,4 +562,9 @@
 .popular-products--catalog .card__inner .product-button-group,
 .popular-products--catalog .card__inner .product-pagination {
   display: none !important;
+}
+
+/* QA-23: Figma badge = text line + 2px padding (mobile 19px); the theme's 20px minimum made it 20px */
+.popular-products--catalog .card__badge .badge {
+  min-height: 0;
 }

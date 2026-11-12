@@ -3755,7 +3755,13 @@ input[type=radio]:focus-visible + label {
   flex-wrap: wrap;
   gap: 0.8rem;
   text-align: center;
-  min-height: 4rem;
+  min-height: var(--announcement-height, 4rem); /* QA-07: follow the bar height (38px) */
+}
+
+/* QA-07: with a background colour override the inner box takes the same colour
+   (it kept the scheme's #1F1F1F, showing a two-tone bar) */
+.section-announcement-bar--custom-bg .announcement-bar {
+  background-color: transparent;
 }
 .section-announcement .announcement-bar__image {
   display: flex;

@@ -1,3 +1,4 @@
+{%- comment -%} QA-07: heights down to 30px (Figma bar is 38px) {%- endcomment -%}
 <style>
   :root {
   	--announcement-height: {{ section.settings.height_mobile }}px;
@@ -49,7 +50,7 @@
     endif
   -%}
   <div
-    class="section-announcement-bar color-{{ section.settings.color_scheme }} {% if section.settings.enable_ticker and speed != 0 and section.settings.ticker_pause_hover %} announcement-bar-ticker--pause-hover{% endif %}"
+    class="section-announcement-bar color-{{ section.settings.color_scheme }}{% if bar_style != blank %} section-announcement-bar--custom-bg{% endif %} {% if section.settings.enable_ticker and speed != 0 and section.settings.ticker_pause_hover %} announcement-bar-ticker--pause-hover{% endif %}"
     {% if bar_style != blank %}
       style="{{ bar_style }}"
     {% endif %}
@@ -146,18 +147,18 @@
     {
       "type": "range",
       "id": "height",
-      "min": 40,
+      "min": 30,
       "max": 100,
-      "step": 5,
+      "step": 1,
       "default": 40,
       "label": "t:sections.announcement-bar.settings.height.label"
     },
     {
       "type": "range",
       "id": "height_mobile",
-      "min": 40,
+      "min": 30,
       "max": 100,
-      "step": 5,
+      "step": 1,
       "default": 40,
       "label": "t:sections.announcement-bar.settings.height_mobile.label"
     },

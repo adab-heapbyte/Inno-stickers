@@ -324,16 +324,26 @@
               {% endif %}
             </div>
 
-            <a
-              href="{% if is_column_linked %}{{ block.settings.column_link }}{% else %}{{ block.settings.button_link }}{% endif %}"
-              class="multicolumn__link-overlay{% if is_column_linked %} multicolumn__link-overlay--visual{% endif %}"
-              aria-label="{{ block.settings.heading | escape }}"
-              {% if is_column_linked %}
-                tabindex="-1"
-                aria-hidden="true"
-              {% endif %}
-              style="opacity: {{ block.settings.overlay_opacity }}"
-            ></a>
+            {%- comment -%} QA-17: no overlay link when the card has no link (it was an empty href that reloaded the page) {%- endcomment -%}
+            {%- liquid
+              if is_column_linked
+                assign overlay_link = block.settings.column_link
+              else
+                assign overlay_link = block.settings.button_link
+              endif
+            -%}
+            {%- if overlay_link != blank -%}
+              <a
+                href="{% if is_column_linked %}{{ block.settings.column_link }}{% else %}{{ block.settings.button_link }}{% endif %}"
+                class="multicolumn__link-overlay{% if is_column_linked %} multicolumn__link-overlay--visual{% endif %}"
+                aria-label="{{ block.settings.heading | escape }}"
+                {% if is_column_linked %}
+                  tabindex="-1"
+                  aria-hidden="true"
+                {% endif %}
+                style="opacity: {{ block.settings.overlay_opacity }}"
+              ></a>
+            {%- endif -%}
           </div>
         {%- endfor -%}
       </div>

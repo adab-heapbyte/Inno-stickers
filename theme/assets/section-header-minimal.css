@@ -307,3 +307,83 @@
     width: 100%;
   }
 }
+
+/* ==========================================================================
+   QA-21 / QA-27: mobile + tablet header (below 1100px) as the Figma mobile
+   "Navigation": 8px / 16px padding, 66px bar + 1px #E2E4E9 line = 67px,
+   24px list and magnifying-glass icons (same icons as desktop).
+   ========================================================================== */
+@media screen and (max-width: 1099px) {
+  .header.header--style-minimal {
+    box-sizing: border-box;
+    min-height: 6.7rem; /* 66px bar (8px padding included) + 1px line */
+    padding: 0.8rem 1.6rem;
+    border-bottom: 0.1rem solid rgb(226, 228, 233); /* Neutral/200 #E2E4E9 */
+  }
+
+  /* Menu button: the theme's 18 x 13 lines -> Figma 24px list icon (closed state only) */
+  .header--style-minimal summary.header__icon--menu {
+    width: 2.4rem;
+    height: 2.4rem;
+    min-width: 0;
+    margin-left: 0; /* theme -12px put the icon at x4; Figma x16 */
+  }
+
+  /* The theme's 18 x 13 hamburger never shows; while the drawer opens/closes the theme keeps
+     [open] without .menu-opening, so the 24px icon follows .menu-opening (no jump on close) */
+  .header--style-minimal summary.header__icon--menu > span > svg:first-child {
+    display: none;
+  }
+
+  .header--style-minimal details:not(.menu-opening) > summary.header__icon--menu > span::before {
+    content: "";
+    display: block;
+    flex: 0 0 2.4rem; /* the span is a flex row: keep the icon from shrinking */
+    width: 2.4rem;
+    height: 2.4rem;
+    background: url("icon-header-list.svg") center / 2.4rem 2.4rem no-repeat;
+  }
+
+  /* The theme's 50px + 10px logo wrapper and 62px icon column made the bar 79px:
+     let the bar's own 67px decide (logo 40px, icons 24px, cart 21px fit inside) */
+  .header--style-minimal .header__heading {
+    min-height: 0;
+    padding: 0;
+  }
+
+  .header--style-minimal .header__column,
+  .header--style-minimal .header__icons,
+  .header--style-minimal .header__icon--cart,
+  .header--style-minimal .header__cart--text {
+    height: auto;
+    min-height: 0;
+  }
+
+  .header--style-minimal .header__icon--cart,
+  .header--style-minimal .header__cart--text {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  /* Search: the theme's 14px glass -> Figma 24px magnifying glass */
+  .header--style-minimal .header__icon--search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    min-width: 0;
+  }
+
+  .header--style-minimal .header__icon--search > svg {
+    display: none;
+  }
+
+  .header--style-minimal .header__icon--search::before {
+    content: "";
+    display: block;
+    width: 2.4rem;
+    height: 2.4rem;
+    background: url("icon-header-search.svg") center / 2.4rem 2.4rem no-repeat;
+  }
+}

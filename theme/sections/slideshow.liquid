@@ -77,6 +77,18 @@
               assign image = 0
             endif
 
+            # Product photo: a product's own (full-resolution) photo instead of the uploaded image,
+            # used on desktop and mobile unless a separate mobile image is set.
+            assign product_photo = blank
+            if block.settings.image_product != blank
+              assign product_photos = block.settings.image_product.media | where: 'media_type', 'image'
+              assign product_photo_index = block.settings.image_product_position | minus: 1
+              assign product_photo = product_photos[product_photo_index].preview_image
+            endif
+            if product_photo != blank and block.settings.mobile_image == blank
+              assign image = product_photo
+            endif
+
             if block.settings.video != blank and block.settings.mobile_video == blank
               assign video = block.settings.video
             elsif block.settings.video == blank and block.settings.mobile_video != blank
@@ -115,6 +127,14 @@
                 assign desktop_image = block.settings.image
               else
                 assign desktop_image = block.settings.mobile_image
+              endif
+            endif
+
+            if product_photo != blank
+              assign has_block_image = true
+              assign desktop_image = product_photo
+              if block.settings.mobile_image == blank
+                assign mobile_image = product_photo
               endif
             endif
 
@@ -219,10 +239,29 @@
             {% endif %}
           {% endif %}
 
-          <div class="slideshow__image-wrapper">
+          <div
+            class="slideshow__image-wrapper"
+            {%- if block.settings.image_position_y != blank and block.settings.image_position_y != 50 %}
+              style="--slide-image-position-y: {{ block.settings.image_position_y }}%;"
+            {%- endif -%}
+          >
             {%- capture sizes -%}
 							(min-width: 1440px) calc({{ calc_ratio_desktop }} * {{ max_image_desktop_width }}), (min-width: 990px) calc({{ calc_ratio_desktop }} * 50vw), (min-width: 576px) calc({{ calc_ratio_desktop }} * 100vw), calc({{ calc_ratio_mobile }} * 100vw)
 						{%- endcapture -%}
+            {%- comment -%} QA-03: layout_6 (home hero) is always full width {%- endcomment -%}
+            {%- if layout == 'layout_6' -%}
+              {%- capture sizes -%}(min-width: 576px) calc({{ calc_ratio_desktop }} * 100vw), calc({{ calc_ratio_mobile }} * 100vw){%- endcapture -%}
+            {%- endif -%}
+            {%- comment -%} Offer every image at its own full width too (theme list starts at 1100, so a
+              1254px original was only offered at 1100w) {%- endcomment -%}
+            {%- liquid
+              assign widths_base = '750, 1100, 1500, 1780, 2000, 3000, 3840, 4200, 5000'
+              if image != 0 and image != 1
+                assign widths_image = widths_base | append: ', ' | append: image.width
+              endif
+              assign widths_desktop = widths_base | append: ', ' | append: block.settings.image.width
+              assign widths_mobile = widths_base | append: ', ' | append: block.settings.mobile_image.width
+            -%}
             {% if image != 0 and block.settings.show_video == false %}
               {%- if image and image != 1 -%}
                 {{
@@ -232,7 +271,7 @@
                     class: 'slideshow__image',
                     loading: image_loading,
                     sizes: sizes,
-                    widths: '1100, 1500, 1780, 2000, 3000, 3840, 4200, 5000',
+                    widths: widths_image,
                     fetchpriority: fetch_priority
                 }}
               {% elsif image == 1 %}
@@ -243,7 +282,7 @@
                     class: 'slideshow__image desktop_image',
                     loading: image_loading,
                     sizes: sizes,
-                    widths: '1100, 1500, 1780, 2000, 3000, 3840, 4200, 5000',
+                    widths: widths_desktop,
                     fetchpriority: fetch_priority
                 }}
                 {{
@@ -253,7 +292,7 @@
                     class: 'slideshow__image mobile_image',
                     loading: image_loading,
                     sizes: sizes,
-                    widths: '1100, 1500, 1780, 2000, 3000, 3840, 4200, 5000',
+                    widths: widths_mobile,
                     fetchpriority: fetch_priority
                 }}
               {%- endif -%}
@@ -578,6 +617,32 @@
           "type": "image_picker",
           "id": "mobile_image",
           "label": "t:sections.all.image.mobile_image.label"
+        },
+        {
+          "type": "range",
+          "id": "image_position_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50,
+          "label": "t:sections.slideshow.blocks.slideshow-item.settings.image_position_y.label",
+          "info": "t:sections.slideshow.blocks.slideshow-item.settings.image_position_y.info"
+        },
+        {
+          "type": "product",
+          "id": "image_product",
+          "label": "t:sections.slideshow.blocks.slideshow-item.settings.image_product.label",
+          "info": "t:sections.slideshow.blocks.slideshow-item.settings.image_product.info"
+        },
+        {
+          "type": "range",
+          "id": "image_product_position",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "default": 1,
+          "label": "t:sections.slideshow.blocks.slideshow-item.settings.image_product_position.label"
         },
         {
           "type": "range",

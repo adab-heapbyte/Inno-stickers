@@ -110,7 +110,8 @@
   </nav>
 </div>
 
-{% render 'header-logo', tag: 'h1' %}
+{%- comment -%} QA-24: the home page H1 is the hero title, not the logo {%- endcomment -%}
+{% render 'header-logo', tag: 'div' %}
 
 <div class="header__column">
   {% render 'header-region', section: section %}

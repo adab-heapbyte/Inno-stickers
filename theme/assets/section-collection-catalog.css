@@ -1526,3 +1526,8 @@
     padding: 1.2rem;
   }
 }
+
+/* QA-23: Figma badge = text line + 2px padding (mobile 19px); the theme's 20px minimum made it 20px */
+.collection-catalog .card__badge .badge {
+  min-height: 0;
+}

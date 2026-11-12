@@ -15,8 +15,8 @@
       "type": "announcement-bar",
       "name": "t:sections.announcement-bar.name",
       "settings": {
-        "height": 40,
-        "height_mobile": 40,
+        "height": 38,
+        "height_mobile": 38,
         "color_scheme": "background-2",
         "background_color": "#18181b",
         "show_close_button": false,

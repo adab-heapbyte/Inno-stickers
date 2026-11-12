@@ -54,7 +54,10 @@ if (!customElements.get('room-inspiration-slider')) {
     update() {
       if (!this.swiper) return;
 
-      const index = this.swiper.isEnd ? this.total : this.swiper.activeIndex + 1;
+      // QA-15: count from the first visible story. When every story fits (start and end at
+      // once, e.g. 3 stories at 3 per view) it reads 01; at the real end it reads the total.
+      const atEnd = this.swiper.isEnd && !this.swiper.isBeginning;
+      const index = atEnd ? this.total : this.swiper.activeIndex + 1;
       if (this.current) this.current.textContent = String(Math.min(index, this.total)).padStart(2, '0');
 
       const progress = Math.min(Math.max(this.swiper.progress || 0, 0), 1);

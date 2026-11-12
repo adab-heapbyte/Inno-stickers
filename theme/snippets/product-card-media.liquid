@@ -282,7 +282,12 @@
           class="subtitle badge badge--soldout {% if settings.badges_background %} badge-transparent {% endif %}"
           aria-hidden="true"
         >
-          {{- 'products.product.sold_out' | t -}}
+          {%- comment -%} Figma catalog cards (Best Seller, PLP) say "OUT OF STOCK" {%- endcomment -%}
+          {%- if sale_badge_format == 'percent_off' -%}
+            {{- 'products.product.quantity.out_of_stock' | t -}}
+          {%- else -%}
+            {{- 'products.product.sold_out' | t -}}
+          {%- endif -%}
         </span>
       {%- elsif badge_compare > badge_price
         and product_card_product.available

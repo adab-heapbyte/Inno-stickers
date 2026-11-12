@@ -65,7 +65,15 @@
                   <h3 class="step-cards__title">{{ block.settings.title | escape }}</h3>
                 {%- endif -%}
                 {%- if block.settings.text != blank -%}
-                  <p class="step-cards__text">{{ block.settings.text }}</p>
+                  {%- comment -%} QA-19: optional shorter text below 990px (Figma mobile copy) {%- endcomment -%}
+                  {%- if block.settings.text_mobile != blank -%}
+                    <p class="step-cards__text">
+                      <span class="step-cards__text-desktop">{{ block.settings.text }}</span>
+                      <span class="step-cards__text-mobile">{{ block.settings.text_mobile }}</span>
+                    </p>
+                  {%- else -%}
+                    <p class="step-cards__text">{{ block.settings.text }}</p>
+                  {%- endif -%}
                 {%- endif -%}
               </div>
             </li>
@@ -214,6 +222,12 @@
           "id": "text",
           "default": "Short description of this step.",
           "label": "t:sections.step-cards.blocks.step.settings.text.label"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text_mobile",
+          "label": "t:sections.step-cards.blocks.step.settings.text_mobile.label",
+          "info": "t:sections.step-cards.blocks.step.settings.text_mobile.info"
         }
       ]
     }

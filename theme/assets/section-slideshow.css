@@ -495,20 +495,15 @@ section:first-child .section--has-overlay.slideshow--layout_4 .slideshow__info, 
    Mobile  - Figma "hero · 393" (3:582): 393 x 640 -> 64rem.
    Desktop - Figma "hero" (1:1270): 1920 x 663 -> 34.53vw, never below 52rem.
    ========================================================================== */
-/* Mobile: follow the phone's screen height so ~220px of the next section
-   shows below the hero; never shorter than 440px (content fits) and never
-   taller than Figma's 640px. */
+/* QA-04: mobile as Figma - "hero · 393" is 640 including the 38px bar and the
+   67px header, so the hero image area is 535px on every phone. */
 .slideshow--banner {
-  min-height: 53rem;
-  min-height: clamp(
-    44rem,
-    calc(100svh - var(--announcement-height, 0px) - var(--header-height, 0px) - 22rem),
-    64rem
-  );
+  min-height: 53.5rem;
 }
 @media screen and (min-width: 750px) {
   .slideshow--banner {
-    min-height: max(52rem, 34.53vw);
+    /* QA-05: Figma 663 at 1920; 34.8vw = 663 at 1905 (page width beside the scrollbar) */
+    min-height: max(52rem, 34.8vw);
   }
 }
 
@@ -566,7 +561,7 @@ section:first-child .section--has-overlay.slideshow--layout_4 .slideshow__info, 
   margin-top: 0.8rem;
   font-size: 1.4rem;
   line-height: 1.5;
-  color: rgba(var(--color-foreground), 0.96);
+  color: rgb(244, 244, 244); /* QA-06: Figma Neutral/100 #F4F4F4 */
 }
 
 .slideshow--layout_6 .slideshow__button {
@@ -586,7 +581,7 @@ section:first-child .section--has-overlay.slideshow--layout_4 .slideshow__info, 
 /* Dots: 6px, 4px apart, 40px from the bottom, visible on every breakpoint */
 .slideshow--layout_6 .slideshow__pagination {
   display: block;
-  bottom: 3rem !important;
+  bottom: 2.7rem !important; /* measured: the 6px dot then ends 40px from the bottom (Figma) */
   z-index: 3;
 }
 .slideshow--layout_6 .slideshow__pagination .swiper-pagination-bullet {
@@ -614,10 +609,33 @@ section:first-child .section--has-overlay.slideshow--layout_4 .slideshow__info, 
 }
 
 @media screen and (min-width: 1360px) {
+  /* QA-05: Figma title 159px from the hero top at 1920.
+     Content (2-line title 134 + 16 + 2-line subtitle 54 + 24 + button 48 = 276) is centred
+     above this offset: (663 - 69 - 276) / 2 = 159 */
+  .slideshow.slideshow--layout_6 .slideshow__contents-wrapper .slideshow__info {
+    bottom: 6.9rem;
+  }
   .slideshow--layout_6 .slideshow__item-heading {
     font-size: 5.6rem;
   }
   .slideshow--layout_6 .slideshow__description {
     font-size: 1.8rem;
+  }
+}
+
+/* Desktop: vertical crop per slide ("Image vertical position", default 50% = theme default).
+   Home hero slide 1 uses 42%: Figma crops the photo from 21.7% down in the 768px frame. */
+@media (min-width: 576px) {
+  .slideshow__image-wrapper .slideshow__image {
+    object-position: 50% var(--slide-image-position-y, 50%);
+  }
+}
+
+/* Mobile home hero: in Figma the photo fills the whole 640px frame, behind the
+   38px bar + 67px header, so it is drawn 105px taller and starts 105px higher. */
+@media (max-width: 575px) {
+  .slideshow--layout_6 .slideshow__image-wrapper {
+    top: -10.5rem;
+    height: calc(100% + 10.5rem);
   }
 }

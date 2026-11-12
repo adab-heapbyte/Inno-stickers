@@ -21,7 +21,7 @@
             "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
             "description_video": "",
             "heading": "Functional Storage Solutions in Solid Wood",
-            "heading_tag": "h2",
+            "heading_tag": "h1",
             "description": "<p>Simple, functional designs that make your<br>home feel open and organized. Less clutter, more comfort.</p>",
             "tab_subheading": "",
             "tab_heading": "Minimal Interior",
@@ -29,7 +29,10 @@
             "button_label": "Shop Acoustic Panels",
             "button_link": "shopify://collections/acoustic-wall-paneling",
             "button_style": "tertiary",
-            "enable_fullscreen_link": true
+            "enable_fullscreen_link": true,
+            "image_position_y": 42,
+            "image_product": "waterjet-leaf-green-cement-peel-and-stick-tile",
+            "image_product_position": 1
           }
         },
         "slideshow_item_TcQxkG": {
@@ -132,8 +135,8 @@
             "image": "shopify://shop_images/PSFT-WDC-12-7.jpg",
             "color_scheme": "background-2",
             "overlay_opacity": 0.1,
-            "title": "",
-            "description": "Highlight products, promos, or seasonal picks to engage visitors."
+            "title": "Acoustic Wood Panels",
+            "description": "Discover how simple, elegant design transforms your space."
           }
         },
         "product_slide1": {
@@ -143,8 +146,8 @@
             "image": "shopify://shop_images/MZMLG-WAL-16-6.jpg",
             "color_scheme": "background-2",
             "overlay_opacity": 0.1,
-            "title": "",
-            "description": "Uncover the beauty of minimalist design that brings sophistication"
+            "title": "Acoustic Wood Panels",
+            "description": "Discover how simple, elegant design transforms your space."
           }
         },
         "product_slide2": {
@@ -154,8 +157,8 @@
             "image": "shopify://shop_images/PSFT-WDM-12-6.jpg",
             "color_scheme": "",
             "overlay_opacity": 0.1,
-            "title": "",
-            "description": "Transform your living space with sleek, understated design"
+            "title": "Acoustic Wood Panels",
+            "description": "Discover how simple, elegant design transforms your space."
           }
         }
       },
@@ -214,7 +217,8 @@
           "settings": {
             "image": "shopify://shop_images/Group_3.png",
             "title": "Measure & trim",
-            "text": "Plan your layout and trim panels to fit where needed."
+            "text": "Plan your layout and trim panels to fit where needed.",
+            "text_mobile": "Measure your layout and cut panels to fit."
           }
         },
         "step_peel": {
@@ -222,7 +226,8 @@
           "settings": {
             "image": "shopify://shop_images/Group_4.png",
             "title": "Peel & press",
-            "text": "Remove the backing, align your panel and press firmly into place."
+            "text": "Remove the backing, align your panel and press firmly into place.",
+            "text_mobile": "Peel the backing, align and press into place."
           }
         }
       },

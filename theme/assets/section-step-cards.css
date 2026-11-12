@@ -260,3 +260,18 @@
     width: auto;
   }
 }
+
+/* QA-19: optional mobile text (Figma mobile copy), desktop text from 990px */
+.step-cards__text-desktop {
+  display: none;
+}
+
+@media screen and (min-width: 990px) {
+  .step-cards__text-desktop {
+    display: inline;
+  }
+
+  .step-cards__text-mobile {
+    display: none;
+  }
+}

@@ -2308,6 +2308,10 @@
             },
             "text": {
               "label": "Text"
+            },
+            "text_mobile": {
+              "label": "Mobile text",
+              "info": "Optional shorter text for mobile. Leave empty to use the same text."
             }
           }
         }
@@ -2430,6 +2434,19 @@
           },
           "tabs_info": {
             "label": "Tabs info"
+          },
+          "settings": {
+            "image_position_y": {
+              "label": "Desktop image vertical position",
+              "info": "0% shows the top of the image, 100% the bottom."
+            },
+            "image_product": {
+              "label": "Product photo",
+              "info": "Uses this product's own full-size photo instead of the image above (sharper than a resized copy)."
+            },
+            "image_product_position": {
+              "label": "Product photo number"
+            }
           }
         },
         "heading": {

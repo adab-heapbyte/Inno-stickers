@@ -45,8 +45,11 @@
         "overlay-close": false,
         "esc-close": false,
         "f4-close": false
-      }
+      },
+      "disabled": true
     }
   },
-  "order": ["notification_banner_7YcPm4"]
+  "order": [
+    "notification_banner_7YcPm4"
+  ]
 }

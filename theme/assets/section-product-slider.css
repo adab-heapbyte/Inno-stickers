@@ -443,13 +443,13 @@
   padding-bottom: 104.07%;
 }
 
-/* Gradient: transparent at 4.315% to 70% overlay colour at the bottom */
+/* QA-14: gradient transparent at 0% to 70% overlay colour at the bottom */
 .product-slider--catalog .product-slider__image-slider__box::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, rgba(var(--color-overlay), 0) 4.315%, rgba(var(--color-overlay), 0.7) 100%);
+  background: linear-gradient(180deg, rgba(var(--color-overlay), 0) 0%, rgba(var(--color-overlay), 0.7) 100%);
   pointer-events: none;
 }
 

@@ -17,14 +17,6 @@
 
 {%- style -%}
   {% render 'section-margin' %}
-  {%- if section.settings.card_style == 'catalog' -%}
-    /* Catalog style: tighter space above the heading on phones */
-    @media screen and (max-width: 749px) {
-      #shopify-section-{{ section.id }} {
-        padding-top: 3.2rem;
-      }
-    }
-  {%- endif -%}
 {%- endstyle -%}
 
 {%- liquid
