@@ -114,97 +114,140 @@
       ],
       "settings": {
         "pdp_style": "figma",
-        "enable_auto_navigation": false,
-        "scroll_to_variant_media_mobile": false,
-        "variant_media_display": "show_all",
-        "enable_sticky_button": false,
-        "header_overlay": false,
-        "enable_video_autoplay": false,
-        "enable_full_screen": false,
-        "image_fit": "cover",
-        "image_ratio": "portrait",
-        "mobile_sliding_bar_position": "overlay",
-        "slider_direction": "vertical",
-        "mobile_alignment": "before",
-        "desktop_alignment": "right",
-        "mobile_show_next_preview": false,
-        "mobile_gallery_type": "synchronize",
-        "disable_scrolling": false,
-        "enable_slider_navigation": false,
-        "enable_slider_loop": false,
+        "figma_gallery_square_fit": "cover",
+        "figma_show_short_text": true,
+        "figma_short_text_length": 120,
+        "figma_unit_word": "box",
+        "figma_unit_word_plural": "boxes",
+        "figma_highlight_1": "No tool needed",
+        "figma_highlight_2": "Light weight",
+        "figma_pairs_text": "intimate interiors, backsplashes, accent layers.",
+        "figma_color_tile_image": 3,
+        "figma_delivery_min": 3,
+        "figma_delivery_max": 6,
+        "figma_trust_1": "30-Day return",
+        "figma_trust_2": "Damage protection",
+        "figma_trust_2_tooltip": "Get a full refund if the order doesn't arrive as described, including loss & damage in transit.",
+        "figma_trust_3": "1-year warranty",
         "gallery_type": "thumbs_aside_horizontal",
-        "figma_short_text_length": 120
+        "enable_slider_loop": false,
+        "enable_slider_navigation": false,
+        "disable_scrolling": false,
+        "mobile_gallery_type": "synchronize",
+        "mobile_show_next_preview": false,
+        "desktop_alignment": "right",
+        "mobile_alignment": "before",
+        "slider_direction": "vertical",
+        "mobile_sliding_bar_position": "overlay",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "enable_full_screen": false,
+        "enable_video_autoplay": false,
+        "header_overlay": false,
+        "enable_sticky_button": false,
+        "variant_media_display": "show_all",
+        "scroll_to_variant_media_mobile": false,
+        "enable_auto_navigation": false
       }
     },
-    "product-slider": {
-      "type": "product-slider",
+    "specs": {
+      "type": "product-specs-figma",
       "blocks": {
-        "product_slide": {
-          "type": "product_slide",
+        "specifications": {
+          "type": "specifications",
           "settings": {
-            "product": "aluminium-peel-and-stick-backsplash-trim-12inch-silver",
-            "image": "shopify://shop_images/PSFT-WDM-12-7.jpg",
-            "color_scheme": "",
-            "overlay_opacity": 0.1,
-            "description": "Elevate your wardrobe with pieces that embody the essence of modern elegance"
+            "title": "Specifications",
+            "icon": "ruler",
+            "open_by_default": true
           }
         },
-        "product_slide1": {
-          "type": "product_slide",
+        "installation": {
+          "type": "steps",
           "settings": {
-            "product": "aluminium-peel-and-stick-backplash-trim-12inch-grey-matte",
-            "image": "shopify://shop_images/MZMLG-WAL-16-7.jpg",
-            "color_scheme": "",
-            "overlay_opacity": 0.1,
-            "description": "Discover refined silhouettes that blend sophistication with contemporary style"
+            "title": "Installation",
+            "icon": "gear",
+            "open_by_default": false,
+            "step_1_image": "shopify://shop_images/Group_2.png",
+            "step_1_title": "Prep your wall",
+            "step_1_text": "Clean, smooth, dry, primed surface.",
+            "step_2_image": "shopify://shop_images/Group_3.png",
+            "step_2_title": "Measure & trim",
+            "step_2_text": "Plan your layout and trim panels to fit where needed.",
+            "step_3_image": "shopify://shop_images/Group_4.png",
+            "step_3_title": "Peel & press",
+            "step_3_text": "Remove the backing, align your panel and press firmly into place.",
+            "step_4_title": "",
+            "step_4_text": ""
           }
         },
-        "product_slide2": {
-          "type": "product_slide",
+        "removal": {
+          "type": "guide",
           "settings": {
-            "product": "aluminium-peel-and-stick-backplash-trim-12inch-black-matte",
-            "image": "shopify://shop_images/PSFT-WDH-12-10.jpg",
-            "color_scheme": "",
-            "overlay_opacity": 0.1,
-            "description": "Embrace timeless fashion with designs that exude confidence and effortless grace"
+            "title": "Removal",
+            "icon": "trash",
+            "content": "<p>Our peel-and-stick products are designed for convenient installation. Before removing them, take care to protect the underlying wall surface.</p><ol><li>Start at an edge. Gently lift one corner of the panel using your fingers.</li><li>Peel slowly. Carefully pull the panel away from the wall, working gradually across the surface.</li><li>Remove any residue. If adhesive remains, use a cleaning method suitable for your wall finish.</li></ol>",
+            "open_by_default": false,
+            "text_size": "16"
+          }
+        },
+        "care": {
+          "type": "guide",
+          "settings": {
+            "title": "Care & Maintenance",
+            "icon": "screwdriver",
+            "content": "<p>Keep your panels looking their best with regular, gentle cleaning.</p><ol><li><strong>Dust regularly:</strong> Use a soft, dry microfiber cloth.</li><li><strong>Clean gently:</strong> Wipe with a slightly damp cloth when needed.</li><li><strong>Avoid harsh chemicals:</strong> Do not use abrasive cleaners, strong solvents, or rough scrubbing tools.</li><li><strong>Dry thoroughly:</strong> Avoid leaving standing water on the surface.</li></ol>",
+            "open_by_default": false,
+            "text_size": "18"
+          }
+        },
+        "limits": {
+          "type": "guide",
+          "settings": {
+            "title": "Limits",
+            "icon": "warning",
+            "content": "<p>For the best results, check that your installation surface and environment are suitable before applying the product.</p><p><strong>Important:</strong> Installation compatibility, water resistance, heat tolerance, and removal limitations vary by product. Always refer to the specific product instructions.</p>",
+            "open_by_default": false,
+            "text_size": "18"
           }
         }
       },
       "block_order": [
-        "product_slide",
-        "product_slide1",
-        "product_slide2"
+        "specifications",
+        "installation",
+        "removal",
+        "care",
+        "limits"
       ],
       "settings": {
-        "image_size": "1/1",
-        "subheading": "",
-        "heading": "Shop the Look",
-        "heading_size": "h1",
-        "heading_tag": "h2",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "button_style": "simple",
-        "is_autoplay": false,
-        "is_hover_stop_autoplay": false,
-        "navigation_position": "static",
-        "slideshow_speed": 2,
-        "slideshow_delay": 3,
-        "slide_effects": "slide",
-        "is_sync_slide": true,
-        "enable_main_image_link": false,
-        "enable_animation": true,
-        "image_ratio": "portrait",
-        "image_fit": "cover",
-        "show_vendor": false,
-        "show_color_count": true,
-        "show_size_count": false,
-        "show_collection": false,
-        "show_desc": false,
-        "margin_top": "m",
-        "margin_bottom": "no-indent"
+        "heading": "Specs & Installation",
+        "background": "#f4f6f8"
+      }
+    },
+    "editorial": {
+      "type": "product-editorial-figma",
+      "blocks": {
+        "product_RAECPA": {
+          "type": "product",
+          "settings": {
+            "product": "2-hex-botanical-green-peel-and-stick-tile",
+            "image_1_position": 1,
+            "image_2_position": 2,
+            "image_1": "shopify://shop_images/648c5453b4d58293bf47c85b34ef76f42157584d.jpg",
+            "image_2": "shopify://shop_images/f6abf708f18dd54ece1282fc538090857542bb94.png",
+            "image_1_file": "",
+            "image_2_file": "",
+            "heading": "",
+            "text": ""
+          }
+        }
       },
-      "disabled": true
+      "block_order": [
+        "product_RAECPA"
+      ],
+      "settings": {
+        "heading": "Product Editorial",
+        "text": "<p>Bring a modern, earthy look to any room with acoustic wood panels. Designed to reduce echo and add natural texture.</p>"
+      }
     },
     "banner-with-popup": {
       "type": "banner-with-popup",
@@ -219,6 +262,7 @@
       "block_order": [
         "image"
       ],
+      "disabled": true,
       "settings": {
         "aspect_ratio": "full",
         "full_screen_image_mode": true,
@@ -242,11 +286,11 @@
         "popup_button_style": "tertiary",
         "margin_top": "no-indent",
         "margin_bottom": "m"
-      },
-      "disabled": true
+      }
     },
     "product-recommendations": {
       "type": "product-recommendations",
+      "disabled": true,
       "settings": {
         "subheading": "",
         "heading": "You May Also Like",
@@ -269,124 +313,12 @@
         "margin_top": "no-indent",
         "margin_bottom": "m"
       }
-    },
-    "specs": {
-      "type": "product-specs-figma",
-      "blocks": {
-        "specifications": {
-          "type": "specifications",
-          "settings": {
-            "title": "Specifications",
-            "icon": "ruler",
-            "open_by_default": true
-          }
-        },
-        "installation": {
-          "type": "steps",
-          "settings": {
-            "title": "Installation",
-            "icon": "gear",
-            "open_by_default": false,
-            "step_1_title": "Prep your wall",
-            "step_1_text": "Clean, smooth, dry, primed surface.",
-            "step_2_title": "Measure & trim",
-            "step_2_text": "Plan your layout and trim panels to fit where needed.",
-            "step_3_title": "Peel & press",
-            "step_3_text": "Remove the backing, align your panel and press firmly into place.",
-            "step_1_image": "shopify://shop_images/Group_2.png",
-            "step_2_image": "shopify://shop_images/Group_3.png",
-            "step_3_image": "shopify://shop_images/Group_4.png"
-          }
-        },
-        "removal": {
-          "type": "guide",
-          "settings": {
-            "title": "Removal",
-            "icon": "trash",
-            "open_by_default": false,
-            "content": "<p>Our peel-and-stick products are designed for convenient installation. Before removing them, take care to protect the underlying wall surface.</p><ol><li>Start at an edge. Gently lift one corner of the panel using your fingers.</li><li>Peel slowly. Carefully pull the panel away from the wall, working gradually across the surface.</li><li>Remove any residue. If adhesive remains, use a cleaning method suitable for your wall finish.</li></ol>",
-            "text_size": "16"
-          }
-        },
-        "care": {
-          "type": "guide",
-          "settings": {
-            "title": "Care & Maintenance",
-            "icon": "screwdriver",
-            "open_by_default": false,
-            "content": "<p>Keep your panels looking their best with regular, gentle cleaning.</p><ol><li><strong>Dust regularly:</strong> Use a soft, dry microfiber cloth.</li><li><strong>Clean gently:</strong> Wipe with a slightly damp cloth when needed.</li><li><strong>Avoid harsh chemicals:</strong> Do not use abrasive cleaners, strong solvents, or rough scrubbing tools.</li><li><strong>Dry thoroughly:</strong> Avoid leaving standing water on the surface.</li></ol>",
-            "text_size": "18"
-          }
-        },
-        "limits": {
-          "type": "guide",
-          "settings": {
-            "title": "Limits",
-            "icon": "warning",
-            "open_by_default": false,
-            "content": "<p>For the best results, check that your installation surface and environment are suitable before applying the product.</p><p><strong>Important:</strong> Installation compatibility, water resistance, heat tolerance, and removal limitations vary by product. Always refer to the specific product instructions.</p>",
-            "text_size": "18"
-          }
-        }
-      },
-      "block_order": [
-        "specifications",
-        "installation",
-        "removal",
-        "care",
-        "limits"
-      ],
-      "settings": {
-        "background": "#F4F6F8",
-        "heading": "Specs & Installation"
-      }
-    },
-    "editorial": {
-      "type": "product-editorial-figma",
-      "blocks": {
-        "natural_oak": {
-          "type": "product",
-          "settings": {
-            "product": "natural-oak-wood-slat-acoustic-panels-decorative-wall-paneling",
-            "image_1_position": 8,
-            "image_2_position": 9,
-            "image_1_file": "editorial-natural-oak-1.jpg",
-            "image_2_file": "editorial-natural-oak-2.jpg"
-          }
-        },
-        "walnut": {
-          "type": "product",
-          "settings": {
-            "product": "walnut-wood-slat-acoustic-panels-decorative-wall-paneling",
-            "image_1_position": 7,
-            "image_2_position": 8
-          }
-        },
-        "black_grey": {
-          "type": "product",
-          "settings": {
-            "product": "black-oak-wood-slat-acoustic-panels-decorative-wall-paneling",
-            "image_1_position": 7,
-            "image_2_position": 8
-          }
-        }
-      },
-      "block_order": [
-        "natural_oak",
-        "walnut",
-        "black_grey"
-      ],
-      "settings": {
-        "heading": "Product Editorial",
-        "text": "<p>Bring a modern, earthy look to any room with acoustic wood panels. Designed to reduce echo and add natural texture.</p>"
-      }
     }
   },
   "order": [
     "main",
     "specs",
     "editorial",
-    "product-slider",
     "banner-with-popup",
     "product-recommendations"
   ]
