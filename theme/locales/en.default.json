@@ -318,7 +318,14 @@
       "figma_calc_overage_hint": "Add more to cover cut & waste",
       "figma_calc_overage_0": "Tradespeople",
       "figma_calc_overage_10": "First time? Start here",
-      "figma_calc_update": "Update Quantity"
+      "figma_calc_update": "Update Quantity",
+      "figma_sticky_qty": "Qty: {{ quantity }}",
+      "figma_notify_title": "Want to know when it's back?",
+      "figma_notify_text": "Sign up to receive an email when this product is available again.",
+      "figma_notify_email": "Email address",
+      "figma_notify_button": "Notify me",
+      "figma_notify_success": "Thanks! We'll email you when it's back in stock.",
+      "figma_notify_body": "Back in stock request: {{ product }} - {{ variant }}"
     },
     "load_more": {
       "label": "Load More"

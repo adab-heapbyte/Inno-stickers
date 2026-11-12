@@ -1459,6 +1459,7 @@ a.pdp-figma__color:hover {
 
   .pdp-figma__title {
     font-size: 3.2rem;
+    line-height: 1.25; /* Figma 6 Nov: Bold 32 / 125% (2 lines = 80px) */
   }
 
   .pdp-figma__rating {
@@ -1493,12 +1494,18 @@ a.pdp-figma__color:hover {
   }
 
   .pdp-figma__price-current {
-    font-size: 2.8rem;
+    font-size: 2.4rem; /* Figma 6 Nov: Bold 24 / 131% */
+    line-height: 1.31;
   }
 
   .pdp-figma__highlights {
     gap: 0.8rem 2.4rem;
-    margin-top: 0;
+    margin-top: 0.8rem; /* Figma desktop: 20px from the price block (12px group gap + 8) */
+  }
+
+  .pdp-figma__price-sqft-value {
+    font-size: 1.8rem; /* Figma "$3.23" Regular 18 / 1.5 -> 27px row */
+    line-height: 1.5;
   }
 
   .pdp-figma__highlights li,
@@ -1534,7 +1541,7 @@ a.pdp-figma__color:hover {
   .pdp-figma__card,
   .pdp-figma__card.is-selected {
     min-height: 9.9rem;
-    padding: 1.6rem;
+    padding: 1.2rem; /* Figma Selector: 12px padding, stroke inside -> 99px with the pack line */
   }
 
   .pdp-figma__card-main {
@@ -1594,5 +1601,273 @@ a.pdp-figma__color:hover {
 
   .pdp-figma__tip-bubble {
     width: 27.4rem;
+  }
+}
+
+/* ==========================================================================
+   Sticky CTA (Figma PDP mobile "Sticky CTA - When scrolling" 22:10596)
+   White bar, #F4F4F4 top line, 0 0 12 rgba(0,0,0,.08) shadow, 12 / 16 / 24 padding,
+   16px gap. Row: 48px thumb (#F4F4F4, 36px photo) + name / "Qty: 2" (14px),
+   price Bold 16 (sale #800020) over the compare-at price (12px #7F859F);
+   then the full-width 48px Add to cart button.
+   ========================================================================== */
+.pdp-figma__sticky {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  padding: 1.2rem 1.6rem 2.4rem;
+  border-top: 0.1rem solid rgb(244, 244, 244);
+  background: rgb(255, 255, 255);
+  box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.08);
+  transform: translateY(100%);
+  visibility: hidden;
+  transition: transform 0.3s ease, visibility 0.3s;
+}
+
+.pdp-figma__sticky.is-visible {
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.pdp-figma__sticky-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  min-width: 0;
+}
+
+.pdp-figma__sticky-product {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 1.2rem;
+  min-width: 0;
+}
+
+.pdp-figma__sticky-media {
+  display: flex;
+  flex: 0 0 4.8rem;
+  align-items: center;
+  justify-content: center;
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 0.4rem;
+  background: rgb(244, 244, 244);
+}
+
+.pdp-figma__sticky-media img {
+  display: block;
+  width: 3.6rem;
+  height: 3.6rem;
+  object-fit: cover;
+  filter: drop-shadow(0 0.02rem 0.06rem rgba(0, 0, 0, 0.19)) drop-shadow(0 0.22rem 0.13rem rgba(0, 0, 0, 0.1));
+}
+
+.pdp-figma__sticky-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+.pdp-figma__sticky-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: rgb(15, 15, 15);
+}
+
+.pdp-figma__sticky-qty {
+  color: rgb(60, 64, 79); /* #3C404F */
+}
+
+.pdp-figma__sticky-prices {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.pdp-figma__sticky-price {
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(15, 15, 15);
+}
+
+.pdp-figma__sticky-prices:has(.pdp-figma__sticky-compare:not([hidden])) .pdp-figma__sticky-price {
+  color: rgb(128, 0, 32); /* sale #800020 */
+}
+
+.pdp-figma__sticky-compare {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: rgb(127, 133, 159); /* #7F859F */
+}
+
+.pdp-figma__sticky-compare[hidden] {
+  display: none;
+}
+
+.pdp-figma__sticky-button {
+  width: 100%;
+  min-height: 4.8rem;
+}
+
+@media screen and (min-width: 990px) {
+  .pdp-figma__sticky {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Sold out (Figma PDP "Out of stock" 22:13623 desktop / 22:11029 mobile)
+   50% "Out of stock" button, 12px, then a #E2E4E9 4px box (12px padding, 20px gap):
+   Bold 16 title + 4 + Body 14 text; 48px email field (#E2E4E9 border) + 8 + 128 x 48
+   "Notify me" (#1F3A4D); 12px teal message under the field.
+   ========================================================================== */
+.pdp-figma__oos {
+  display: none;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.pdp-figma.is-sold-out .pdp-figma__oos,
+.is-sold-out > .pdp-figma__info .pdp-figma__oos,
+.pdp-figma__layout.is-sold-out .pdp-figma__oos {
+  display: flex;
+}
+
+.pdp-figma__layout.is-sold-out .pdp-figma__quantity-group,
+.pdp-figma__layout.is-sold-out .pdp-figma__buy,
+.pdp-figma__layout.is-sold-out .pdp-figma__sticky {
+  display: none;
+}
+
+.pdp-figma__layout.is-sold-out .pdp-figma__oos {
+  margin-top: 2.4rem;
+}
+
+.pdp-figma__oos-button {
+  width: 100%;
+  min-height: 4.8rem;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pdp-figma__notify {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.2rem;
+  border: 0.1rem solid rgb(226, 228, 233); /* #E2E4E9 */
+  border-radius: 0.4rem;
+}
+
+.pdp-figma__notify-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pdp-figma__notify-text p {
+  margin: 0;
+}
+
+.pdp-figma__notify-title {
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgb(15, 15, 15);
+}
+
+.pdp-figma__notify-description {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(33, 34, 38); /* #212226 */
+}
+
+.pdp-figma__notify-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.pdp-figma__notify-row {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.pdp-figma__notify-input {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 4.8rem;
+  padding: 0 1.2rem;
+  border: 0.1rem solid rgb(226, 228, 233);
+  border-radius: 0.4rem;
+  background: rgb(255, 255, 255);
+  font-family: var(--font-body-family);
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(15, 15, 15);
+}
+
+.pdp-figma__notify-input::placeholder {
+  color: rgb(127, 133, 159); /* #7F859F */
+  opacity: 1;
+}
+
+.pdp-figma__notify-input:focus-visible {
+  outline: 0.2rem solid rgba(42, 100, 137, 0.5);
+  outline-offset: 0.1rem;
+}
+
+.pdp-figma__notify-button {
+  flex: 0 0 12.8rem;
+  width: 12.8rem;
+  min-height: 4.8rem;
+  border: 0;
+  background: rgb(31, 58, 77); /* #1F3A4D */
+  color: rgb(255, 255, 255);
+}
+
+.pdp-figma__notify-message {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: rgb(42, 100, 137); /* teal */
+}
+
+.pdp-figma__notify-message--error {
+  color: rgb(128, 0, 32);
+}
+
+/* Desktop Smart calculator (Figma PDP "Filled in" 22:15020, 500px sheet, 24px padding):
+   title row 24 -> 51, 18px to the divider (y69), body from y93, 16px between the groups
+   (size / width / height / wall area / recommend), Overage 24px after the stepper. */
+@media screen and (min-width: 990px) {
+  .pdp-calc__head {
+    padding: 2.4rem 0 1.8rem;
+  }
+
+  .pdp-calc__body {
+    gap: 1.6rem;
+    padding-top: 2.3rem; /* 24 from the 1px divider */
+  }
+
+  .pdp-calc__field[data-pdp-calc-overage-field] {
+    margin-top: 0.8rem; /* 16 + 8 = Figma 24 */
   }
 }

@@ -203,10 +203,11 @@
 
 @media screen and (min-width: 990px) {
   .product-specs-figma {
-    padding: 12rem max(2.4rem, 8.33vw);
+    padding: 8rem max(2.4rem, 8.33vw); /* Figma 6 Nov "Option 2 - Horizontal Tab": 80 / 160 */
   }
 
   .product-specs-figma__heading {
+    margin-bottom: 4rem; /* 40 from the heading to the first row */
     font-size: 4rem;
     line-height: 1.2;
   }

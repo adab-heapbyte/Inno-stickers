@@ -6251,6 +6251,29 @@ details[open] > .header__icon--menu .icon-hamburger {
   bottom: -2px;
 }
 
+/* Phones (Figma mobile frames): breadcrumb on one line, the current page shortened with "...".
+   Long product titles wrapped to 3 lines and pushed the PDP gallery 43px down. */
+@media screen and (max-width: 749px) {
+  .breadcrumb {
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
+
+  .breadcrumb > a,
+  .breadcrumb > .breadcrumb__delimiter {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .breadcrumb > span:last-child {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
 /* Popup */
 .popup-scroll-hidden {
   overflow: hidden;

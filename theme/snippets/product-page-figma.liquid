@@ -147,9 +147,10 @@
 
 <div class="pdp-figma section-{{ section.id }}" data-section="{{ section.id }}">
   <pdp-figma
-    class="pdp-figma__layout"
+    class="pdp-figma__layout{% unless current_variant.available %} is-sold-out{% endunless %}"
     data-section="{{ section.id }}"
     data-product-url="{{ product.url }}"
+    data-product-title="{{ product.title | escape }}"
     data-sample-index="{{ sample_index }}"
     data-install-index="{{ install_index }}"
     data-unit="{{ unit_word | escape }}"
@@ -531,6 +532,58 @@
         </div>
       </div>
 
+      {%- comment -%}
+        ---------- Sold out (Figma PDP "Out of stock" 22:13623 / 22:11029): replaces the quantity,
+        buttons and delivery while the chosen variant is sold out. "Notify me" is a Shopify contact
+        form (like the theme's back-in-stock notification), so the store gets the email + variant.
+      {%- endcomment -%}
+      <div class="pdp-figma__oos" data-pdp-oos>
+        <button type="button" class="pdp-figma__button pdp-figma__button--primary pdp-figma__oos-button" aria-disabled="true" tabindex="-1">
+          {{- 'products.product.figma_out_of_stock' | t -}}
+        </button>
+        <div class="pdp-figma__notify">
+          <div class="pdp-figma__notify-text">
+            <p class="pdp-figma__notify-title">{{ 'products.product.figma_notify_title' | t }}</p>
+            <p class="pdp-figma__notify-description">{{ 'products.product.figma_notify_text' | t }}</p>
+          </div>
+          {%- assign notify_form_id = 'PdpNotify-' | append: section.id -%}
+          {%- form 'contact', id: notify_form_id, class: 'pdp-figma__notify-form' -%}
+            <input type="hidden" name="contact[name]" value="{% if customer %}{{ customer.name }}{% endif %}">
+            <input
+              type="hidden"
+              name="contact[body]"
+              value="{{ 'products.product.figma_notify_body' | t: product: product.title, variant: current_variant.title }}"
+              data-pdp-notify-body
+            >
+            <div class="pdp-figma__notify-row">
+              <label class="visually-hidden" for="{{ notify_form_id }}-email">{{ 'products.product.figma_notify_email' | t }}</label>
+              <input
+                class="pdp-figma__notify-input"
+                id="{{ notify_form_id }}-email"
+                type="email"
+                name="contact[email]"
+                required
+                autocomplete="email"
+                autocapitalize="off"
+                spellcheck="false"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                placeholder="{{ 'products.product.figma_notify_email' | t }}"
+              >
+              <button type="submit" class="pdp-figma__button pdp-figma__notify-button">
+                {{- 'products.product.figma_notify_button' | t -}}
+              </button>
+            </div>
+            {%- if form.posted_successfully? -%}
+              <p class="pdp-figma__notify-message" role="status">{{ 'products.product.figma_notify_success' | t }}</p>
+            {%- elsif form.errors -%}
+              <p class="pdp-figma__notify-message pdp-figma__notify-message--error" role="alert">
+                {{- form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email -}}
+              </p>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      </div>
+
       {%- comment -%} ---------- Trust icons (same icons as the cart) {%- endcomment -%}
       <ul class="pdp-figma__trust list-unstyled" role="list">
         <li>
@@ -579,6 +632,7 @@
             endcapture
             assign v_coverage = v_coverage | strip | plus: 0
             assign v_media = v.featured_media.id | default: 0
+            assign v_image = v.featured_image | default: product.featured_image
             assign v_dims = ''
             for v_value in v.options
               if v_value contains ' x '
@@ -596,7 +650,8 @@
             "policy": {{ v.inventory_policy | json }},
             "media": {{ v_media }},
             "coverage": {{ v_coverage | round: 2 }},
-            "dims": {{ v_dims | json }}
+            "dims": {{ v_dims | json }},
+            "image": {% if v_image %}{{ v_image | image_url: width: 120 | json }}{% else %}null{% endif %}
           }{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
       ]
@@ -732,8 +787,51 @@
         "perSqft": {{ 'products.product.figma_per_sqft' | t | json }},
         "calcPanel": {{ 'products.product.figma_calc_panel' | t: size: '[size]' | json }},
         "calcOverage0": {{ 'products.product.figma_calc_overage_0' | t | json }},
-        "calcOverage10": {{ 'products.product.figma_calc_overage_10' | t | json }}
+        "calcOverage10": {{ 'products.product.figma_calc_overage_10' | t | json }},
+        "stickyQty": {{ 'products.product.figma_sticky_qty' | t: quantity: '[quantity]' | json }},
+        "notifyBody": {{ 'products.product.figma_notify_body' | t: product: '[product]', variant: '[variant]' | json }}
       }
     </script>
+
+    {%- comment -%}
+      Sticky CTA (Figma PDP mobile "Sticky CTA - When scrolling" 22:10596): shown below 990px
+      once the main Add to cart button has scrolled out of view; its button presses that one.
+    {%- endcomment -%}
+    {%- liquid
+      assign sticky_image = current_variant.featured_image | default: product.featured_image
+    -%}
+    <div class="pdp-figma__sticky" data-pdp-sticky aria-hidden="true">
+      <div class="pdp-figma__sticky-row">
+        <div class="pdp-figma__sticky-product">
+          <span class="pdp-figma__sticky-media">
+            {%- if sticky_image -%}
+              <img
+                src="{{ sticky_image | image_url: width: 120 }}"
+                alt=""
+                width="36"
+                height="36"
+                loading="lazy"
+                data-pdp-sticky-image
+              >
+            {%- endif -%}
+          </span>
+          <span class="pdp-figma__sticky-text">
+            <span class="pdp-figma__sticky-title">{{ product.title | escape }}</span>
+            <span class="pdp-figma__sticky-qty" data-pdp-sticky-qty>
+              {{- 'products.product.figma_sticky_qty' | t: quantity: 1 -}}
+            </span>
+          </span>
+        </div>
+        <span class="pdp-figma__sticky-prices">
+          <span class="pdp-figma__sticky-price" data-pdp-sticky-price>{{ current_variant.price | money }}</span>
+          <s class="pdp-figma__sticky-compare" data-pdp-sticky-compare{% unless current_variant.compare_at_price > current_variant.price %} hidden{% endunless %}>
+            {{- current_variant.compare_at_price | money -}}
+          </s>
+        </span>
+      </div>
+      <button type="button" class="pdp-figma__button pdp-figma__button--primary pdp-figma__sticky-button" data-pdp-sticky-add tabindex="-1">
+        <span data-pdp-sticky-label>{{ 'products.product.figma_add_to_cart' | t }}</span>
+      </button>
+    </div>
   </pdp-figma>
 </div>

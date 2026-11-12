@@ -31,8 +31,52 @@ if (!customElements.get('pdp-figma')) {
         this.bindOptions();
         this.bindQuantity();
         this.bindCalculator();
+        this.bindSticky();
         this.renderDelivery();
         this.update(false);
+      }
+
+      /* ---------- sticky CTA (mobile): visible once the main Add to cart has scrolled above the screen */
+      bindSticky() {
+        this.sticky = this.querySelector('[data-pdp-sticky]');
+        const mainAdd = this.querySelector('[data-pdp-add]');
+        if (!this.sticky || !mainAdd || !('IntersectionObserver' in window)) return;
+        const stickyButton = this.sticky.querySelector('[data-pdp-sticky-add]');
+        stickyButton.addEventListener('click', () => {
+          if (mainAdd.getAttribute('aria-disabled') === 'true') return;
+          mainAdd.click();
+        });
+        new IntersectionObserver(([entry]) => {
+          const show = !entry.isIntersecting && entry.boundingClientRect.bottom < 0;
+          this.sticky.classList.toggle('is-visible', show);
+          this.sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
+          stickyButton.tabIndex = show ? 0 : -1;
+        }).observe(mainAdd);
+      }
+
+      updateSticky() {
+        if (!this.sticky || !this.variant) return;
+        const v = this.variant;
+        const quantity = this.quantity();
+        const qty = this.sticky.querySelector('[data-pdp-sticky-qty]');
+        if (qty) qty.textContent = (this.strings.stickyQty || 'Qty: [quantity]').replace('[quantity]', quantity);
+        const price = this.sticky.querySelector('[data-pdp-sticky-price]');
+        if (price) price.textContent = this.money(v.price);
+        const compare = this.sticky.querySelector('[data-pdp-sticky-compare]');
+        if (compare) {
+          compare.hidden = !(v.compare_at_price > v.price);
+          if (!compare.hidden) compare.textContent = this.money(v.compare_at_price);
+        }
+        const image = this.sticky.querySelector('[data-pdp-sticky-image]');
+        if (image && v.image) image.src = v.image;
+        const label = this.sticky.querySelector('[data-pdp-sticky-label]');
+        const mainLabel = this.querySelector('[data-pdp-add-label]');
+        if (label && mainLabel) label.textContent = mainLabel.textContent;
+        const button = this.sticky.querySelector('[data-pdp-sticky-add]');
+        if (button) {
+          if (v.available) button.removeAttribute('aria-disabled');
+          else button.setAttribute('aria-disabled', 'true');
+        }
       }
 
       readJson(selector) {
@@ -225,7 +269,11 @@ if (!customElements.get('pdp-figma')) {
         if (sqft) {
           sqft.hidden = !v.coverage;
           if (v.coverage) {
-            sqft.textContent = `${this.money(Math.round(v.price / v.coverage))} ${this.strings.perSqft || '/sq ft'}`;
+            // Figma: value Regular 18 ("$3.23"), unit Regular 16 ("/sq ft")
+            const value = document.createElement('span');
+            value.className = 'pdp-figma__price-sqft-value';
+            value.textContent = this.money(Math.round(v.price / v.coverage));
+            sqft.replaceChildren(value, ` ${this.strings.perSqft || '/sq ft'}`);
           }
         }
 
@@ -241,6 +289,15 @@ if (!customElements.get('pdp-figma')) {
           else if (v.inventory !== null && v.inventory > 0)
             stock.textContent = (this.strings.inStockCount || '[count] In-stock. Ready to Ship.').replace('[count]', v.inventory);
           else stock.textContent = this.strings.inStock || 'In stock. Ready to Ship.';
+        }
+
+        // sold out: Figma "Out of stock" button + notify-me form replace quantity / buttons / delivery
+        this.classList.toggle('is-sold-out', !v.available);
+        const notifyBody = this.querySelector('[data-pdp-notify-body]');
+        if (notifyBody) {
+          notifyBody.value = (this.strings.notifyBody || 'Back in stock request: [product] - [variant]')
+            .replace('[product]', this.dataset.productTitle || '')
+            .replace('[variant]', v.options.join(' / '));
         }
 
         // add to cart button
@@ -308,6 +365,7 @@ if (!customElements.get('pdp-figma')) {
             ? `${this.strings.addToCart || 'Add to cart'} • ${this.money(v.price * quantity)}`
             : this.strings.soldOut || 'Sold out';
         }
+        this.updateSticky();
       }
 
       /* ---------- smart calculator (drawer) */

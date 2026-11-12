@@ -239,9 +239,38 @@
             "heading": "",
             "text": ""
           }
+        },
+        "natural_oak": {
+          "type": "product",
+          "settings": {
+            "product": "natural-oak-wood-slat-acoustic-panels-decorative-wall-paneling",
+            "image_1_position": 8,
+            "image_2_position": 9,
+            "image_1_file": "editorial-natural-oak-1.jpg",
+            "image_2_file": "editorial-natural-oak-2.jpg"
+          }
+        },
+        "walnut": {
+          "type": "product",
+          "settings": {
+            "product": "walnut-wood-slat-acoustic-panels-decorative-wall-paneling",
+            "image_1_position": 7,
+            "image_2_position": 8
+          }
+        },
+        "black_grey": {
+          "type": "product",
+          "settings": {
+            "product": "black-oak-wood-slat-acoustic-panels-decorative-wall-paneling",
+            "image_1_position": 7,
+            "image_2_position": 8
+          }
         }
       },
       "block_order": [
+        "natural_oak",
+        "walnut",
+        "black_grey",
         "product_RAECPA"
       ],
       "settings": {
